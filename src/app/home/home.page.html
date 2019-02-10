@@ -1,0 +1,75 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button color="success"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Нүүр
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-avatar class="custom-avatar" (click)="openPopover($event)">
+        <img src="./../../assets/icon/avatar.svg">
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Өнөөдөр</ion-label>
+    </ion-item-divider>
+    <ion-item class="text-center">
+      <ion-thumbnail slot="start">
+        <img src="../../assets/other/weather.png">
+      </ion-thumbnail>
+      <ion-label>Улаанбаатар</ion-label>
+      <div slot="end">
+        <ion-label>
+          <b class="celsius">-95°C</b>
+        </ion-label>
+      </div>
+    </ion-item>
+    <!-- <ion-list-header>Чиглэлийн жагсаалт</ion-list-header> -->
+    <ion-item-divider class="custom-divider">
+      <ion-label>Чиглэл сонгох</ion-label>
+    </ion-item-divider>
+    <ion-item class="combo-item">
+      <ion-label>Хаанаас</ion-label>
+      <ion-select interface="alert" [value]="aimag[0].id" okText="Сонгох" cancelText="Болих">
+        <div *ngFor="let item of aimag; let i = index;">
+          <ion-select-option [value]="item.id">{{item.name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="combo-item">
+      <ion-label>Хаашаа</ion-label>
+      <ion-select [value]="aimag[0].id" okText="Сонгох" cancelText="Болих">
+        <div *ngFor="let item of aimag; let i = index;">
+          <ion-select-option [value]="item.id">{{item.name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Цагийн хуваарь</ion-label>
+    </ion-item-divider>
+    <ion-item>
+      <div slot="start" class="start-side">
+        <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
+        <ion-label class="start-time">09:00</ion-label>
+      </div>
+      <div class="body-side">
+        <ion-label>Улаанбаатар - Ар.Жаргалант</ion-label>
+        <ion-label class="sub-body">Том автобус</ion-label>
+      </div>
+      <!-- <div slot="end" class="end-side">
+        End
+      </div> -->
+    </ion-item>
+
+
+  </ion-list>
+
+</ion-content>

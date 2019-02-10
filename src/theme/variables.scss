@@ -34,6 +34,7 @@
   --ion-color-success-contrast-rgb: 255, 255, 255;
   --ion-color-success-shade: #0ec254;
   --ion-color-success-tint: #28e070;
+  --ion-color-success-black: #e1fcec;
 
   /** warning **/
   --ion-color-warning: #ffce00;
@@ -74,4 +75,12 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+
+  /** Custom variables **/
+  --ion-font-family: 'MnHeide';
+  --ion-color-facebook: #3b5998;
+  --ion-color-facebook-hover: #5b82d6;
+  --ion-color-google: #d62d20;
+  --ion-color-google-hover: #f6655b;
 }

@@ -9,6 +9,24 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   templateUrl: 'app.component.html'
 })
 export class AppComponent {
+  public appPages = [
+    {
+      title: 'Нүүр',
+      url: '/home',
+      icon: 'home'
+    },
+    {
+      title: 'Тээврийн хуваарийн жагсаалт',
+      url: '/time-table',
+      icon: 'list'
+    },
+    {
+      title: 'Захиалга',
+      url: '/order',
+      icon: 'browsers'
+    }
+  ];
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

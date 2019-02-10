@@ -1,0 +1,41 @@
+@font-face {
+    font-family: 'MnHeide';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./MnHeide.ttf');
+}
+
+@font-face {
+    font-family: 'MogulFuturaCondensed';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./MogulFuturaCondensed.ttf');
+}
+
+@font-face {
+    font-family: 'MogulBaltica';
+    font-style: normal;
+    font-weight: normal;
+    src: url('./MogulBaltica.ttf');
+}
+
+@font-face {
+    font-family: 'MogulBaltica';
+    font-style: normal;
+    font-weight: bold;
+    src: url('./MogulBalticaBold.ttf');
+}
+
+@font-face {
+    font-family: 'MogulBaltica';
+    font-style: italic;
+    font-weight: normal;
+    src: url('./MogulBalticaItalic.ttf');
+}
+
+@font-face {
+    font-family: 'MogulBaltica';
+    font-style: italic;
+    font-weight: bold;
+    src: url('./MogulBalticaBoldItalic.ttf');
+}

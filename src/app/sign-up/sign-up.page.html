@@ -1,0 +1,20 @@
+<ion-content padding class="custom-content">
+  <div style="height: 160px; width: 100%; background: rgba(64,35,124,0.3)">
+  </div>
+  <!-- Email Input -->
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" placeholder="И-мэйл" pattern="email" size="email" type="email"></ion-input>
+  </ion-item>
+
+  <!-- Password Input -->
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" placeholder="Нууц үг" pattern="password" size="password" type="password"></ion-input>
+  </ion-item>
+
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" placeholder="Нууц үг давтах" pattern="password" size="password" type="password"></ion-input>
+  </ion-item>
+  <ion-button class="custom-button" [routerDirection]="'root'" [routerLink]="'/login'" expand="block" fill="solid"
+    color="primary" mode="ios">Бүртгүүлэх</ion-button>
+
+</ion-content>

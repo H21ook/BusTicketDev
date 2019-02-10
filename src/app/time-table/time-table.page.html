@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Тээврийн хуваарь
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <!-- <ion-item-divider class="custom-divider">
+      <ion-label>Чиглэл сонгох</ion-label>
+    </ion-item-divider> -->
+    <ion-item>
+      <ion-label>Хэзээ</ion-label>
+      <ion-datetime display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD" [(ngModel)]="startDate" [min]="minDate"
+        [max]="maxDate"></ion-datetime>
+    </ion-item>
+    <ion-item class="combo-item">
+      <ion-label>Хаанаас</ion-label>
+      <ion-select interface="alert" [value]="aimag[0].id" okText="Сонгох" cancelText="Болих">
+        <div *ngFor="let item of aimag; let i = index;">
+          <ion-select-option [value]="item.id">{{item.name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+
+    <ion-item class="combo-item">
+      <ion-label>Хаашаа</ion-label>
+      <ion-select [value]="aimag[0].id" okText="Сонгох" cancelText="Болих">
+        <div *ngFor="let item of aimag; let i = index;">
+          <ion-select-option [value]="item.id">{{item.name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </ion-item>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Цагийн хуваарь</ion-label>
+    </ion-item-divider>
+    <ion-item-sliding>
+      <ion-item>
+        <div slot="start" class="start-side">
+          <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
+          <ion-label class="start-time">09:00</ion-label>
+        </div>
+        <div class="body-side">
+          <ion-label>Улаанбаатар - Ар.Жаргалант</ion-label>
+          <ion-label class="sub-body">Том автобус</ion-label>
+        </div>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option>Захиалах</ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+</ion-content>
