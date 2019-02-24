@@ -12,7 +12,6 @@ import { UserMethodsPageModule } from './user-methods/user-methods.module';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
@@ -26,4 +25,5 @@ import { UserMethodsPageModule } from './user-methods/user-methods.module';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

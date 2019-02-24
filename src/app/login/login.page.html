@@ -5,7 +5,8 @@
 </ion-header> -->
 
 <ion-content padding class="custom-content">
-  <div style="height: 160px; width: 100%; background: rgba(64,35,124,0.3)">
+  <div style="height: 180px; width: 100%; text-align: center; padding-top: 50px;">
+    <img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" height="120px" width="120px">
   </div>
   <!-- Email Input -->
   <ion-item lines="full" class="custom-item-input" mode="ios">
@@ -19,7 +20,8 @@
   <ion-button class="custom-button" (click)="logInLoading()" [routerDirection]="'forward'" [routerLink]="'/home'"
     expand="block" fill="solid" color="success" mode="ios">Нэвтрэх</ion-button>
   <div class="signup-item">
-    <a (click)="goToSignUp()" class="signup" mode="ios">Бүртгүүлэх</a>
+    <a class="link-btn" mode="ios">Нууц үг мартсан</a>
+    <a (click)="goToSignUp()" class="link-btn">Бүртгүүлэх</a>
   </div>
   <ion-button class="custom-button fb" expand="block" fill="solid" mode="ios">Facebook
     хаягаар нэвтрэх</ion-button>

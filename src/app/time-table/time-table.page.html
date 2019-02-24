@@ -19,23 +19,42 @@
       <ion-datetime display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD" [(ngModel)]="startDate" [min]="minDate"
         [max]="maxDate"></ion-datetime>
     </ion-item>
-    <ion-item class="combo-item">
+    <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
-      <ion-select interface="alert" [value]="sourceStops[0].ss_id" okText="Сонгох" cancelText="Болих">
-        <div *ngFor="let item of sourceStops; let i = index;">
-          <ion-select-option [value]="item.ss_id">{{item.ss_name}}</ion-select-option>
-        </div>
-      </ion-select>
-    </ion-item>
+    </ion-item-divider>
 
-    <ion-item class="combo-item">
-      <ion-label>Хаашаа</ion-label>
-      <ion-select [value]="sourceStops[0].ss_id" okText="Сонгох" cancelText="Болих">
-        <div *ngFor="let item of sourceStops; let i = index;">
-          <ion-select-option [value]="item.ss_id">{{item.ss_name}}</ion-select-option>
+    <div class="combo-item">
+      <ion-select okText="Сонгох" cancelText="Болих" [(ngModel)]="model.fromAimag" placeholder="Аймаг сонгох">
+        <div *ngFor="let item of aimagData; let i = index;">
+          <ion-select-option [value]="i">{{item.name}}</ion-select-option>
         </div>
       </ion-select>
-    </ion-item>
+    </div>
+    <div class="combo-item" *ngIf="model.fromAimag">
+      <ion-select okText="Сонгох" cancelText="Болих" [(ngModel)]="model.fromStop" placeholder="Буудал сонгох">
+        <div *ngFor="let item of aimagData[model.fromAimag].data; let i = index;">
+          <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+
+    <ion-item-divider class="custom-divider">
+      <ion-label>Хаашаа</ion-label>
+    </ion-item-divider>
+    <div class="combo-item">
+      <ion-select okText="Сонгох" cancelText="Болих" [(ngModel)]="model.toAimag" placeholder="Аймаг сонгох">
+        <div *ngFor="let item of aimagData; let i = index;">
+          <ion-select-option [value]="i">{{item.name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div>
+    <div class="combo-item" *ngIf="model.toAimag">
+      <ion-select okText="Сонгох" cancelText="Болих" [(ngModel)]="model.toStop" placeholder="Буудал сонгох">
+        <div *ngFor="let item of aimagData[model.toAimag].data; let i = index;">
+          <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div>
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>

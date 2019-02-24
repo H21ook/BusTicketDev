@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
-
 import { OrderPage } from './order.page';
+import { BusComponentsModule } from '../components/bus-components/bus-components.module';
 
 @NgModule({
   imports: [
+    BusComponentsModule,
     CommonModule,
     FormsModule,
     IonicModule,
@@ -20,4 +21,4 @@ import { OrderPage } from './order.page';
   ],
   declarations: [OrderPage]
 })
-export class OrderPageModule {}
+export class OrderPageModule { }

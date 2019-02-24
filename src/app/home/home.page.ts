@@ -1,6 +1,8 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { AlertController, PopoverController, LoadingController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
+import { DataService } from '../services/data.service';
+import { FunctionsService } from '../services/functions.service';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +11,19 @@ import { UserMethodsPage } from '../user-methods/user-methods.page';
 })
 export class HomePage implements OnInit {
 
-  constructor(private popover: PopoverController) {
-
+  sourceStops: any = [];
+  aimagData: any = []
+  model: any = {};
+  constructor(
+    private popover: PopoverController,
+    private dataService: DataService,
+    private functionsService: FunctionsService
+  ) {
+    this.sourceStops = this.dataService.sourceStops;
   }
 
   ngOnInit() {
+    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
   }
 
   async openPopover(ev: Event) {
@@ -29,38 +39,5 @@ export class HomePage implements OnInit {
     await popover.present();
   }
 
-  aimag: any = [
-    {
-      id: 1,
-      name: "Архангай"
-    },
-    {
-      id: 2,
-      name: "Булган"
-    },
-    {
-      id: 3,
-      name: "Говь-Алтай"
-    },
-    {
-      id: 4,
-      name: "Дорнод"
-    },
-    {
-      id: 5,
-      name: "Зүүн хараа"
-    },
-    {
-      id: 6,
-      name: "Булган"
-    },
-    {
-      id: 7,
-      name: "Орхон"
-    },
-    {
-      id: 8,
-      name: "Өмнө-Говь"
-    }
-  ]
+
 }

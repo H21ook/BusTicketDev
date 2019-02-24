@@ -1,0 +1,63 @@
+.bus {
+    width: 127px;
+    height: 342px;
+    border-radius: 5px;
+    border: 1px solid black;
+    margin: 10px auto 5px auto;
+}
+
+.seat-row {
+    display: block;
+}
+
+.start-row {
+    margin-top: -3px;
+}
+
+.driver {
+    background: #981a1a;
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-radius: 4px 4px 0px 0px;
+}
+
+.end-row {
+    display: inline-flex;
+    margin-top: 3px;
+}
+
+.seat-left {
+    float: left;
+    display: inline-flex;
+    margin-top: 3px;
+}
+
+.seat-right {
+    float: right;
+    display: inline-flex;
+    margin-top: 3px;
+}
+
+.seat {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    padding-top: 3px;
+}
+
+.seat-img {
+    z-index: 1;
+    position: absolute;
+}
+
+.seat-no {
+    position: relative;
+    font-size: 12px;
+    padding-top: 3px;
+    z-index: 1;
+    text-align: center;
+}
+
+
+// 20 * 12 = 240 + 120
+// 20 * 5 = 100 + 50
