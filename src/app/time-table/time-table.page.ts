@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PickerController } from '@ionic/angular';
 import { PickerColumn, PickerColumnOption, PickerOptions } from '@ionic/core';
 import { DataService } from '../services/data.service';
+import { FunctionsService } from '../services/functions.service';
 
 @Component({
   selector: 'app-time-table',
@@ -13,13 +14,21 @@ export class TimeTablePage implements OnInit {
   startDate: string;
   minDate: string;
   maxDate: string;
-  sourceStops: any;
-  constructor(private dataService: DataService) { }
+  sourceStops: any = [];
+  aimagData: any = []
+  model: any = {};
+
+  constructor(
+    private dataService: DataService,
+    private functionsService: FunctionsService
+  ) { 
+    this.sourceStops = this.dataService.sourceStops;
+  }
 
   ngOnInit() {
-    // this.sourceStops = this.dataService.sourceStops;
+    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
+    console.log(this.aimagData);
     this.getDefaultValue();
-
   }
 
   getDefaultValue() {
