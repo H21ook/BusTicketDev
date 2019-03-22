@@ -12,8 +12,8 @@ const routes: Routes = [
     loadChildren: './home/home.module#HomePageModule'
   },
   {
-    path: 'order',
-    loadChildren: './order/order.module#OrderPageModule'
+    path: 'time-table/:id',
+    loadChildren: './time-table/time-table.module#TimeTablePageModule'
   },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUpPageModule' },

@@ -22,7 +22,7 @@ export class AppComponent {
     },
     {
       title: 'Захиалга',
-      url: '/order',
+      url: '/time-table/1',
       icon: 'browsers'
     }
   ];
