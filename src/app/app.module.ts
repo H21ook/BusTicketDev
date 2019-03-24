@@ -9,12 +9,14 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { UserMethodsPageModule } from './user-methods/user-methods.module';
+import { HttpModule } from '@angular/http';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    HttpModule,
     AppRoutingModule,
     UserMethodsPageModule
   ],

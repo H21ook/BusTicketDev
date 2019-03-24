@@ -19,11 +19,6 @@ export class AppComponent {
       title: 'Тээврийн хуваарийн жагсаалт',
       url: '/time-table',
       icon: 'list'
-    },
-    {
-      title: 'Захиалга',
-      url: '/time-table/1',
-      icon: 'browsers'
     }
   ];
 

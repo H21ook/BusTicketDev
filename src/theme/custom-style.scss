@@ -1,0 +1,77 @@
+.title-md, .title-ios {
+    font-size: 18px;
+}
+
+.custom-select, .custom-datetime, .list, .body-side, .custom-divider, .custom-button {
+    font-size: 14px;
+}
+
+//ion item font size
+.sc-ion-label-md-h, .sc-ion-label-ios-h, .sc-ion-input-md,  .sc-ion-input-ios{
+    font-size: 14px !important;
+}
+
+.custom-datetime {
+    --padding-start: 10px;
+}
+
+.stop {
+    --padding-start: 30px; 
+}
+
+.celsius {
+    font-size: 20px;
+}
+
+.item ion-thumbnail {
+    width: 36px;
+    height: 36px;
+    // img {
+    //   max-width: 32px;
+    //   min-width: 32px;
+    // }
+}
+
+.body-side, .start-side {
+    text-align: center;
+}
+
+.start-side {
+    width: 50px;
+    margin-right: 10px;
+}
+
+.start-time {
+    font-size: 16px !important;
+    font-weight: bold;
+}
+
+.body-side {
+    padding: 0;
+    width: 100%;
+}
+
+.sub-body {
+    font-size: 12px !important;
+    text-align: right;
+    margin-right: 10px;
+}
+
+.combo-item {
+    padding: 0px 10px
+}
+
+.custom-divider {
+    height: 25px;
+    background-color: var(--ion-color-success-black);
+}
+
+.custom-divider ion-label, .body-side {
+    margin: 0;
+}
+
+.custom-avatar {
+    height: 32px;
+    width: 32px;
+    margin-right: 5px;
+}

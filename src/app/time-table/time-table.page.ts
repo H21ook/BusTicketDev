@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { PickerController } from '@ionic/angular';
-import { PickerColumn, PickerColumnOption, PickerOptions } from '@ionic/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../services/data.service';
 import { FunctionsService } from '../services/functions.service';
-import { ActivatedRoute } from '@angular/router';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-time-table',
@@ -19,20 +17,25 @@ export class TimeTablePage implements OnInit {
   aimagData: any = []
   model: any = {};
   id: string;
+  slideConfig: any = {
+    centeredSiles: true, 
+    slidesPerView: 3,
+    effect: 'slide'
+  };
 
   constructor(
     private dataService: DataService,
     private functionsService: FunctionsService,
-    private activatedRoute: ActivatedRoute
+    private apiService: ApiService
   ) { 
     this.sourceStops = this.dataService.sourceStops;
   }
 
   ngOnInit() {
-    this.id = this.activatedRoute.snapshot.paramMap.get('id');
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
     console.log(this.aimagData);
     this.getDefaultValue();
+    this.apiService.getSourceStops();
   }
 
   getDefaultValue() {

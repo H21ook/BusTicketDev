@@ -11,13 +11,13 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
   },
-  {
-    path: 'time-table/:id',
-    loadChildren: './time-table/time-table.module#TimeTablePageModule'
-  },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
   { path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUpPageModule' },
-  { path: 'time-table', loadChildren: './time-table/time-table.module#TimeTablePageModule' }
+  { path: 'time-table', loadChildren: './time-table/time-table.module#TimeTablePageModule' },  { path: 'seats-select', loadChildren: './seats-select/seats-select.module#SeatsSelectPageModule' },
+  { path: 'passenger-info', loadChildren: './passenger-info/passenger-info.module#PassengerInfoPageModule' },
+  { path: 'subscriber-info', loadChildren: './subscriber-info/subscriber-info.module#SubscriberInfoPageModule' },
+  { path: 'warning-info', loadChildren: './warning-info/warning-info.module#WarningInfoPageModule' }
+
 ];
 
 @NgModule({

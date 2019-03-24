@@ -10,5 +10,204 @@
 </ion-header>
 
 <ion-content>
-  <bus [seats]="dataService.emptySeats" busType="1"></bus>
+  <ion-slides #sliderMain (ionSlideWillChange)="changeSliderMain()">
+    <ion-slide>
+      <ion-list class="list">
+        <!-- <ion-item-divider class="custom-divider">
+                  <ion-label>Чиглэл сонгох</ion-label>
+                </ion-item-divider> -->
+        <ion-item-divider class="custom-divider">
+          <ion-label>Хэзээ</ion-label>
+        </ion-item-divider>
+        <ion-item>
+          <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
+            [(ngModel)]="startDate" [min]="minDate" [max]="maxDate"></ion-datetime>
+        </ion-item>
+        <ion-item-divider class="custom-divider">
+          <ion-label>Хаанаас</ion-label>
+        </ion-item-divider>
+
+        <div class="combo-item">
+          <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromAimag"
+            placeholder="Аймаг сонгох" (ionChange)="changeFromAimag($event)">
+            <div *ngFor="let item of aimagData; let i = index;">
+              <ion-select-option [value]="i">{{item.name}}</ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+        <div class="combo-item" *ngIf="model.fromAimag != null && model.fromAimag != undefined">
+          <ion-select okText="Сонгох" class="custom-select stop" cancelText="Болих" [(ngModel)]="model.fromStop"
+            placeholder="Буудал сонгох">
+            <div *ngFor="let item of aimagData[model.fromAimag].data; let i = index;">
+              <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+
+        <ion-item-divider class="custom-divider">
+          <ion-label>Хаашаа</ion-label>
+        </ion-item-divider>
+        <div class="combo-item">
+          <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.toAimag"
+            placeholder="Аймаг сонгох" (change)="changeToAimag($event)">
+            <div *ngFor="let item of aimagData; let i = index;">
+              <ion-select-option [value]="i">{{item.name}}</ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+        <div class="combo-item" *ngIf="model.toAimag != null && model.toAimag != undefined">
+          <ion-select okText="Сонгох" class="custom-select  stop" cancelText="Болих" [(ngModel)]="model.toStop"
+            placeholder="Буудал сонгох">
+            <div *ngFor="let item of aimagData[model.toAimag].data; let i = index;">
+              <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
+            </div>
+          </ion-select>
+        </div>
+        <ion-item-divider class="custom-divider">
+          <ion-label>Цагийн хуваарь</ion-label>
+        </ion-item-divider>
+        <ion-item-sliding>
+          <ion-item>
+            <div slot="start" class="start-side">
+              <ion-label class="start-time">09:00</ion-label>
+            </div>
+            <div class="body-side">
+              <ion-label>Улаанбаатар - Ар.Жаргалант</ion-label>
+              <ion-label class="sub-body">Том автобус</ion-label>
+            </div>
+          </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid class="custom-grid">
+        <ion-row>
+          <ion-list>
+            <ion-item-divider class="custom-divider">
+              <ion-label>Суудал сонгох</ion-label>
+            </ion-item-divider>
+          </ion-list>
+        </ion-row>
+        <ion-row justify-content-center>
+          <bus [seats]="dataService.emptySeats" busType="1"></bus>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-item-divider class="custom-divider">
+          <ion-label>Зорчигчдын мэдээлэл</ion-label>
+        </ion-item-divider>
+        <ion-list-header color="primary">
+          <ion-label class="custom-list-header-ios">Нийт үнэ</ion-label>
+          <ion-label class="amount-text custom-list-header-ios">25000₮</ion-label>
+        </ion-list-header>
+        <ion-list-header color="danger">
+          <ion-label class="custom-list-header-ios">4 дугаартай суудал</ion-label>
+          <ion-label class="amount-text custom-list-header-ios">25000₮</ion-label>
+        </ion-list-header>
+        <div class="padding-list">
+          <ion-item>
+            <ion-label>Нас</ion-label>
+            <ion-select class="custom-select" interface="popover">
+              <ion-select-option value="1" selected>Том хүн</ion-select-option>
+              <ion-select-option value="0">Хүүхэд /7-12 нас/</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Овог"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Регистерийн дугаар"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label>Амь даатгал /400₮/</ion-label>
+            <ion-checkbox slot="end" checked></ion-checkbox>
+          </ion-item>
+        </div>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-list>
+        <ion-item-divider class="custom-divider">
+          <ion-label>Захиалагчийн мэдээлэл</ion-label>
+        </ion-item-divider>
+        <div class="padding-list">
+          <ion-item>
+            <ion-input placeholder="Овог Нэр"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Регистерийн дугаар"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Утасны дугаар"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-input placeholder="Имэйл хаяг"></ion-input>
+          </ion-item>
+        </div>
+      </ion-list>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row style="background: yellow">
+          <ol class="warning-info">
+            <li>
+              <b>Зорчигчдын анхаарах зүйлс.</b>
+              <ul class="warning-info-sub">
+                <li>Автобусанд суухдаа зорчигчид хувийн бичиг баримтаа жолоочид шалгуулаад сууна</li>
+                <li>Хэрэв төлбөрийн баримт шаардлагатай бол автобус хөдлөн явахаас 30 минутын өмнө ирж лавлагаа хэвлүүлж
+                  авсан байх ба суудлаа эзэлсэн байх.</li>
+                <li>0-6 насны хүүхдийг суудал эзлүүлэхгүйгээр үнэ төлбөргүй тээвэрлэнэ.</li>
+                <li>60*40*20 см-ээс илүүгүй овор хэмжээтэй, 20 кг хүртлэх жинтэй гар тээшийг биедээ авч явахыг
+                  зөвшөөрнө.
+                </li>
+                <li>Тухайн аялалд явах боломжгүй болж тасалбар буцаах бол тийзний үнийн дүнгийн 15 хувьтай тэнцэх
+                  хэмжээний үйлчилгээний төлбөр болон онлайн үйлчилгээний төлбөрийг төлнө.</li>
+                <li>Хэрэглэгч та Захиалга хийгдсэнээс хойш 20 минутын дотор Автотээврийн үндэсний төвийн дансруу
+                  төлбөрөө
+                  шилжүүлэх ба гүйлгээний утга хэсэгт ЗАХИАЛГЫН КОД /заавал/ болон холбогдох утасны дугаараа бичиж
+                  шилжүүлэг хийнэ.</li>
+              </ul>
+            </li>
+            <li>
+              <b>Зорчигчийг дараах нөхцөлд тээвэрлэхээс татгалзах эрхтэй. Үүнд:</b>
+              <ul class="warning-info-sub">
+                <li>Согтууруулах ундаа хэрэглэсэн зорчигчид үйлчлэхгүй.</li>
+                <li>Зорчигчдын нэр, регистерийн дугаар болон насыг буруу мэдээлсэн бол тухайн зорчигчид үйлчилгээ
+                  үзүүлэхгүй.</li>
+                <li>Асран хамгаалагчгүйгээр бага насны /0-12/ хүүхдийг зорчуулахгүй.</li>
+                <li>Зорчигч нь хөнгөлөлтөд хамрагдах боломжгүй, заагдсан насны заагт багтахгүй боловч хүүхдийн тасалбар
+                  авсан, дутуу төлбөр төлсөн бол зорчигчид үйлчлэхгүй.</li>
+              </ul>
+            </li>
+            <li>
+              <b>Онлайн захиалгын үйлчилгээ нь ямар нэгэн нэмэлт шимтгэл байхгүй.</b>
+              <ul class="warning-info-sub">
+                <li>Том хүн: 0 ₮</li>
+                <li>Хүүхэд /7-12/: 0 ₮</li>
+              </ul>
+            </li>
+          </ol>
+        </ion-row>
+        <ion-row>
+          <ion-list>
+            <ion-item>
+              <ion-label>Зөвшөөрөх</ion-label>
+              <ion-checkbox slot="end"></ion-checkbox>
+            </ion-item>
+          </ion-list>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+  </ion-slides>
+
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button class="custom-button" slot="end" fill="clear">
+      <ion-icon name="arrow-forward" slot="end"></ion-icon>
+      <ion-label>Үргэлжлүүлэх</ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
