@@ -9,14 +9,16 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: './pages/home/home.module#HomePageModule'
   },
-  { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
-  { path: 'sign-up', loadChildren: './sign-up/sign-up.module#SignUpPageModule' },
-  { path: 'time-table', loadChildren: './time-table/time-table.module#TimeTablePageModule' },  { path: 'seats-select', loadChildren: './seats-select/seats-select.module#SeatsSelectPageModule' },
-  { path: 'passenger-info', loadChildren: './passenger-info/passenger-info.module#PassengerInfoPageModule' },
-  { path: 'subscriber-info', loadChildren: './subscriber-info/subscriber-info.module#SubscriberInfoPageModule' },
-  { path: 'warning-info', loadChildren: './warning-info/warning-info.module#WarningInfoPageModule' }
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },
+  { path: 'sign-up', loadChildren: './pages/sign-up/sign-up.module#SignUpPageModule' },
+  { path: 'time-table', loadChildren: './pages/time-table/time-table.module#TimeTablePageModule' },
+  { path: 'seats-select', loadChildren: './pages/seats-select/seats-select.module#SeatsSelectPageModule' },
+  { path: 'passenger-info', loadChildren: './pages/passenger-info/passenger-info.module#PassengerInfoPageModule' },
+  { path: 'subscriber-info', loadChildren: './pages/subscriber-info/subscriber-info.module#SubscriberInfoPageModule' },
+  { path: 'warning-info', loadChildren: './pages/warning-info/warning-info.module#WarningInfoPageModule' },  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' }
+
 
 ];
 

@@ -75,3 +75,29 @@
     width: 32px;
     margin-right: 5px;
 }
+
+.error{
+    background: #FDE2E2;
+    color: #EA5353;
+    margin: 5px;
+    padding: 0px;
+}
+.error-msg {
+    border: 1px solid #F15B5B;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+.ico-times:before{ content: "\2718"; }
+.ico-times:hover {
+    background: rgba(31, 30, 30, 0.3);
+    color: rgb(216, 59, 59);
+}
+
+.close-icon {
+    float: right;
+    padding: 5px 5px 5px 8px !important;
+    border-radius: 50px;
+    height: 30px;
+    width: 30px;
+}

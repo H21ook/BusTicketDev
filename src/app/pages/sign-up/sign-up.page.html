@@ -1,0 +1,43 @@
+<ion-content padding class="custom-content" fullscreen>
+  <div style="height: 180px; width: 100%; text-align: center; padding-top: 50px;">
+    <img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" height="120px" width="120px">
+  </div>
+  <!-- Email Input -->
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" (change)="changeEmail()" [(ngModel)]="user.email" placeholder="И-мэйл"
+      pattern="email" size="email" type="email"></ion-input>
+  </ion-item>
+
+  <!-- Password Input -->
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" (change)="changePassword()" [(ngModel)]="user.password"
+      placeholder="Нууц үг" pattern="password" size="password" type="password"></ion-input>
+  </ion-item>
+
+  <ion-item lines="full" class="custom-item-input" mode="ios">
+    <ion-input mode="ios" class="custom-input" (change)="changePassword2()" [(ngModel)]="password2"
+      placeholder="Нууц үг давтах" pattern="password" size="password" type="password"></ion-input>
+  </ion-item>
+  <ion-grid class="error error-msg" *ngIf="error">
+    <ion-row align-items-center>
+      <ion-col size="10" style="text-align:center;">
+        <span>{{error}}</span>
+      </ion-col>
+      <ion-col size="2">
+        <i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-button class="custom-button" (click)="register()" expand="block" fill="solid" color="secondary" mode="ios">
+    Бүртгүүлэх</ion-button>
+
+</ion-content> 
+
+<ion-footer translucent>
+  <ion-toolbar style="--background: transparent; --ion-color-base: transparent !important;">
+    <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/login'">
+      <ion-icon color="light" name="arrow-back"></ion-icon>
+      <ion-label color="light">Буцах</ion-label>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
