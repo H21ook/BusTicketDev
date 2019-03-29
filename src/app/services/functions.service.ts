@@ -35,9 +35,9 @@ export class FunctionsService {
     let j = 0;
     for (let i = 1; i <= length; i++) {
       if (array[j].seat_no != i) {
-        result.push({ seat_no: i, checked: true });
+        result.push({ seat_no: i, checked: true, status: 1});
       } else {
-        result.push({ seat_no: array[j].seat_no, checked: false });
+        result.push({ seat_no: array[j].seat_no, checked: false, status: 0});
         j++;
       }
     }

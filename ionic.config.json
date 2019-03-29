@@ -1,6 +1,8 @@
 {
   "name": "BusTicketDev",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "878b8cfb"
 }

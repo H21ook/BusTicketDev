@@ -11,16 +11,16 @@
     </ion-item-divider>
     <div class="padding-list">
       <ion-item>
-        <ion-input placeholder="Овог Нэр"></ion-input>
+        <ion-input placeholder="Овог Нэр" [(ngModel)]="subscriber.name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Регистерийн дугаар"></ion-input>
+        <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="subscriber.register"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Утасны дугаар"></ion-input>
+        <ion-input placeholder="Утасны дугаар" [(ngModel)]="subscriber.phoneNumber"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-input placeholder="Имэйл хаяг"></ion-input>
+        <ion-input placeholder="Имэйл хаяг" [(ngModel)]="subscriber.email"></ion-input>
       </ion-item>
     </div>
   </ion-list>
@@ -32,8 +32,7 @@
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>
-    <ion-button class="custom-button" slot="end" fill="clear" [routerDirection]="'forward'"
-      [routerLink]="'/warning-info'">
+    <ion-button class="custom-button" slot="end" fill="clear" (click)="goToNextPage()">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>
     </ion-button>

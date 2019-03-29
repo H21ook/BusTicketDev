@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
 
 @Component({
   selector: 'app-warning-info',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WarningInfoPage implements OnInit {
 
-  constructor() { }
+  isAgree: boolean = false;
+  constructor(
+    private passData: PassingDataService
+  ) { }
 
   ngOnInit() {
+    console.log(this.passData.getOrderData());
   }
 
 }

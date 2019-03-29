@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { FunctionsService } from 'src/app/services/functions.service';
+import { Seat } from 'src/app/models/seat.model';
 
 @Component({
   selector: 'bus',
@@ -11,18 +12,42 @@ export class BusComponent implements OnInit {
   private seatData: any;
   @Input() seats = {};
   @Input() busType = 1;
+  @Output() valueChange = new EventEmitter();
 
   constructor(
     private functionsService: FunctionsService
   ) { }
 
   ngOnInit() {
-    this.fillDate();
+    this.fillSeatData();
   }
 
-  fillDate() {
+  toggleChanged(e) { 
+    this.seatChecked(e.name);
+    let selectedSeats = this.getSelectedSeats();
+    this.valueChange.emit({selectedSeats: selectedSeats});
+  }
+
+  fillSeatData() {
     this.seatData = this.functionsService.seatArrayFill(this.seats, 45);
-    console.log(this.seatData);
   }
 
+  getSelectedSeats() : Seat[] {
+    let result: Seat[] = [];
+    for(let i = 0; i < this.seatData.length; i++) {
+      if(this.seatData[i].checked && this.seatData[i].status == 0) {
+        result.push({seat_no: this.seatData[i].seat_no, checked: this.seatData[i].checked, status: this.seatData[i].status});
+      }
+    }
+    return result;
+  }
+
+  seatChecked(seat_no) {
+    for(let i = 0; i < this.seatData.length; i++) {
+      if(this.seatData[i].seat_no == seat_no) {
+          this.seatData[i].checked = !this.seatData[i].checked;
+        break;
+      }
+    }
+  }
 }

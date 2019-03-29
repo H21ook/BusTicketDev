@@ -13,7 +13,7 @@ export class BusSeatCheckboxComponent implements OnInit {
   @Input() disabled: boolean = false;
   @Input() checked: boolean = false;
   @Input() readonly: boolean = false;
-  @Output() action = new EventEmitter();
+  @Output() toggle = new EventEmitter();
 
   constructor(
   ) { }
@@ -23,7 +23,6 @@ export class BusSeatCheckboxComponent implements OnInit {
   }
 
   private fillData() {
-
     if (this.readonly) {
       if (this.status == "normal")
         this.image = '../../../assets/other/images/normal.svg';
@@ -49,7 +48,7 @@ export class BusSeatCheckboxComponent implements OnInit {
         this.image = '../../../assets/other/images/special_disabled.svg';
     }
   }
-  private toggle() {
+  private toggleEmit() {
     if (!this.disabled && !this.readonly) {
       this.checked = !this.checked;
       if (this.checked) {
@@ -63,7 +62,7 @@ export class BusSeatCheckboxComponent implements OnInit {
         else if (this.status == "special")
           this.image = '../../../assets/other/images/special.svg';
       }
-      this.action.emit();
+      this.toggle.emit({name: this.text, disabled: this.disabled, checked: this.checked});
     }
   }
 }

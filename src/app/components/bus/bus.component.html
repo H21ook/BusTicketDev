@@ -4,116 +4,116 @@
   </div>
   <div class="seat-row  start-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[1].seat_no" [checked]="seatData[1].checked" status="special"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[2].seat_no" [checked]="seatData[2].checked" status="special"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[1].seat_no" [checked]="seatData[1].checked" (toggle)="toggleChanged($event)" status="special"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[2].seat_no" [checked]="seatData[2].checked" (toggle)="toggleChanged($event)" status="special"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[3].seat_no" [checked]="seatData[3].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[4].seat_no" [checked]="seatData[4].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[3].seat_no" [checked]="seatData[3].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[4].seat_no" [checked]="seatData[4].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[5].seat_no" [checked]="seatData[5].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[6].seat_no" [checked]="seatData[6].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[5].seat_no" [checked]="seatData[5].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[6].seat_no" [checked]="seatData[6].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[7].seat_no" [checked]="seatData[7].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[8].seat_no" [checked]="seatData[8].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[7].seat_no" [checked]="seatData[7].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[8].seat_no" [checked]="seatData[8].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[9].seat_no" [checked]="seatData[9].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[10].seat_no" [checked]="seatData[10].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[9].seat_no" [checked]="seatData[9].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[10].seat_no" [checked]="seatData[10].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[11].seat_no" [checked]="seatData[11].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[12].seat_no" [checked]="seatData[12].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[11].seat_no" [checked]="seatData[11].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[12].seat_no" [checked]="seatData[12].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[13].seat_no" [checked]="seatData[13].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[14].seat_no" [checked]="seatData[14].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[13].seat_no" [checked]="seatData[13].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[14].seat_no" [checked]="seatData[14].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[15].seat_no" [checked]="seatData[15].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[16].seat_no" [checked]="seatData[16].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[15].seat_no" [checked]="seatData[15].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[16].seat_no" [checked]="seatData[16].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[17].seat_no" [checked]="seatData[17].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[18].seat_no" [checked]="seatData[18].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[17].seat_no" [checked]="seatData[17].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[18].seat_no" [checked]="seatData[18].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[19].seat_no" [checked]="seatData[19].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[20].seat_no" [checked]="seatData[20].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[19].seat_no" [checked]="seatData[19].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[20].seat_no" [checked]="seatData[20].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[21].seat_no" [checked]="seatData[21].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[22].seat_no" [checked]="seatData[22].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[21].seat_no" [checked]="seatData[21].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[22].seat_no" [checked]="seatData[22].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[23].seat_no" [checked]="seatData[23].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[24].seat_no" [checked]="seatData[24].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[23].seat_no" [checked]="seatData[23].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[24].seat_no" [checked]="seatData[24].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[25].seat_no" [checked]="seatData[25].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[26].seat_no" [checked]="seatData[26].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[25].seat_no" [checked]="seatData[25].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[26].seat_no" [checked]="seatData[26].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[27].seat_no" [checked]="seatData[27].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[28].seat_no" [checked]="seatData[28].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[27].seat_no" [checked]="seatData[27].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[28].seat_no" [checked]="seatData[28].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[29].seat_no" [checked]="seatData[29].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[30].seat_no" [checked]="seatData[30].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[29].seat_no" [checked]="seatData[29].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[30].seat_no" [checked]="seatData[30].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[31].seat_no" [checked]="seatData[31].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[32].seat_no" [checked]="seatData[32].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[31].seat_no" [checked]="seatData[31].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[32].seat_no" [checked]="seatData[32].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[33].seat_no" [checked]="seatData[33].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[34].seat_no" [checked]="seatData[34].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[33].seat_no" [checked]="seatData[33].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[34].seat_no" [checked]="seatData[34].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[35].seat_no" [checked]="seatData[35].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[36].seat_no" [checked]="seatData[36].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[35].seat_no" [checked]="seatData[35].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[36].seat_no" [checked]="seatData[36].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[37].seat_no" [checked]="seatData[37].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[38].seat_no" [checked]="seatData[38].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[37].seat_no" [checked]="seatData[37].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[38].seat_no" [checked]="seatData[38].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[39].seat_no" [checked]="seatData[39].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[40].seat_no" [checked]="seatData[40].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[39].seat_no" [checked]="seatData[39].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[40].seat_no" [checked]="seatData[40].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row end-row">
-    <bus-seat-checkbox [text]="seatData[41].seat_no" [checked]="seatData[41].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[42].seat_no" [checked]="seatData[42].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[43].seat_no" [checked]="seatData[43].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[44].seat_no" [checked]="seatData[44].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[45].seat_no" [checked]="seatData[45].checked" status="normal"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[41].seat_no" [checked]="seatData[41].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[42].seat_no" [checked]="seatData[42].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[43].seat_no" [checked]="seatData[43].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[44].seat_no" [checked]="seatData[44].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[45].seat_no" [checked]="seatData[45].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
   </div>
 </div>
 
 <div class="bus" *ngIf="busType == 2" style="height: 202px">
   <div class="seat-row driver">
-    <bus-seat-checkbox [text]="'Ж'" status="normal" readonly="true"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="'Ж'" status="normal" (toggle)="toggleChanged($event)" readonly="true"></bus-seat-checkbox>
   </div>
   <div class="seat-row  start-row">
     <div class="seat-left">
@@ -121,55 +121,55 @@
       <bus-seat-checkbox [text]="seatData[2].seat_no" [checked]="seatData[2].checked" status="special"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[3].seat_no" [checked]="seatData[3].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[4].seat_no" [checked]="seatData[4].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[3].seat_no" [checked]="seatData[3].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[4].seat_no" [checked]="seatData[4].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[5].seat_no" [checked]="seatData[5].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[6].seat_no" [checked]="seatData[6].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[5].seat_no" [checked]="seatData[5].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[6].seat_no" [checked]="seatData[6].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[7].seat_no" [checked]="seatData[7].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[8].seat_no" [checked]="seatData[8].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[7].seat_no" [checked]="seatData[7].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[8].seat_no" [checked]="seatData[8].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[9].seat_no" [checked]="seatData[9].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[10].seat_no" [checked]="seatData[10].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[9].seat_no" [checked]="seatData[9].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[10].seat_no" [checked]="seatData[10].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[11].seat_no" [checked]="seatData[11].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[12].seat_no" [checked]="seatData[12].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[11].seat_no" [checked]="seatData[11].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[12].seat_no" [checked]="seatData[12].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[13].seat_no" [checked]="seatData[13].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[14].seat_no" [checked]="seatData[14].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[13].seat_no" [checked]="seatData[13].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[14].seat_no" [checked]="seatData[14].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[15].seat_no" [checked]="seatData[15].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[16].seat_no" [checked]="seatData[16].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[15].seat_no" [checked]="seatData[15].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[16].seat_no" [checked]="seatData[16].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row">
     <div class="seat-left">
-      <bus-seat-checkbox [text]="seatData[17].seat_no" [checked]="seatData[17].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[18].seat_no" [checked]="seatData[18].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[17].seat_no" [checked]="seatData[17].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[18].seat_no" [checked]="seatData[18].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
     <div class="seat-right">
-      <bus-seat-checkbox [text]="seatData[19].seat_no" [checked]="seatData[19].checked" status="normal"></bus-seat-checkbox>
-      <bus-seat-checkbox [text]="seatData[20].seat_no" [checked]="seatData[20].checked" status="normal"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[19].seat_no" [checked]="seatData[19].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      <bus-seat-checkbox [text]="seatData[20].seat_no" [checked]="seatData[20].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     </div>
   </div>
   <div class="seat-row end-row">
-    <bus-seat-checkbox [text]="seatData[21].seat_no" [checked]="seatData[21].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[22].seat_no" [checked]="seatData[22].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[23].seat_no" [checked]="seatData[23].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[24].seat_no" [checked]="seatData[24].checked" status="normal"></bus-seat-checkbox>
-    <bus-seat-checkbox [text]="seatData[25].seat_no" [checked]="seatData[25].checked" status="normal"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[21].seat_no" [checked]="seatData[21].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[22].seat_no" [checked]="seatData[22].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[23].seat_no" [checked]="seatData[23].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[24].seat_no" [checked]="seatData[24].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+    <bus-seat-checkbox [text]="seatData[25].seat_no" [checked]="seatData[25].checked" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
   </div>
 </div>
