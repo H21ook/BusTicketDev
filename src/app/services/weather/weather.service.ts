@@ -1,6 +1,5 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { Http } from '@angular/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,21 +11,41 @@ export class WeatherService {
   private url: string;
   headers: any;
 
-  constructor(public http: HttpClient) {
+  constructor(public http: Http) {
     this.url = 'http://api.openweathermap.org/data/2.5/'; // openweather
     // this.url = 'https://api.apixu.com/v1/forecast.json?key='+ this.apiKey +'&q='; //apixu
-    this.headers = new HttpHeaders({
-      'Content-Type':'application/json',
-      'Accept':'application/json',
-      'Access-Control-Allow-Origin':'*',
-      'Access-Control-Allow-Methods':'GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH'
-    });
+
+    
+
+    // this.headers = new HttpHeaders({
+    //   'Content-Type':'application/json',
+    //   'Accept':'application/json',
+    //   'Access-Control-Allow-Origin':'*',
+    //   'Access-Control-Allow-Methods':'GET'
+    // });
+
     // this.headerOption = this.headerOption.append('Authorization','Bearer '+this.token);
   }
 
   getWeater(city) {
     // return this.http.get(this.url+city+'&days=5').map(res => res); //apixu
-    return this.http.get(this.url + 'weather?q=' + city + ',mn&units=metric&appid=' + this.apiKey, {headers:this.headers}); // openweather
+    try {
+      const response = this.http.get(this.url + 'weather?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+      const params = {};
+      const headers = {};
+      
+      response.subscribe(data => {
+        console.log(data.status);
+        console.log(data); // JSON data returned by server
+        console.log(data.headers);
+      });
+
+      return response;
+    } catch (error) {
+      console.error(error.status);
+      console.error(error.error); // Error message as string
+      console.error(error.headers);
+    }
   }
 
   getForecastWeater(city) {

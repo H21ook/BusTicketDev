@@ -25,14 +25,15 @@ export class HomePage implements OnInit {
     private popover: PopoverController,
     private dataService: DataService,
     private functionsService: FunctionsService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private weatherService: WeatherService
   ) {
     this.sourceStops = this.dataService.sourceStops;
   }
 
   ngOnInit() {
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    //this.getWeather();
+    this.getWeather();
   }
 
   async openPopover(ev: Event) {
@@ -69,10 +70,11 @@ export class HomePage implements OnInit {
     await modal.present();
   }
 
-  // getWeather() {
-  //   this.weatherService.getWeater(this.selectedCity.name).subscribe(weatherData => {
-  //     this.weatherData = weatherData;
-  //     console.log(this.weatherData);
-  //   });
-  // }
+  getWeather() {
+    this.weatherService.getWeater(this.selectedCity.name)
+    .subscribe(weatherData => {
+      this.weatherData = weatherData;
+      console.log(this.weatherData);
+    });
+  }
 }

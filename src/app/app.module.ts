@@ -16,6 +16,7 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Facebook } from "@ionic-native/facebook/ngx";
 import { WeatherPageModule } from './pages/weather/weather.module';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { WeatherPageModule } from './pages/weather/weather.module';
     BrowserModule,
     IonicModule.forRoot(),
     HttpModule,
+    HttpClientModule,
     AppRoutingModule,
     UserMethodsPageModule,
     WeatherPageModule,
