@@ -15,6 +15,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Facebook } from "@ionic-native/facebook/ngx";
+import { WeatherPageModule } from './pages/weather/weather.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -24,6 +25,7 @@ import { Facebook } from "@ionic-native/facebook/ngx";
     HttpModule,
     AppRoutingModule,
     UserMethodsPageModule,
+    WeatherPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,

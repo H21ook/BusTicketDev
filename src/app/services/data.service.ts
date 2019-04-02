@@ -6,7 +6,24 @@ import { Injectable } from '@angular/core';
 export class DataService {
 
   constructor() { }
-
+  cities: any = [
+    {
+      name: "Ulaanbaatar",
+      mn_name: "Улаанбаатар"
+    },
+    {
+      name: "Tsetserleg",
+      mn_name: "Цэцэрлэг"
+    },
+    {
+      name: "Darkhan",
+      mn_name: "Дархан"
+    },
+    {
+      name: "Khatgal",
+      mn_name: "Хатгал"
+    },
+  ];
   sourceStops: any = [
     {
       "ss_A_id": 1,

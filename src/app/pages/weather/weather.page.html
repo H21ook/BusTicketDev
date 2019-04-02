@@ -1,0 +1,10 @@
+<ion-list>
+  <ion-item-divider class="custom-divider">
+    <ion-label>Хотууд</ion-label>
+  </ion-item-divider>
+  <ion-item *ngFor="let city of cities" (click)="selectItem(city)" detail="false" lines=full>
+    <ion-label>
+      {{city.mn_name}}
+    </ion-label>
+  </ion-item>
+</ion-list>

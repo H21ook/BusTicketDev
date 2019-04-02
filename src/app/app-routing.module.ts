@@ -17,9 +17,8 @@ const routes: Routes = [
   { path: 'seats-select', loadChildren: './pages/seats-select/seats-select.module#SeatsSelectPageModule' },
   { path: 'passenger-info', loadChildren: './pages/passenger-info/passenger-info.module#PassengerInfoPageModule' },
   { path: 'subscriber-info', loadChildren: './pages/subscriber-info/subscriber-info.module#SubscriberInfoPageModule' },
-  { path: 'warning-info', loadChildren: './pages/warning-info/warning-info.module#WarningInfoPageModule' },  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' }
-
-
+  { path: 'warning-info', loadChildren: './pages/warning-info/warning-info.module#WarningInfoPageModule' },
+  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' }
 ];
 
 @NgModule({

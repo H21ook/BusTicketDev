@@ -20,11 +20,11 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Өнөөдөр</ion-label>
     </ion-item-divider>
-    <ion-item class="text-center">
+    <ion-item class="text-center" (click)="openModalWeather($event)">
       <ion-thumbnail slot="start">
         <img src="../../assets/other/weather.png">
       </ion-thumbnail>
-      <ion-label>Улаанбаатар</ion-label>
+      <ion-label>{{selectedCity.mn_name}}</ion-label>
       <div slot="end">
         <ion-label>
           <b class="celsius">-95°C</b>
