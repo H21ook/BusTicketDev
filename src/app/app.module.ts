@@ -17,6 +17,12 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Facebook } from "@ionic-native/facebook/ngx";
 import { WeatherPageModule } from './pages/weather/weather.module';
 import { HttpClientModule } from '@angular/common/http';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+library.add(fas, fab, far);
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,10 +33,10 @@ import { HttpClientModule } from '@angular/common/http';
     HttpClientModule,
     AppRoutingModule,
     UserMethodsPageModule,
-    WeatherPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
+    FontAwesomeModule
   ],
   providers: [
     StatusBar,

@@ -1,8 +1,12 @@
 .title-md, .title-ios {
     font-size: 18px;
 }
-
-.custom-select, .custom-datetime, .list, .body-side, .custom-divider, .custom-button {
+ion-item {
+  --highlight-color-focused: var(--ion-color-primary,#3880ff);
+  --highlight-color-valid: var(--ion-color-primary,#3880ff);
+  --highlight-color-invalid: var(--ion-color-danger,#f04141);
+}
+.custom-select, .custom-datetime, .list, .body-side, .custom-divider {
     font-size: 14px;
 }
 
@@ -63,7 +67,21 @@
 
 .custom-divider {
     height: 25px;
-    background-color: var(--ion-color-success-black);
+    font-weight: bold;
+    text-transform: uppercase;
+    background-color: var(--ion-color-divider);
+}
+
+.custom-divider ion-label{
+  color: var(--ion-color-light) !important;
+}
+
+.bg-sea{
+    background: var(--ion-color-sea) !important;
+}
+
+.bg-aqua {
+    background: var(--ion-color-aqua) !important;
 }
 
 .custom-divider ion-label, .body-side {
@@ -77,13 +95,13 @@
 }
 
 .error{
-    background: #FDE2E2;
-    color: #EA5353;
+    // background: #FDE2E2;
+    color: #EB1B23;
     margin: 5px;
     padding: 0px;
 }
 .error-msg {
-    border: 1px solid #F15B5B;
+    border: 1px solid #EB1B23;
     border-radius: 5px;
     font-size: 14px;
 }
@@ -91,7 +109,7 @@
 .ico-times:before{ content: "\2718"; }
 .ico-times:hover {
     background: rgba(31, 30, 30, 0.3);
-    color: rgb(216, 59, 59);
+    color: #EB1B23;
 }
 
 .close-icon {
@@ -100,4 +118,398 @@
     border-radius: 50px;
     height: 30px;
     width: 30px;
+}
+
+
+////////////////////////////////////////
+
+
+.padding-wrap-tb {
+	padding: 15px 0px 15px 0px;
+}
+.padding-wrap-all {
+	padding: 10px;
+}
+.padding-wrap-lr {
+	padding: 0px 10px 0px 10px;
+}
+.custom-button {
+  font-family: Poppins-Medium;
+  font-size: 16px;
+  color: #fff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  width: 100%;
+  height: 50px;
+  cursor: pointer;
+  position: relative;
+  background-color: #0059A9;
+  border: none;
+  transition-duration: 0.5s;
+  overflow: hidden;
+  box-shadow: 0 5px 5px #9da9b4;
+  border-radius: 25px;
+}
+
+.custom-button:hover {
+  background: #0059A9;
+  box-shadow: 0px 5px 5px #2286dd;
+  // color: #000;
+}
+
+.custom-button:after {
+  content: "";
+  background: #2286dd;
+  display: block;
+  position: absolute;
+  padding-top: 100%;
+  padding-left: 100%;
+  margin-left: -20px !important;
+  margin-top: -50%;
+  opacity: 0;
+  transition: all 0.8s
+}
+
+.custom-button:active:after {
+  padding: 0;
+  margin: 0;
+  opacity: 1;
+  transition: 0s
+}
+
+.custom-button:focus { outline:0; }
+
+
+//button end//
+
+
+
+
+
+
+
+
+
+
+/*//////////////////////////////////////////////////////////////////
+[ RESTYLE TAG ]*/
+
+
+/*---------------------------------------------*/
+a {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+}
+
+a:focus {
+	outline: none !important;
+}
+
+a:hover {
+	text-decoration: none;
+  color: #a64bf4;
+}
+
+/*---------------------------------------------*/
+h1,h2,h3,h4,h5,h6 {
+	margin: 0px;
+}
+
+p {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666666;
+	margin: 0px;
+}
+
+ul, li {
+	margin: 0px;
+}
+.mp-0 {
+  margin:0px;
+  padding:0px;
+}
+
+/*---------------------------------------------*/
+input {
+	outline: none;
+	border: none;
+}
+
+textarea {
+  outline: none;
+  border: none;
+}
+
+textarea:focus, input:focus {
+  border-color: transparent !important;
+}
+
+input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; }
+input:focus::-moz-placeholder { color:transparent; }
+input:focus:-ms-input-placeholder { color:transparent; }
+
+textarea:focus::-webkit-input-placeholder { color:transparent; }
+textarea:focus:-moz-placeholder { color:transparent; }
+textarea:focus::-moz-placeholder { color:transparent; }
+textarea:focus:-ms-input-placeholder { color:transparent; }
+
+input::-webkit-input-placeholder { color: #adadad;}
+input:-moz-placeholder { color: #adadad;}
+input::-moz-placeholder { color: #adadad;}
+input:-ms-input-placeholder { color: #adadad;}
+
+textarea::-webkit-input-placeholder { color: #adadad;}
+textarea:-moz-placeholder { color: #adadad;}
+textarea::-moz-placeholder { color: #adadad;}
+textarea:-ms-input-placeholder { color: #adadad;}
+
+/*---------------------------------------------*/
+button {
+	outline: none !important;
+	border: none;
+	background: transparent;
+}
+
+button:hover {
+	cursor: pointer;
+}
+
+iframe {
+	border: none !important;
+}
+
+/*--[ Utility ]--*/
+.txt1 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #666666;
+}
+
+.txt2 {
+  font-family: Poppins-Regular;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #333333;
+  text-transform: uppercase;
+}
+
+.bg1 {background-color: #3b5998}
+.bg2 {background-color: #1da1f2}
+.bg3 {background-color: #ea4335}
+
+
+
+/*--[ login ]--*/
+.login-wrap-limiter {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.login-wrap {
+  width: 100%;
+  background: transparent;
+}
+.login-input-wrap {
+  background:#ffffff;
+  width: 90%;
+  border-radius: 5px; 
+  margin: 0 auto;
+  padding: 20px 10px;
+  box-shadow:0 5px 5px #9da9b4;
+}
+
+/* --[ Form ]--*/
+
+.login-form {
+  width: 100%;
+}
+
+.login-form-icon {
+  display: block;
+  text-align: center;
+  margin:20px auto;
+  width:30%;
+}
+
+
+
+/*------------------------------------------------------------------
+[ Input ]*/
+
+.wrap-input {
+  width: 100%;
+  position: relative;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.label-input {
+  font-family: Poppins-Regular;
+  font-size: 12px;
+  color: #333333;
+  line-height: 1;
+  padding-left: 7px;
+}
+
+.input {
+  font-family: Poppins-Medium;
+  font-size: 14px;
+  color: #333333;
+  line-height: 1;
+  display: block;
+  width: 100%;
+  height: 40px;
+  background: transparent;
+  padding: 0 7px 0 5px;
+}
+
+
+/*---------------------------------------------*/
+.focus-input {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.focus-input::after {
+  font-family: Material-Design-Iconic-Font;
+  color: #adadad;
+  font-size: 22px;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  height: calc(100% - 20px);
+  bottom: 0;
+  left: 0;
+  padding-left: 13px;
+  padding-top: 3px;
+}
+
+.focus-input::before {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #0059A9;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.input:focus + .wrap-input::before {
+  width: 100%;
+}
+.input:focus + .wrap-input::after {
+  color: #0059A9;
+}
+.input:focus + .focus-input::before {
+  width: 100%;
+}
+
+.has-val.input + .focus-input::before {
+  width: 100%;
+}
+
+.input:focus + .focus-input::after {
+  color: #0059A9;
+}
+
+.has-val.input + .focus-input::after {
+  color: #0059A9;
+}
+
+/*--[text]--*/
+.text-right {
+	text-align:right;
+}
+.text-center {
+	text-align:center;
+}
+.text-left {
+	text-align:left;
+}
+
+/*--[height]--*/
+.height-100 {
+	height:100%;
+}
+.full-100 {
+  height:100%;
+  width: 100%;
+  padding: 0;
+  margin:0;
+}
+/*--[icon]--*/
+.input-icon {
+	height: 20px;
+	width: 20px;
+	padding-top: 5px;
+	padding-left: 5px;
+	color: #333333;
+}
+
+/*--[ Social item ]--*/
+.login-social-item {
+  font-size: 25px;
+  color: #fff;
+
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 5px;
+}
+
+.login-social-item:hover {
+  color: #fff;
+  background-color: #333333;
+}
+
+.linear-flex {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	justify-content: center;
+	-ms-align-items: center;
+	align-items: center;
 }

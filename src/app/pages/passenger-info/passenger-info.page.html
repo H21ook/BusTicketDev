@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-title>Захиалга хийх</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,30 +9,34 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Зорчигчдын мэдээлэл</ion-label>
     </ion-item-divider>
-    <ion-list-header color="primary">
-      <ion-label class="custom-list-header-ios">Нийт үнэ</ion-label>
-      <ion-label class="amount-text custom-list-header-ios">{{totalAmount}}₮</ion-label>
-    </ion-list-header>
+    <ion-item-divider class="custom-divider bg-sea">
+      <ion-label>Нийт үнэ</ion-label>
+      <ion-label class="amount-text ">{{totalAmount}}₮</ion-label>
+    </ion-item-divider>
     <div *ngFor="let passenger of passengersData; let i=index">
-      <ion-list-header color="danger">
-        <ion-label class="custom-list-header-ios">{{passenger.seat_no}} дугаартай суудал</ion-label>
-        <ion-label class="amount-text custom-list-header-ios">{{passenger.amount}}₮</ion-label>
-      </ion-list-header>
+      <ion-item-divider class="custom-divider bg-aqua">
+        <ion-label>{{passenger.seat_no}} дугаартай суудал</ion-label>
+        <ion-label class="amount-text ">{{passenger.amount}}₮</ion-label>
+      </ion-item-divider>
       <div class="padding-list">
         <ion-item>
-          <ion-label>Нас</ion-label>
+          <fa-icon icon="sort-numeric-up" slot="start"></fa-icon>
+          <ion-label style="padding-left:5px;">Нас</ion-label>
           <ion-select class="custom-select" interface="popover" [(ngModel)]="passenger.age" (ionChange)="calcAmountAge(i)">
             <ion-select-option value="1" selected>Том хүн</ion-select-option>
             <ion-select-option value="0">Хүүхэд /7-12 нас/</ion-select-option>
           </ion-select>
         </ion-item>
         <ion-item>
-          <ion-input placeholder="Овог" [(ngModel)]="passenger.name"></ion-input>
+          <fa-icon icon="address-card" slot="start"></fa-icon>
+          <ion-input placeholder="Овог.Нэр" [(ngModel)]="passenger.name"></ion-input>
         </ion-item>
         <ion-item>
+            <fa-icon icon="fingerprint" slot="start"></fa-icon>
           <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="passenger.register"></ion-input>
         </ion-item>
-        <ion-item>
+        <ion-item lines="full">
+            <fa-icon icon="user-shield" slot="start"></fa-icon>
           <ion-label>Амь даатгал /400₮/</ion-label>
           <ion-checkbox slot="end" [(ngModel)]="passenger.incur" (ionChange)="calcTotalAmout(i)"></ion-checkbox>
         </ion-item>
@@ -42,12 +46,12 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button class="custom-button" slot="start" fill="clear" [routerDirection]="'backward'"
+    <ion-button slot="start" fill="clear" [routerDirection]="'backward'"
       [routerLink]="'/seats-select'">
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>
-    <ion-button class="custom-button" slot="end" fill="clear" (click)="goToNextPage()">
+    <ion-button slot="end" fill="clear" (click)="goToNextPage()">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>
     </ion-button>

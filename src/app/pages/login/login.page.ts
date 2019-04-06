@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { LoadingController, NavController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from 'angularfire2/auth';
@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { Profile } from 'src/app/models/profile.model';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
+
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,8 @@ export class LoginPage implements OnInit {
   profileObser: Observable<Profile>;
   loginError: any = '';
   required = [];
+
+  @ViewChild('errMsg', {read: ElementRef}) private errMsg: ElementRef;
 
   constructor(
     private navController: NavController,
@@ -41,6 +44,7 @@ export class LoginPage implements OnInit {
   }
 
   changeEmail() {
+    console.log(this.user);
     var res = this.validator.validateEmail(this.user.email);
     if (res == true) {
       this.required[0] = true;

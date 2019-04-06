@@ -9,5 +9,8 @@
 @import '~@ionic/angular/css/text-alignment.css';
 @import '~@ionic/angular/css/text-transformation.css';
 @import '~@ionic/angular/css/flex-utils.css';
-@import './assets/fonts/fonts.css';
+
+@import '~magic.css/magic.min.css';
+@import '~animate.css/animate.min.css';
+@import './assets/fonts/localImport.css';
 @import './theme/custom-style.scss';

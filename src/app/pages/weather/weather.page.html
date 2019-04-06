@@ -1,4 +1,4 @@
-<ion-list>
+<!-- <ion-list>
   <ion-item-divider class="custom-divider">
     <ion-label>Хотууд</ion-label>
   </ion-item-divider>
@@ -7,4 +7,122 @@
       {{city.mn_name}}
     </ion-label>
   </ion-item>
-</ion-list>
+</ion-list> -->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Ionic Blank
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="full-100">
+
+    <div class="wrap-slide">
+
+      <ion-grid class="full-100">
+        <ion-row align-items-center class="full-100">
+
+          <ion-col align-self-center>
+              <ion-item lines="full">
+                <ion-label>Хот</ion-label>
+                <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="selectedCity"
+                  placeholder="Хот сонгох">
+                  <div *ngFor="let city of cities; let i = index;">
+                    <ion-select-option [value]="city.name" (ionChange)="selectItem()">{{city.mn_name}}
+                    </ion-select-option>
+                  </div>
+                </ion-select>
+              </ion-item>
+            <ion-slides *ngIf="weather && forecastPreData" #mySlider>
+              <ion-slide *ngFor="let forecastday of forecastPreData;">
+                <ion-grid style="width:100%;">
+
+                  <ion-row class="normal-info">
+                    <p class="date-text">{{forecastday.dateFull}}</p>
+                  </ion-row>
+
+                  <ion-row class="condition-info">
+                    <ion-grid class="height-100 margin-center">
+                      <ion-row align-items-center class="height-100 mp-0">
+                        <img src="{{'http://openweathermap.org/img/w/'+ forecastday.weather[0].icon +'.png'}}"
+                          class="icon-con">
+                        <p class="con-info-text">{{forecastday.weather[0].main}}</p>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-row>
+
+                  <ion-row class="temp-info">
+                    <p class="temp-info-text">{{forecastday.temp}}°</p>
+                  </ion-row>
+
+                  <ion-row class="sup-info">
+                    <ion-grid class="height-100 margin-center">
+                      <ion-row align-items-center class="height-100 mp-0">
+                        <img src="../../assets/imglib/wind1.svg" class="icon-sup">
+                        <p class="sup-info-text">{{forecastday.windSpeed}} m/s</p>
+                      </ion-row>
+                    </ion-grid>
+                    <ion-grid class="height-100 margin-center">
+                      <ion-row align-items-center class="height-100 mp-0">
+                        <img src="../../assets/imglib/drops.svg" class="icon-sup">
+                        <p class="sup-info-text">{{forecastday.humidity}} %</p>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-row>
+
+                  <ion-row class="limit-info">
+                    <ion-grid class="full-100">
+                      <ion-row align-items-center class="full-100 mp-0">
+                        <div class="limit-layer">
+                          <p class="limit-info-text-min">{{forecastday.temp_min}}°</p>
+                          <p class="limit-info-text-min" style="margin-top: -10px;">MIN</p>
+                        </div>
+                        <input class="limit-pointer margin-center" disabled="true" type="range"
+                          min="{{forecastday.temp_min}}" max="{{forecastday.temp_max}}" value="{{forecastday.temp}}"
+                          step="1" />
+                        <div class="limit-layer">
+                          <p class="limit-info-text-max">{{forecastday.temp_max}}°</p>
+                          <p class="limit-info-text-max" style="margin-top: -10px;">MAX</p>
+                        </div>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-row>
+
+                </ion-grid>
+
+              </ion-slide>
+            </ion-slides>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+
+    <div class="wrap-days-control">
+
+      <ion-grid *ngIf="weather && forecastPreData" class="full-100">
+        <ion-row align-items-center class="full-100">
+          <ion-col align-self-center class="day-item full-100" *ngFor="let forecastday of forecastPreData; index as i"
+            (click)="changeDay(i)">
+            <ion-grid class="full-100">
+              <ion-row align-items-center class="full-100">
+                <ion-col align-self-center>
+                  <span class="day-week">{{forecastday.date}}</span><br />
+                  <img class="day-icon"
+                    src="{{'http://openweathermap.org/img/w/'+ forecastday.weather[0].icon +'.png'}}"
+                    alt="{{forecastday.weather.main}}"><br />
+                  <span class="day-week-temp">{{(i == 0) ? weather.main.temp : forecastday.temp}}°</span><br />
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+    </div>
+  </div>
+</ion-content>
+
+<!-- [ngStyle]="{'border-radius': (i == 0) ? '5px 0 0 5px' : (i == forecastPreData.length - 1) ? '0 5px 5px 0': ' '}" -->

@@ -1,15 +1,13 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button color="success"></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>
       Нүүр
     </ion-title>
-    <ion-buttons slot="end">
-      <ion-avatar class="custom-avatar" (click)="openPopover($event)">
-        <img src="./../../assets/icon/avatar.svg">
-      </ion-avatar>
+    <ion-buttons slot="end" (click)="openPopover($event)">
+        <fa-icon icon="user-circle" color="ligth"></fa-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -20,14 +18,14 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Өнөөдөр</ion-label>
     </ion-item-divider>
-    <ion-item class="text-center" (click)="openModalWeather($event)">
+    <ion-item class="text-center" (click)="openModalWeather($event)" lines="none">
       <ion-thumbnail slot="start">
         <img src="../../assets/other/weather.png">
       </ion-thumbnail>
       <ion-label>{{selectedCity.mn_name}}</ion-label>
       <div slot="end">
         <ion-label>
-          <b class="celsius">-95°C</b>
+          <b class="celsius">14°C</b>
         </ion-label>
       </div>
     </ion-item>
@@ -76,7 +74,7 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>
-    <ion-item>
+    <ion-item lines="full">
       <div slot="start" class="start-side">
         <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
         <ion-label class="start-time">09:00</ion-label>

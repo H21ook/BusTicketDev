@@ -1,0 +1,140 @@
+input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 6px;
+    border-radius: 5px;
+    background: linear-gradient(90deg, #6eb1f5, #f58d96);
+    cursor: pointer;
+    margin-top: -4px;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    background: linear-gradient(90deg, #1e90ff, #ff4757);
+    border-radius: 5px;
+}
+
+
+////new
+.wrap-slide , .wrap-days-control{
+    width: 100%;
+    padding:0;
+    margin: 0;
+}
+
+.wrap-slide {
+    height: 70%;
+    min-height: 350px; 
+}
+
+.wrap-days-control {
+    height: 25%;
+}
+
+// Location info row
+.normal-info, .date-text {
+    height: 30px;
+}
+
+.date-text {
+    font-size: 18px;
+    text-align: right;
+    width: 100%;
+}
+
+.city-info, .city-name-text {
+    height: 40px;
+}
+
+.city-name-text {
+    width:100%;
+    text-align:center;
+    font-size: 24px;
+}
+
+.condition-info , .icon-con{
+    height: 50px;
+}
+.margin-center {
+    margin:0 auto;
+}
+
+.con-info-text {
+    font-size: 20px;
+    width: 80px;
+    margin: 0 10px;
+}
+
+.temp-info {
+    min-height: 155px;
+    height: 25%;
+}
+
+.temp-info-text {
+    font-size: 500%;
+    width:100%;
+    font-weight: bold;
+}
+
+.sup-nfo, .icon-sup{
+    height: 30px;
+}
+
+.sup-info-text {
+    font-size: 18px;
+    margin: 0 5px;
+}
+
+.limit-info {
+    height: 70px;
+}
+
+.limit-layer {
+    width:20%;
+    text-align: center;
+}
+
+.limit-info-text-min, .limit-info-text-max {
+    padding: 0;
+    font-size: 20px;
+}
+
+.limit-info-text-min {
+    color: #1e90ff;
+}
+
+.limit-info-text-max {
+    color: #ff4757;
+}
+
+.limit-pointer {
+    width: 55%;
+}
+
+.day-item {
+    background-color: #484fd8;
+    text-align: center;
+}
+
+.day-item:hover {
+    background-color: #676cc7;
+}
+
+.day-week {
+    font-size: 18px;
+}
+
+.day-week-temp {
+    font-size: 20px;
+}
+
+.day-icon {
+    width: 100%;
+    padding: 0;
+}

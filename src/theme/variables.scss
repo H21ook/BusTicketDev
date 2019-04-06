@@ -4,28 +4,28 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
-  --ion-color-primary-rgb: 56, 128, 255;
+  --ion-color-primary: #0059A9;
+  --ion-color-primary-rgb: 0, 89, 169;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #3171e0;
-  --ion-color-primary-tint: #4c8dff;
+  --ion-color-primary-shade: #004f94;
+  --ion-color-primary-tint: #2286dd;
 
   /** secondary **/
-  --ion-color-secondary: #0cd1e8;
+  --ion-color-secondary: #424656;
   --ion-color-secondary-rgb: 12, 209, 232;
   --ion-color-secondary-contrast: #ffffff;
   --ion-color-secondary-contrast-rgb: 255, 255, 255;
-  --ion-color-secondary-shade: #0bb8cc;
-  --ion-color-secondary-tint: #24d6ea;
+  --ion-color-secondary-shade: #a6abbd;
+  --ion-color-secondary-tint: #a6abbd;
 
   /** tertiary **/
-  --ion-color-tertiary: #7044ff;
-  --ion-color-tertiary-rgb: 112, 68, 255;
+  --ion-color-tertiary: #8090bb;
+  --ion-color-tertiary-rgb: 128, 144, 187;
   --ion-color-tertiary-contrast: #ffffff;
   --ion-color-tertiary-contrast-rgb: 255, 255, 255;
-  --ion-color-tertiary-shade: #633ce0;
-  --ion-color-tertiary-tint: #7e57ff;
+  --ion-color-tertiary-shade: #bfa5a8;
+  --ion-color-tertiary-tint: #a6abbd;
 
   /** success **/
   --ion-color-success: #10dc60;
@@ -69,18 +69,18 @@
   --ion-color-medium-tint: #a2a4ab;
 
   /** light **/
-  --ion-color-light: #f4f5f8;
-  --ion-color-light-rgb: 244, 244, 244;
+  --ion-color-light: #FFFFFF;
+  --ion-color-light-rgb: 255, 255, 255;
   --ion-color-light-contrast: #000000;
   --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d7d8da;
-  --ion-color-light-tint: #f5f6f9;
+  --ion-color-light-shade: #ffffff;
+  --ion-color-light-tint: #FFFFFF;
 
 
   /** Custom variables **/
   --ion-font-family: 'MnHeide';
-  --ion-color-facebook: #3b5998;
-  --ion-color-facebook-hover: #5b82d6;
-  --ion-color-google: #d62d20;
+  --ion-color-divider: #0093d1;
+  --ion-color-aqua: #00cca7;
+  --ion-color-sea: #00aac4;
   --ion-color-google-hover: #f6655b;
 }

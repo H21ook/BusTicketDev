@@ -1,49 +1,93 @@
-<!-- <ion-header>
-  <ion-toolbar>
-    <ion-title>login</ion-title>
-  </ion-toolbar>
-</ion-header> -->
+<ion-content>
+	<ion-grid class="height-100 mp-0">
+		<ion-row align-items-center class="height-100 bg-img">
+			<ion-col align-self-center>
+				<div class="login-wrap login-wrap-limiter">
+					<form class="login-form">
+						<span class="login-form-icon">
+							<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" >
+						</span>
+						<div class="login-input-wrap">
+							<div class="wrap-input">
+								<span class="label-input">И-мэйл</span>
+								<ion-grid>
+									<ion-row align-items-center>
+										<ion-col size="1" align-self-center>
+											<ion-icon name="person" class="input-icon"></ion-icon>
+										</ion-col>
+										<ion-col size="11">
+											<input class="input" (change)="changeEmail()" [(ngModel)]="user.email" type="text" name="username" placeholder="Type your username">
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+								<span class="focus-input"></span>
+							</div>
+							
+							<div class="wrap-input">
+								<span class="label-input">Нууц үг</span>
+								<ion-grid>
+									<ion-row align-items-center>
+										<ion-col size="1" align-self-center>
+											<ion-icon name="lock" class="input-icon"></ion-icon>
+										</ion-col>
+										<ion-col size="11">
+											<input class="input" (change)="changePassword()" [(ngModel)]="user.password" type="password" name="pass" placeholder="Type your password">
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+								<span class="focus-input"></span>
+							</div>
+							
+							<ion-row>
+								<ion-col>
+									<div class="text-left">
+										<a (click)="goToSignUp()">
+											Бүртгүүлэх
+										</a>
+									</div>
+								</ion-col>
+								<ion-col>
+									<div class="text-right">
+										<a href="#">
+											Нууц үг мартсан
+										</a>
+									</div>
+								</ion-col>
+							</ion-row>
+							<ion-grid class="error error-msg" *ngIf="loginError">
+								<ion-row align-items-center>
+									<ion-col size="10" style="text-align:center;">
+										<span>{{loginError}}</span>
+									</ion-col>
+									<ion-col size="2">
+										<i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
+									</ion-col>
+								</ion-row>
+							</ion-grid>
+			
+							<div class="padding-wrap-tb">
+								<button class="custom-button" (click)="login()">Нэвтрэх</button>
+							</div>
 
-<ion-content padding class="custom-content">
-  <ion-grid style="height: 90vh">
-    <ion-row align-items-center style="height: 90vh">
-      <ion-col>
-        <div style="height: 180px; width: 100%; text-align: center; padding-top: 50px;">
-          <img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" height="120px" width="120px">
-        </div>
-        <!-- Email Input -->
-        <ion-item lines="full" class="custom-item-input" mode="ios">
-          <ion-input class="custom-input" (change)="changeEmail()" placeholder="И-мэйл" pattern="email" size="email"
-            type="email" mode="ios" [(ngModel)]="user.email"></ion-input>
-        </ion-item>
+							<div class="txt1 text-center">
+								<span>
+									ЭСВЭЛ
+								</span>
+							</div>
 
-        <!-- Password Input -->
-        <ion-item lines="full" class="custom-item-input" mode="ios">
-          <ion-input class="custom-input" (change)="changePassword()" placeholder="Нууц үг" pattern="password"
-            size="password" type="password" mode="ios" [(ngModel)]="user.password"></ion-input>
-        </ion-item>
-        <ion-grid class="error error-msg" *ngIf="loginError">
-          <ion-row align-items-center>
-            <ion-col size="10" style="text-align:center;">
-              <span>{{loginError}}</span>
-            </ion-col>
-            <ion-col size="2">
-              <i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-        <ion-button class="custom-button" expand="block" fill="solid" color="success" mode="ios" (click)="login()">
-          Нэвтрэх</ion-button>
-        <div class="signup-item">
-          <a class="link-btn" mode="ios">Нууц үг мартсан</a>
-          <a (click)="goToSignUp()" class="link-btn">Бүртгүүлэх</a>
-        </div>
-        <ion-button class="custom-button fb" (click)="facebookLogin()" expand="block" fill="solid" mode="ios">Facebook
-          <ion-icon name="facebook" slot="start"></ion-icon>
-          хаягаар нэвтрэх</ion-button>
-        <ion-button class="custom-button google" expand="block" fill="solid" mode="ios">Google
-          хаягаар нэвтрэх</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+							<div class="linear-flex">
+								<a href="#" class="login-social-item bg1">
+									<ion-icon name="logo-facebook"></ion-icon>
+								</a>
+
+								<a href="#" class="login-social-item bg3">
+									<ion-icon name="logo-google"></ion-icon>
+								</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
 </ion-content>

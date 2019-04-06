@@ -14,29 +14,19 @@ export class WeatherService {
   constructor(public http: Http) {
     this.url = 'http://api.openweathermap.org/data/2.5/'; // openweather
     // this.url = 'https://api.apixu.com/v1/forecast.json?key='+ this.apiKey +'&q='; //apixu
-
-    
-
-    // this.headers = new HttpHeaders({
-    //   'Content-Type':'application/json',
-    //   'Accept':'application/json',
-    //   'Access-Control-Allow-Origin':'*',
-    //   'Access-Control-Allow-Methods':'GET'
-    // });
-
-    // this.headerOption = this.headerOption.append('Authorization','Bearer '+this.token);
   }
 
   getWeater(city) {
     // return this.http.get(this.url+city+'&days=5').map(res => res); //apixu
     try {
       const response = this.http.get(this.url + 'weather?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+      // const response = this.http.get(this.url + city + '&days=5');
       const params = {};
       const headers = {};
-      
+
       response.subscribe(data => {
         console.log(data.status);
-        console.log(data); // JSON data returned by server
+        console.log(data.json()); // JSON data returned by server
         console.log(data.headers);
       });
 
@@ -50,6 +40,10 @@ export class WeatherService {
 
   getForecastWeater(city) {
     return this.http.get(this.url + 'forecast?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+  }
+
+  getForecastHourly(city) {
+    return this.http.get(this.url + 'forecast/hourly?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
   }
 }
 // https://api.apixu.com/v1/forecast.json?key=a38fec97bda64fb6af1120457182110&q=mecherfeh-hims-syria-2338880 //apixu

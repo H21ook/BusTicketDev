@@ -7,6 +7,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { SubscriberInfoPage } from './subscriber-info.page';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 const routes: Routes = [
   {
     path: '',
@@ -19,7 +21,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    FontAwesomeModule
   ],
   declarations: [SubscriberInfoPage]
 })
