@@ -3,6 +3,6 @@ export class Passenger {
     name: string;
     register: string;
     age: string = "1"
-    incur: boolean;
+    incur: boolean = false;
     amount: number;
 }

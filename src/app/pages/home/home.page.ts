@@ -51,31 +51,12 @@ export class HomePage implements OnInit {
   }
 
   async openModalWeather(event) {
-    this.navCtrl.navigateForward('\weather');
-    // const modal: HTMLIonModalElement =
-    //   await this.modalController.create({
-    //     component: WeatherPage,
-    //     componentProps: {
-    //       ev: event
-    //     },
-    //     backdropDismiss: true,
-    //     showBackdrop: true
-    //   });
-
-    // modal.onDidDismiss().then((result) => {
-    //   if (result !== null) {
-    //     this.selectedCity = result.data;
-    //     // this.getWeather();
-    //   }
-    // });
-
-    // await modal.present();
+    this.navCtrl.navigateForward('/weather');
   }
 
   getWeather() {
-    this.weatherService.getWeater(this.selectedCity.name)
-    .subscribe(weatherData => {
-      this.weatherData = weatherData;
+    this.weatherService.getWeater(name).subscribe(data => {
+      this.weatherData = data.json();
     });
   }
 

@@ -12,15 +12,15 @@
     <div class="padding-list">
       <ion-item lines="full">
         <fa-icon icon="address-card" slot="start"></fa-icon>
-        <ion-input placeholder="Овог.Нэр" [(ngModel)]="subscriber.name"></ion-input>
+        <ion-input placeholder="Овог.Нэр" [(ngModel)]="subscriber.name" (ionChange)="changeName()"></ion-input>
       </ion-item>
       <ion-item lines="full">
           <fa-icon icon="fingerprint" slot="start"></fa-icon>
-        <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="subscriber.register"></ion-input>
+        <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="subscriber.register" (ionChange)="changeRegister()"></ion-input>
       </ion-item>
       <ion-item lines="full">
         <fa-icon icon="sim-card" slot="start"></fa-icon>
-        <ion-input placeholder="Утасны дугаар" [(ngModel)]="subscriber.phoneNumber"></ion-input>
+        <ion-input placeholder="Утасны дугаар" [(ngModel)]="subscriber.phoneNumber" (ionChange)="changePhone()"></ion-input>
       </ion-item>
       <ion-item lines="full">
         <fa-icon icon="envelope" slot="start"></fa-icon>
@@ -36,7 +36,7 @@
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>
-    <ion-button slot="end" fill="clear" (click)="goToNextPage()">
+    <ion-button slot="end" fill="clear" (click)="goToNextPage()" disabled="!nextAgree">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>
     </ion-button>

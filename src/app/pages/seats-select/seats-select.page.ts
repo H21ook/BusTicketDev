@@ -16,6 +16,7 @@ export class SeatsSelectPage implements OnInit {
   aimagData: any = []
   model: any = {};
   selectedSeats: Seat[];
+  nextAgree: boolean = false;
 
   constructor(
     private dataService: DataService,
@@ -32,6 +33,11 @@ export class SeatsSelectPage implements OnInit {
 
   changeBusSeat(e) {
     this.selectedSeats = e.selectedSeats;
+    if(this.selectedSeats) {
+      this.nextAgree = true;
+    } else {
+      this.nextAgree =false
+    }
   }
 
   goToNextPage() {

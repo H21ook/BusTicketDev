@@ -20,12 +20,12 @@
     </ion-item-divider>
     <ion-item class="text-center" (click)="openModalWeather($event)" lines="none">
       <ion-thumbnail slot="start">
-        <img src="../../assets/other/weather.png">
+        <img src="{{'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png'">
       </ion-thumbnail>
       <ion-label>{{selectedCity.mn_name}}</ion-label>
       <div slot="end">
         <ion-label>
-          <b class="celsius">14°C</b>
+          <b class="celsius">{{weatherData.main.temp}}°C</b>
         </ion-label>
       </div>
     </ion-item>

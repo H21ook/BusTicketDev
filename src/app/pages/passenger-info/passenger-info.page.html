@@ -29,16 +29,16 @@
         </ion-item>
         <ion-item>
           <fa-icon icon="address-card" slot="start"></fa-icon>
-          <ion-input placeholder="Овог.Нэр" [(ngModel)]="passenger.name"></ion-input>
+          <ion-input placeholder="Овог.Нэр" [(ngModel)]="passenger.name" (change)="changeName(i)"></ion-input>
         </ion-item>
         <ion-item>
             <fa-icon icon="fingerprint" slot="start"></fa-icon>
-          <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="passenger.register"></ion-input>
+          <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="passenger.register" (change)="changeRegister(i)"></ion-input>
         </ion-item>
         <ion-item lines="full">
             <fa-icon icon="user-shield" slot="start"></fa-icon>
           <ion-label>Амь даатгал /400₮/</ion-label>
-          <ion-checkbox slot="end" [(ngModel)]="passenger.incur" (ionChange)="calcTotalAmout(i)"></ion-checkbox>
+          <ion-checkbox slot="end" [(ngModel)]="passenger.incur" (ionChange)="calcAmountAge(i)"></ion-checkbox>
         </ion-item>
       </div>
     </div>
@@ -51,7 +51,7 @@
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>
-    <ion-button slot="end" fill="clear" (click)="goToNextPage()">
+    <ion-button slot="end" fill="clear" (click)="goToNextPage()" disabled="!nextAgree">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>
     </ion-button>

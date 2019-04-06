@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class ValidatorService {
 
+  private latinLetters = "QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm";
+  private mnLetters = "ФЦУЖЭНГШҮЗКЪЕЩЙЫБӨАХРОЛДПЯЧЁСМИТЬВЮфцужэнгшүзкъещйыбөахролдпячёсмитьвю";
+  private nameSymbol = ".-";
   constructor() { }
 
   validateEmail(mail : string) : any {
@@ -31,5 +34,71 @@ export class ValidatorService {
         return false;
     }
     return true;
+  }
+
+  validateName(name : string) : any  {
+    let errIndex = -1;
+    let errMsg = '';
+    if(name.length > 1 && name.length < 36) {
+      for(let j = 0; j < name.length; j++) {
+        let step1 = false, step2 = false, step3 = false;
+        for(let i = 0; i < this.latinLetters.length; i++) {
+          if(name[j] != this.latinLetters[i]) {
+            step1 = true;
+            break;
+          }
+        }
+        if(step1 == true) {
+          continue;
+        }
+        for(let i = 0; i < this.mnLetters.length; i++) {
+          if(name[j] != this.mnLetters[i]) {
+            step2 = true;
+            break;
+          }
+        }
+        if(step2 == true) {
+          continue;
+        }
+        for(let i = 0; i < this.nameSymbol.length; i++) {
+          if(name[j] != this.nameSymbol[i]) {
+            step3 = true;
+            break;
+          }
+        }
+        if(step3 == false) {
+          errIndex = j;
+          break;
+        }
+      }
+      if(errIndex > -1) {
+        if(name[errIndex] == ' ') 
+          errMsg = "Нэрэнд хоосон зай ашиглаж болохгүй";
+        else
+          errMsg = "Нэрэнд \"" +name[errIndex]+ "\" тэмдэгт ашиглаж болохгүй";
+      }
+    } else {
+      errMsg = "Нэрний урт 2-35 тэмдэгт байх ёстой!"
+    }
+    return errMsg ? errMsg : true;
+  } 
+  
+  validateRegister(register : string) : any  {
+    if(/^\w{10}$/.test(register))
+      return true;
+    return "Регистерын урт 10 тэмдэгт байх ёстой!";
+  }
+
+  validatePhoneNumber(phone : string) : any  {
+    let result: any;
+    if(phone.length < 9 && phone.length > 5) {
+      if(/^[0-9]{8}$/.test(phone))
+        result = true;
+      else
+        result = "Утасны дугаарт зөвхөн тоо ашиглана уу!";
+    } else {
+      result = "Утасны дугаарын урт 6-8 тэмдэгт байх ёстой!";
+    }
+    return result;
   }
 }

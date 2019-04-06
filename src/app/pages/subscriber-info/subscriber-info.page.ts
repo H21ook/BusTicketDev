@@ -3,6 +3,7 @@ import { Subscriber } from 'src/app/models/subscriber.model';
 import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
 import { NavController } from '@ionic/angular';
 import { Order } from 'src/app/models/order.model';
+import { ValidatorService } from 'src/app/services/validator/validator.service';
 
 @Component({
   selector: 'app-subscriber-info',
@@ -13,10 +14,14 @@ export class SubscriberInfoPage implements OnInit {
 
   subscriber: Subscriber = new Subscriber();
   orderData: Order;
+  required = [];
+  error: any;
+  nextAgree: boolean = false;
   
   constructor(
     private passData: PassingDataService,
-    private nav: NavController
+    private nav: NavController,
+    private validator: ValidatorService
   ) { }
 
   ngOnInit() {
@@ -24,8 +29,43 @@ export class SubscriberInfoPage implements OnInit {
     console.log(this.orderData);
   }
 
+  changeName(index) {
+    var res = this.validator.validateName(this.subscriber.name);
+    if (res == true) {
+      this.required[0] = true;
+    } else {
+      this.required[0] = false;
+      this.error = res;
+    }
+    this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
+  }
+
+  changeRegistger(index) {
+    var res = this.validator.validateRegister(this.subscriber.register);
+    if (res == true) {
+      this.required[1] = true;
+    } else {
+      this.required[1] = false;
+      this.error = res;
+    }
+    this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
+  }
+
+  changePhone() {
+    var res = this.validator.validatePhoneNumber(this.subscriber.register);
+    if (res == true) {
+      this.required[2] = true;
+    } else {
+      this.required[2] = false;
+      this.error = res;
+    }
+    this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
+  }
+
   goToNextPage() {
-    this.passData.setSubscriber(this.subscriber);
-    this.nav.navigateForward("/warning-info");
+    if(this.validator.checkRequired(this.required)) {
+      this.passData.setSubscriber(this.subscriber);
+      this.nav.navigateForward("/warning-info");
+    }
   }
 }
