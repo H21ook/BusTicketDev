@@ -22,6 +22,11 @@ export class UserMethodsPage implements OnInit {
     this.logOutLoading();
   }
 
+  goToProfile() {
+    this.popover.dismiss();
+    this.navCtrl.navigateForward('/profile/old');
+  }
+
   async logOutLoading() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
@@ -36,6 +41,5 @@ export class UserMethodsPage implements OnInit {
     }, err => {
       loading.dismiss();
     }); 
-    
   }
 }

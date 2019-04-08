@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, AlertController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
@@ -30,7 +30,8 @@ export class LoginPage implements OnInit {
     private authService: AuthenticationService,
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
-    private validator: ValidatorService) { }
+    private validator: ValidatorService,
+	private alertController: AlertController) { }
 
   ngOnInit() {
   }
@@ -71,18 +72,22 @@ export class LoginPage implements OnInit {
   login() {
     if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
-      // this.user={ email: "tbeta40@gmail.com", password:"12345678"};
       this.authService.login(this.user)
         .then(() => {
-          this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-          this.profileObser = this.profileAFObser.valueChanges();
+		  if(this.afAuth.auth.currentUser.emailVerified) {
+			  this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
+			  this.profileObser = this.profileAFObser.valueChanges();
 
-          this.profileObser.subscribe((profile) => {
-            if (profile.state == "new")
-              this.navController.navigateRoot('/home');
-            else
-              this.navController.navigateRoot('/home');
-          });
+			  this.profileObser.subscribe((profile) => {
+				if (profile.state == "new")
+				  this.navController.navigateRoot('/profile/new');
+				else
+				  this.navController.navigateRoot('/home');
+			  });
+		  } else {
+			  this.loginError = "Таны мэйл хаяг баталгаажаагүй байна! Мэйл хаягаа шалгана уу"
+			  this.authService.logOut();
+		  }
         }, error => {
           if (error === 'The email address is badly formatted.')
             this.loginError = "Имэйл хаяг буруу бүтэцтэй байна!";
@@ -96,5 +101,28 @@ export class LoginPage implements OnInit {
             this.loginError = error;
         });
     }
+  }
+  
+  resetPassword() {
+	  if(this.required[0]) {
+		  this.loginError = '';
+		  this.authService.resetPassword(this.user.email)
+		  .then((data) => {
+			  this.presentAlert("Таны " +this.user.email+  " хаягруу нууц үг сэргээх холбоосыг илгээсэн!","Нууц үг сэргээх");
+			  console.log(data);
+		  }, err => {
+			  this.loginError = err;
+		  });
+	  }
+  }
+  
+  async presentAlert(massage: string, header?:string, buttons?: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: massage,
+      buttons: [buttons ? buttons : 'ХААХ']
+    });
+
+    await alert.present();
   }
 }

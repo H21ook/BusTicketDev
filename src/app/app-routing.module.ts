@@ -18,7 +18,7 @@ const routes: Routes = [
   { path: 'passenger-info', loadChildren: './pages/passenger-info/passenger-info.module#PassengerInfoPageModule' },
   { path: 'subscriber-info', loadChildren: './pages/subscriber-info/subscriber-info.module#SubscriberInfoPageModule' },
   { path: 'warning-info', loadChildren: './pages/warning-info/warning-info.module#WarningInfoPageModule' },
-  { path: 'profile', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
+  { path: 'profile/:id', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'weather', loadChildren: './pages/weather/weather.module#WeatherPageModule' }
 ];
 

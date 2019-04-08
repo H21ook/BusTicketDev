@@ -8,6 +8,14 @@
 							<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" >
 						</span>
 						<div class="login-input-wrap">
+							<!-- <ion-item lines="full">
+								<fa-icon icon="id-badge" slot="start" color="dark"></fa-icon>
+								<ion-input placeholder="И-мэйл" type="email" name="email" [(ngModel)]="user.email" (ionChange)="changeEmail()"></ion-input>
+							</ion-item>
+							<ion-item lines="full">
+								<fa-icon icon="lock" slot="start" color="dark"></fa-icon>
+								<ion-input placeholder="Нууц үг" type="password" name="password" [(ngModel)]="user.password" (ionChange)="changePassword()"></ion-input>
+							</ion-item> -->
 							<div class="wrap-input">
 								<span class="label-input">И-мэйл</span>
 								<ion-grid>
@@ -48,7 +56,7 @@
 								</ion-col>
 								<ion-col>
 									<div class="text-right">
-										<a href="#">
+										<a (click)="resetPassword()">
 											Нууц үг мартсан
 										</a>
 									</div>

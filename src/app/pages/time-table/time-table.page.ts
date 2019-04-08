@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
+import { PopoverController } from '@ionic/angular';
+import { UserMethodsPage } from '../user-methods/user-methods.page';
 
 @Component({
   selector: 'app-time-table',
@@ -24,6 +26,7 @@ export class TimeTablePage implements OnInit {
   };
 
   constructor(
+    private popover: PopoverController,
     private dataService: DataService,
     private functionsService: FunctionsService,
     private apiService: ApiService
@@ -53,6 +56,19 @@ export class TimeTablePage implements OnInit {
 
   changeToAimag(e) {
     this.model.toStop = null;
+  }
+
+  async openPopover(ev: Event) {
+    const popover = await this.popover.create({
+      component: UserMethodsPage,
+      componentProps: {
+        ev: ev
+      },
+      event: ev,
+      mode: 'ios'
+    });
+
+    await popover.present();
   }
 }
 

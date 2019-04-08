@@ -36,7 +36,7 @@ export class SeatsSelectPage implements OnInit {
     if(this.selectedSeats) {
       this.nextAgree = true;
     } else {
-      this.nextAgree =false
+      this.nextAgree = false;
     }
   }
 

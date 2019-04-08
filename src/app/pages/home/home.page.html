@@ -6,8 +6,8 @@
     <ion-title>
       Нүүр
     </ion-title>
-    <ion-buttons slot="end" (click)="openPopover($event)">
-        <fa-icon icon="user-circle" color="ligth"></fa-icon>
+    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+        <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -18,9 +18,9 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Өнөөдөр</ion-label>
     </ion-item-divider>
-    <ion-item class="text-center" (click)="openModalWeather($event)" lines="none">
+    <ion-item class="text-center" (click)="openModalWeather($event)" lines="none" *ngIf="weatherData">
       <ion-thumbnail slot="start">
-        <img src="{{'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png'">
+        <img src="{{'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png'}}">
       </ion-thumbnail>
       <ion-label>{{selectedCity.mn_name}}</ion-label>
       <div slot="end">

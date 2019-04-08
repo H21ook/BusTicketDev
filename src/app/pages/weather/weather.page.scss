@@ -118,16 +118,24 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .day-item {
-    background-color: #484fd8;
+    background-color: var(--ion-color-sea);
     text-align: center;
 }
 
 .day-item:hover {
-    background-color: #676cc7;
+    background-color: var(--ion-color-divider);
 }
 
 .day-week {
     font-size: 18px;
+}
+.day-week, .day-week-temp{
+    color:var(--ion-color-light);
+    font-weight: bold;
+}
+
+.light-select {
+    color:var(--ion-color-light);
 }
 
 .day-week-temp {

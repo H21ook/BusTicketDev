@@ -18,7 +18,7 @@ export class AppComponent {
     {
       title: 'Тээврийн хуваарийн жагсаалт',
       url: '/time-table',
-      icon: 'list'
+      icon: 'list-alt'
     }
   ];
 

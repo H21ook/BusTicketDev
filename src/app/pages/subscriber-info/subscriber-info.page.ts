@@ -40,7 +40,7 @@ export class SubscriberInfoPage implements OnInit {
     this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
   }
 
-  changeRegistger(index) {
+  changeRegister(index) {
     var res = this.validator.validateRegister(this.subscriber.register);
     if (res == true) {
       this.required[1] = true;
@@ -52,7 +52,7 @@ export class SubscriberInfoPage implements OnInit {
   }
 
   changePhone() {
-    var res = this.validator.validatePhoneNumber(this.subscriber.register);
+    var res = this.validator.validatePhoneNumber(this.subscriber.phoneNumber);
     if (res == true) {
       this.required[2] = true;
     } else {
@@ -67,5 +67,9 @@ export class SubscriberInfoPage implements OnInit {
       this.passData.setSubscriber(this.subscriber);
       this.nav.navigateForward("/warning-info");
     }
+  }
+
+  closeErrorMsg() {
+    this.error = "";
   }
 }

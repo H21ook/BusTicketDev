@@ -68,7 +68,7 @@ export class PassengerInfoPage implements OnInit {
     this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
   }
 
-  changeRegistger(index) {
+  changeRegister(index) {
     var res = this.validator.validateRegister(this.passengersData[index].register);
     if (res == true) {
       this.required[1] = true;
@@ -84,5 +84,9 @@ export class PassengerInfoPage implements OnInit {
       this.passData.setPassengerAndTotal(this.passengersData, this.totalAmount);
       this.nav.navigateForward("/subscriber-info");
     }
+  }
+
+  closeErrorMsg() {
+    this.error = "";
   }
 }

@@ -53,6 +53,38 @@ export class AuthenticationService {
         });
     });
   }
+  
+  resetPassword(emailAddress): Promise<any> {
+    return new Promise((resolve, reject) => {
+		this.afAuth.auth.sendPasswordResetEmail(emailAddress).then((data) => {
+		  resolve(data);
+		}, error => {
+		  reject(error);
+		});
+    });
+  }
+  
+  verificationEmail(): Promise<any> {
+    return new Promise((resolve, reject) => {
+		var user = this.afAuth.auth.currentUser;
+		user.sendEmailVerification().then((data) => {
+		  resolve(data);
+		}, error => {
+		  reject(error);
+		});
+    });
+  }
+  
+  deleteUser(): Promise<any> {
+    return new Promise((resolve, reject) => {
+		var user = this.afAuth.auth.currentUser;
+		user.delete().then((data) => {
+		  resolve(data);
+		}, error => {
+		  reject(error);
+		});
+    });
+  }
 
   facebookLogin(): Promise<any> {
     return this.facebook.login(['email'])

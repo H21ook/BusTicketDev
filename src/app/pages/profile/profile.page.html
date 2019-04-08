@@ -1,24 +1,69 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>profile</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button color="light"></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        {{isNew ? 'Хувийн мэдээлэл бүртгэх' : 'Хувийн мэдээлэл'}}
+      </ion-title>
+      <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+          <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ion-content padding>
-  <ion-list>
-    <ion-grid>
-    </ion-grid>
-      <ion-item>
-        <ion-input placeholder="Овог Нэр"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Регистерийн дугаар"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Утасны дугаар"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input placeholder="Имэйл хаяг"></ion-input>
-      </ion-item>
-  </ion-list>
+<ion-content fullscreen>
+  <ion-grid class="height-100 mp-0">
+    <ion-row align-items-center class="height-100 bg-img">
+      <ion-col align-self-center>
+        <div class="login-wrap login-wrap-limiter">
+          <div class="login-form">
+            <span class="login-form-icon">
+              <img class="user-image" *ngIf="avatarImage != null" [src]="avatarImage">
+              <img class="user-image" *ngIf="(avatarImage == null)" src="../../assets/imgs/add_image.png">
+            </span>
+            <div class="pic-edit-control" *ngIf="editable">
+              <div class="edit-layer">
+                <ion-buttons class="icon-btn" slot="end" (click)="selectPhoto()">
+                  <fa-icon class="user-icon" icon="camera" color="ligth"></fa-icon>
+                </ion-buttons>
+                <ion-buttons class="icon-btn" slot="end" (click)="takePhoto()">
+                  <fa-icon class="user-icon" icon="upload" color="ligth"></fa-icon>
+                </ion-buttons>
+              </div>
+            </div>
+            <div class="login-input-wrap">
+              <ion-list *ngIf="profile">
+                <ion-item lines="full">
+                  <fa-icon icon="address-card" slot="start"></fa-icon>
+                  <ion-input placeholder="Овог" [(ngModel)]="profile.firstName" [readonly]="!editable" name="fname" (ionChange)="changeFN()"></ion-input>
+                </ion-item>
+                <ion-item lines="full">
+                  <fa-icon icon="address-card" slot="start"></fa-icon>
+                  <ion-input placeholder="Нэр" [(ngModel)]="profile.lastName" [readonly]="!editable" name="lname" (ionChange)="changeLN()"></ion-input>
+                </ion-item>
+                <ion-item lines="full">
+                  <fa-icon icon="address-card" slot="start"></fa-icon>
+                  <ion-input placeholder="Регистерын дугаар" name="register" [readonly]="!editable" [(ngModel)]="profile.registerNumber"
+                    (ionChange)="changeRegN()">
+                  </ion-input>
+                </ion-item>
+                <ion-item lines="full">
+                  <fa-icon icon="envelope" slot="start"></fa-icon>
+                  <ion-input placeholder="Имэйл хаяг" [readonly]="true" name="email" [(ngModel)]="profile.email"></ion-input>
+                </ion-item>
+                <ion-item lines="full">
+                  <fa-icon icon="envelope" slot="start"></fa-icon>
+                  <ion-input type="number" placeholder="Утасны дугаар" [readonly]="!editable" name="phone" [(ngModel)]="profile.phoneNumber"></ion-input>
+                </ion-item>
+              </ion-list>
+              <div class="padding-wrap-tb">
+                <button class="custom-button" type="button" (click)="saveProfileData()">{{editable ? 'Хадгалах' : 'Засварлах'}}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

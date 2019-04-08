@@ -3,8 +3,8 @@ import { AlertController, PopoverController, LoadingController, ModalController,
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
-import { WeatherPage } from '../weather/weather.page';
 import { WeatherService } from 'src/app/services/weather/weather.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-home',
@@ -25,11 +25,14 @@ export class HomePage implements OnInit {
     private popover: PopoverController,
     private dataService: DataService,
     private functionsService: FunctionsService,
-    private modalController: ModalController,
+    private afAuth: AngularFireAuth,
     private weatherService: WeatherService,
     private navCtrl: NavController
   ) {
     this.sourceStops = this.dataService.sourceStops;
+    if(!this.afAuth.auth.currentUser) {
+      navCtrl.navigateRoot('/login');
+    }
   }
 
   ngOnInit() {
@@ -55,7 +58,7 @@ export class HomePage implements OnInit {
   }
 
   getWeather() {
-    this.weatherService.getWeater(name).subscribe(data => {
+    this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
       this.weatherData = data.json();
     });
   }

@@ -43,7 +43,7 @@ export class ValidatorService {
       for(let j = 0; j < name.length; j++) {
         let step1 = false, step2 = false, step3 = false;
         for(let i = 0; i < this.latinLetters.length; i++) {
-          if(name[j] != this.latinLetters[i]) {
+          if(name[j] == this.latinLetters[i]) {
             step1 = true;
             break;
           }
@@ -52,7 +52,7 @@ export class ValidatorService {
           continue;
         }
         for(let i = 0; i < this.mnLetters.length; i++) {
-          if(name[j] != this.mnLetters[i]) {
+          if(name[j] == this.mnLetters[i]) {
             step2 = true;
             break;
           }
@@ -61,7 +61,7 @@ export class ValidatorService {
           continue;
         }
         for(let i = 0; i < this.nameSymbol.length; i++) {
-          if(name[j] != this.nameSymbol[i]) {
+          if(name[j] == this.nameSymbol[i]) {
             step3 = true;
             break;
           }
@@ -84,7 +84,7 @@ export class ValidatorService {
   } 
   
   validateRegister(register : string) : any  {
-    if(/^\w{10}$/.test(register))
+    if(register.length == 10)
       return true;
     return "Регистерын урт 10 тэмдэгт байх ёстой!";
   }

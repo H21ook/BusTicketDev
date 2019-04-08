@@ -1,4 +1,14 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireObject } from 'angularfire2/database';
+import { Observable } from 'rxjs';
+import { NavController, PopoverController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Profile } from 'src/app/models/profile.model';
+import { ProfileService } from 'src/app/services/profile.service';
+import * as firebase from 'firebase';
+import { ValidatorService } from 'src/app/services/validator/validator.service';
+import { ActivatedRoute } from '@angular/router';
+import { UserMethodsPage } from '../user-methods/user-methods.page';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +17,169 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfilePage implements OnInit {
 
-  constructor() { }
+  private profileAFObser: AngularFireObject<Profile>;
+  private profileObser: Observable<Profile>;
+  private profile : Profile;
+  private avatarImage = null;
+  // private cameraOptions: CameraOptions;
 
-  ngOnInit() {
+  checkPhoto = false;
+  required = [];
+  error: any;
+  status: string;
+  isNew: boolean = false;
+  editable: boolean = false;
+
+  constructor(
+    private popover: PopoverController,
+    public navCtrl: NavController,
+    private afAuth: AngularFireAuth,
+    private profileService: ProfileService,
+    private route: ActivatedRoute,
+    // private camera: Camera,
+    private validator: ValidatorService
+  ) {
+    if(!this.afAuth.auth.currentUser) {
+      navCtrl.navigateRoot('/login');
+    } else {
+      this.status = this.route.snapshot.paramMap.get('id');
+      this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
+      this.profileObser = this.profileAFObser.valueChanges();
+
+
+      this.getPro();
+    }
+
+    // this.cameraOptions = {
+    //   quality: 100,
+    //   targetWidth: 400,
+    //   targetHeight: 400,
+    //   destinationType: this.camera.DestinationType.DATA_URL,
+    //   encodingType: this.camera.EncodingType.JPEG,
+    //   mediaType: this.camera.MediaType.PICTURE,
+    //   correctOrientation: true
+    // };
   }
 
+  async getPro() {
+    const aaa = await this.profileObser.subscribe((profile) => {
+      this.profile = profile;
+      if(!this.isNew) {
+      this.changeFN();
+      this.changeLN();
+      this.changeRegN();
+      }
+      if (this.profile.image != null)
+        this.loadImage(this.profile.image)
+    });
+    console.log(aaa);
+  }
+
+  ngOnInit() {
+    if(this.status == "new") {
+      this.isNew = true;
+      this.editable = true;
+    } else {
+      this.isNew = false;
+    }
+  }
+
+  changeFN() {
+    var res = this.validator.validateName(this.profile.firstName);
+    if (res == true) {
+      this.required[0] = true;
+    } else {
+      this.required[0] = false;
+      this.error = res;
+    }
+  }
+  changeLN() {
+    var res = this.validator.validateName(this.profile.lastName);
+    if (res == true) {
+      this.required[1] = true;
+    } else {
+      this.required[1] = false;
+      this.error = res;
+    }
+  }
+  changeRegN() {
+    var res = this.validator.validateRegister(this.profile.registerNumber);
+    if (res == true) {
+      this.required[2] = true;
+    } else {
+      this.required[2] = false;
+      this.error = res;
+    }
+  }
+
+  ionViewDidLoad() {
+
+  }
+
+  loadImage(imageName) {
+    var storageRef = firebase.storage().ref(imageName);
+    storageRef.getDownloadURL().then((url) => {
+      this.avatarImage = url;
+    });
+  }
+
+  // selectPhoto() {
+  //   this.checkPhoto = true;
+  //   this.cameraOptions.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+  //   this.camera.getPicture(this.cameraOptions).then((data) => {
+  //     this.avatarImage = "data:image/jpeg;base64," + data;
+  //   }, (err) => {
+  //     console.log(err.message);
+  //   });
+  // }
+
+  // takePhoto() {
+  //   this.checkPhoto = true;
+  //   this.cameraOptions.sourceType = this.camera.PictureSourceType.CAMERA;
+  //   this.camera.getPicture(this.cameraOptions).then((data) => {
+  //     this.avatarImage = "data:image/jpeg;base64," + data;
+  //   }, (err) => {
+  //     console.log(err.message);
+  //   });
+  // }
+
+  saveProfileData() {
+    if(this.editable) {
+      if (this.validator.checkRequired(this.required)) {
+        if (this.checkPhoto) {
+          const picture = firebase.storage().ref('avatar/image' + this.afAuth.auth.currentUser.uid);
+          picture.putString(this.avatarImage, 'data_url');
+          this.profile.image = 'avatar/image' + this.afAuth.auth.currentUser.uid;
+        }
+        if(this.isNew) {
+          this.profile.state = "old";
+          this.profileService.setProfile(this.profile);
+          this.navCtrl.navigateRoot('/home');
+        } else {
+          try {
+            this.profileService.setProfile(this.profile);
+          } catch(error){
+            console.error(error);
+            this.navCtrl.navigateRoot('/home');
+          } 
+          this.editable = !this.editable;
+        } 
+      }
+    } else {
+      this.editable = !this.editable;
+    }
+  }
+
+  async openPopover(ev: Event) {
+    const popover = await this.popover.create({
+      component: UserMethodsPage,
+      componentProps: {
+        ev: ev
+      },
+      event: ev,
+      mode: 'ios'
+    });
+
+    await popover.present();
+  }
 }

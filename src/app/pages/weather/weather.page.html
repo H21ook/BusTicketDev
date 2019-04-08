@@ -1,19 +1,14 @@
-<!-- <ion-list>
-  <ion-item-divider class="custom-divider">
-    <ion-label>Хотууд</ion-label>
-  </ion-item-divider>
-  <ion-item *ngFor="let city of cities" (click)="selectItem(city)" detail="false" lines=full>
-    <ion-label>
-      {{city.mn_name}}
-    </ion-label>
-  </ion-item>
-</ion-list> -->
-
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
     <ion-title>
-      Ionic Blank
+      Цаг агаар
     </ion-title>
+    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+      <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -26,19 +21,20 @@
         <ion-row align-items-center class="full-100">
 
           <ion-col align-self-center>
-              <ion-item lines="full">
-                <ion-label>Хот</ion-label>
-                <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="selectedCity"
+            <ion-list style="background: var(--ion-color-divider); margin-bottom: 5px;">
+              <div class="combo-item">
+                <ion-select okText="Сонгох" class="custom-select light-select" cancelText="Болих" [(ngModel)]="selectedCity"
                   placeholder="Хот сонгох">
                   <div *ngFor="let city of cities; let i = index;">
                     <ion-select-option [value]="city.name" (ionChange)="selectItem()">{{city.mn_name}}
                     </ion-select-option>
                   </div>
                 </ion-select>
-              </ion-item>
+              </div>
+            </ion-list>
             <ion-slides *ngIf="weather && forecastPreData" #mySlider>
               <ion-slide *ngFor="let forecastday of forecastPreData;">
-                <ion-grid style="width:100%;">
+                <ion-grid style="width:100%; background: #e3edf6;">
 
                   <ion-row class="normal-info">
                     <p class="date-text">{{forecastday.dateFull}}</p>
@@ -102,8 +98,8 @@
 
     <div class="wrap-days-control">
 
-      <ion-grid *ngIf="weather && forecastPreData" class="full-100">
-        <ion-row align-items-center class="full-100">
+      <ion-grid *ngIf="weather && forecastPreData" class="full-100" style="margin: 5px; width:auto;">
+        <ion-row align-items-center class="full-100" style="width:auto;">
           <ion-col align-self-center class="day-item full-100" *ngFor="let forecastday of forecastPreData; index as i"
             (click)="changeDay(i)">
             <ion-grid class="full-100">

@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController, IonSlides  } from '@ionic/angular';
+import { ModalController, IonSlides, PopoverController  } from '@ionic/angular';
 import { WeatherService } from 'src/app/services/weather/weather.service';
+import { UserMethodsPage } from '../user-methods/user-methods.page';
 
 @Component({
   selector: 'app-weather',
@@ -20,6 +21,7 @@ export class WeatherPage implements OnInit{
   @ViewChild('mySlider') slider: IonSlides;
   
   constructor(
+    private popover: PopoverController,
     private weatherService: WeatherService,
     private dataService: DataService
     // private modalCtrl: ModalController
@@ -148,5 +150,18 @@ export class WeatherPage implements OnInit{
         this.slider.slideTo(e, 300);
       }
     });
+  }
+
+  async openPopover(ev: Event) {
+    const popover = await this.popover.create({
+      component: UserMethodsPage,
+      componentProps: {
+        ev: ev
+      },
+      event: ev,
+      mode: 'ios'
+    });
+
+    await popover.present();
   }
 } 

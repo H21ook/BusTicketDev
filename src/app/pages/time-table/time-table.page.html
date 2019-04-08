@@ -1,11 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button color="light"></ion-menu-button>
     </ion-buttons>
     <ion-title>
       Тээврийн хуваарь
     </ion-title>
+    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+        <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

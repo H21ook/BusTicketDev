@@ -1,6 +1,8 @@
 <ion-header>
   <ion-toolbar color="primary">
-    <ion-title>Захиалга хийх</ion-title>
+    <ion-title>
+        Захиалга хийх
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -42,6 +44,16 @@
         </ion-item>
       </div>
     </div>
+    <ion-grid class="error error-msg" *ngIf="error">
+      <ion-row align-items-center>
+        <ion-col size="10" style="text-align:center;">
+          <span>{{error}}</span>
+        </ion-col>
+        <ion-col size="2">
+          <i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-list>
 </ion-content>
 <ion-footer>
@@ -51,7 +63,7 @@
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>
-    <ion-button slot="end" fill="clear" (click)="goToNextPage()" disabled="!nextAgree">
+    <ion-button slot="end" fill="clear" (click)="goToNextPage()" [disabled]="!nextAgree">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>
     </ion-button>
