@@ -76,12 +76,12 @@ export class SignUpPage implements OnInit {
       this.error = "";
       this.authService.register(this.user)
       .then(() =>{
-		this.verificationEmail();
         this.profile.email = this.user.email;
         this.profile.sex = '1';
         this.profile.state = 'new';
         this.profileService.setProfile(this.profile);
         console.log("Amjilttai");
+		    this.verificationEmail();
       },
       error=>{
         console.log(error);
@@ -91,28 +91,18 @@ export class SignUpPage implements OnInit {
   }
   
   verificationEmail() {
-	  if(this.required[0]) {
-		  this.error = '';
-		  this.authService.login(this.user)
-		  .then((data) => {
-			  console.log(data);
-			  this.authService.verificationEmail().then((data1) => {
-				  console.log(data1);
-				this.presentAlert("Таны " +this.user.email+  " хаягруу бүртгэл баталгаажуулах холбоос илгээсэн. Таны бүртгэл баталгаажсан үед нэвтрэх эрх нээгдэхийг анхаарна уу!","Бүртгэл баталгаажуулах");
-				
-				this.authService.logOut().then(() => {
-					this.navCtrl.navigateRoot('/login');
-				}); 
-			  },err => {
-				var uid = this.afAuth.auth.currentUser;
-				this.authService.deleteUser().then(() => {
-					
-				});
-			  });
-		  }, err => {
-			  this.error = err;
-		  });
-	  }
+    if (this.required[0]) {
+      this.error = '';
+      this.required = [];
+      this.authService.verificationEmail().then(() => {
+        this.presentAlert("Таны " + this.user.email + " хаягруу бүртгэл баталгаажуулах холбоос илгээсэн. Таны бүртгэл баталгаажсан үед нэвтрэх эрх нээгдэхийг анхаарна уу!", "Бүртгэл баталгаажуулах");
+        this.user = null;
+      }, err => {
+        this.authService.deleteUser().then(() => {
+          this.profileService.deleteProfile(this.afAuth.auth.currentUser.uid);
+        });
+      });
+    }
   }
   
   async presentAlert(massage: string, header?:string, buttons?: string) {

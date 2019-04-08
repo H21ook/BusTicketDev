@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
+import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
   selector: 'app-profile',
@@ -37,7 +38,8 @@ export class ProfilePage implements OnInit {
     private profileService: ProfileService,
     private route: ActivatedRoute,
     // private camera: Camera,
-    private validator: ValidatorService
+    private validator: ValidatorService,
+    private authService: AuthenticationService
   ) {
     if(!this.afAuth.auth.currentUser) {
       navCtrl.navigateRoot('/login');
@@ -181,5 +183,13 @@ export class ProfilePage implements OnInit {
     });
 
     await popover.present();
+  }
+
+  logout() {
+    this.authService.logOut().then((data) => {
+        this.navCtrl.navigateRoot('/login');
+      }, err => {
+      console.log(err);
+    }); 
   }
 }

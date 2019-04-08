@@ -7,7 +7,8 @@
       Цаг агаар
     </ion-title>
     <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
-      <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
+        <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+        <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -24,9 +25,9 @@
             <ion-list style="background: var(--ion-color-divider); margin-bottom: 5px;">
               <div class="combo-item">
                 <ion-select okText="Сонгох" class="custom-select light-select" cancelText="Болих" [(ngModel)]="selectedCity"
-                  placeholder="Хот сонгох">
+                  placeholder="Хот сонгох" (ionChange)="selectItem()">
                   <div *ngFor="let city of cities; let i = index;">
-                    <ion-select-option [value]="city.name" (ionChange)="selectItem()">{{city.mn_name}}
+                    <ion-select-option [value]="city.name">{{city.mn_name}}
                     </ion-select-option>
                   </div>
                 </ion-select>
@@ -57,13 +58,13 @@
                   <ion-row class="sup-info">
                     <ion-grid class="height-100 margin-center">
                       <ion-row align-items-center class="height-100 mp-0">
-                        <img src="../../assets/imglib/wind1.svg" class="icon-sup">
+                        <img src="../../../assets/other/wind1.svg" class="icon-sup">
                         <p class="sup-info-text">{{forecastday.windSpeed}} m/s</p>
                       </ion-row>
                     </ion-grid>
                     <ion-grid class="height-100 margin-center">
                       <ion-row align-items-center class="height-100 mp-0">
-                        <img src="../../assets/imglib/drops.svg" class="icon-sup">
+                        <img src="../../../assets/other/drops.svg" class="icon-sup">
                         <p class="sup-info-text">{{forecastday.humidity}} %</p>
                       </ion-row>
                     </ion-grid>

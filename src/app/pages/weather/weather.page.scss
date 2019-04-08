@@ -82,7 +82,7 @@ input[type=range]::-webkit-slider-runnable-track {
     font-weight: bold;
 }
 
-.sup-nfo, .icon-sup{
+.icon-sup{
     height: 30px;
 }
 
@@ -127,7 +127,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .day-week {
-    font-size: 18px;
+    font-size: 14px;
 }
 .day-week, .day-week-temp{
     color:var(--ion-color-light);
@@ -136,10 +136,11 @@ input[type=range]::-webkit-slider-runnable-track {
 
 .light-select {
     color:var(--ion-color-light);
+    font-size:14px !important;
 }
 
 .day-week-temp {
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .day-icon {

@@ -2,8 +2,14 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, NavController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
+import { AngularFireObject } from 'angularfire2/database';
+import { Observable } from 'rxjs';
+import { Profile } from 'src/app/models/profile.model';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { ProfileService } from 'src/app/services/profile.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-time-table',
@@ -12,6 +18,10 @@ import { UserMethodsPage } from '../user-methods/user-methods.page';
 })
 export class TimeTablePage implements OnInit {
 
+  private profileAFObser: AngularFireObject<Profile>;
+  private profileObser: Observable<Profile>;
+  private profile : Profile;
+  avatarImage: any;
   startDate: string;
   minDate: string;
   maxDate: string;
@@ -29,9 +39,34 @@ export class TimeTablePage implements OnInit {
     private popover: PopoverController,
     private dataService: DataService,
     private functionsService: FunctionsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private profileService: ProfileService,
+    private navCtrl: NavController,
+    private afAuth: AngularFireAuth
   ) { 
-    this.sourceStops = this.dataService.sourceStops;
+    if(!this.afAuth.auth.currentUser) {
+      this.navCtrl.navigateRoot('/login');
+    } else {
+      this.sourceStops = this.dataService.sourceStops;
+      this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
+      this.profileObser = this.profileAFObser.valueChanges();
+      this.getPro();
+    }
+    
+  }
+
+  getPro() {
+    this.profileObser.subscribe((profile) => {
+      this.profile = profile;
+      if (this.profile.image != null)
+        this.loadImage(this.profile.image)
+    });
+  }
+  loadImage(imageName) {
+    var storageRef = firebase.storage().ref(imageName);
+    storageRef.getDownloadURL().then((url) => {
+      this.avatarImage = url;
+    });
   }
 
   ngOnInit() {

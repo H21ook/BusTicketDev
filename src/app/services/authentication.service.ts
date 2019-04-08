@@ -12,7 +12,7 @@ export class AuthenticationService {
   constructor(
     private afAuth: AngularFireAuth,
     private facebook: Facebook
-    ) { }
+  ) { }
 
   login(user: User): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -53,50 +53,51 @@ export class AuthenticationService {
         });
     });
   }
-  
+
   resetPassword(emailAddress): Promise<any> {
     return new Promise((resolve, reject) => {
-		this.afAuth.auth.sendPasswordResetEmail(emailAddress).then((data) => {
-		  resolve(data);
-		}, error => {
-		  reject(error);
-		});
+      this.afAuth.auth.sendPasswordResetEmail(emailAddress).then((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
     });
   }
-  
+
   verificationEmail(): Promise<any> {
     return new Promise((resolve, reject) => {
-		var user = this.afAuth.auth.currentUser;
-		user.sendEmailVerification().then((data) => {
-		  resolve(data);
-		}, error => {
-		  reject(error);
-		});
+      var user = this.afAuth.auth.currentUser;
+      console.log(user);
+      user.sendEmailVerification().then((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
     });
   }
-  
+
   deleteUser(): Promise<any> {
     return new Promise((resolve, reject) => {
-		var user = this.afAuth.auth.currentUser;
-		user.delete().then((data) => {
-		  resolve(data);
-		}, error => {
-		  reject(error);
-		});
+      var user = this.afAuth.auth.currentUser;
+      user.delete().then((data) => {
+        resolve(data);
+      }, error => {
+        reject(error);
+      });
     });
   }
 
   facebookLogin(): Promise<any> {
     return this.facebook.login(['email'])
-      .then( response => {
+      .then(response => {
         const facebookCredential = firebase.auth.FacebookAuthProvider
           .credential(response.authResponse.accessToken);
-  
+
         firebase.auth().signInWithCredential(facebookCredential)
-          .then( success => { 
-            console.log("Firebase success: " + JSON.stringify(success)); 
+          .then(success => {
+            console.log("Firebase success: " + JSON.stringify(success));
           });
-  
+
       }).catch((error) => { console.log(error) });
   }
 }

@@ -1,13 +1,20 @@
 <ion-header>
     <ion-toolbar color="primary">
-      <ion-buttons slot="start">
+      <ion-buttons slot="start" *ngIf="!isNew">
         <ion-menu-button color="light"></ion-menu-button>
       </ion-buttons>
       <ion-title>
         {{isNew ? 'Хувийн мэдээлэл бүртгэх' : 'Хувийн мэдээлэл'}}
       </ion-title>
+      <ion-buttons slot="end" *ngIf="isNew">
+        <ion-button (click)="logout()">
+          <fa-icon class="user-icon" icon="sign-out-alt" color="light"></fa-icon>
+          <ion-label>Гарах</ion-label>
+        </ion-button>
+      </ion-buttons>
       <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
-          <fa-icon class="user-icon" icon="user-circle" color="ligth"></fa-icon>
+          <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+          <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
@@ -20,7 +27,7 @@
           <div class="login-form">
             <span class="login-form-icon">
               <img class="user-image" *ngIf="avatarImage != null" [src]="avatarImage">
-              <img class="user-image" *ngIf="(avatarImage == null)" src="../../assets/imgs/add_image.png">
+              <img class="user-image" *ngIf="(avatarImage == null)" src="../../../assets/other/user-circle-solid.svg">
             </span>
             <div class="pic-edit-control" *ngIf="editable">
               <div class="edit-layer">

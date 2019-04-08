@@ -21,7 +21,6 @@ export class AppComponent {
       icon: 'list-alt'
     }
   ];
-
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,

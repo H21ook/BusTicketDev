@@ -24,4 +24,8 @@ export class ProfileService {
       this.afd.object('/profile/' + auth.uid).set(profile);
     })
   }
+
+  deleteProfile(userID) {
+    this.afd.object('/profile/' + userID).remove();
+  }
 }

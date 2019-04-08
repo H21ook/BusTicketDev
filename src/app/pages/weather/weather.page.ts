@@ -1,8 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController, IonSlides, PopoverController  } from '@ionic/angular';
+import { ModalController, IonSlides, PopoverController, NavController  } from '@ionic/angular';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
+import { AngularFireObject } from 'angularfire2/database';
+import { Observable } from 'rxjs';
+import { Profile } from 'src/app/models/profile.model';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { ProfileService } from 'src/app/services/profile.service';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-weather',
@@ -11,6 +17,10 @@ import { UserMethodsPage } from '../user-methods/user-methods.page';
 })
 export class WeatherPage implements OnInit{
 
+  private profileAFObser: AngularFireObject<Profile>;
+  private profileObser: Observable<Profile>;
+  private profile : Profile;
+  avatarImage: any;
   cities: any;
   selectedCity: any = "Ulaanbaatar";
   private weather: any;
@@ -23,11 +33,37 @@ export class WeatherPage implements OnInit{
   constructor(
     private popover: PopoverController,
     private weatherService: WeatherService,
-    private dataService: DataService
+    private dataService: DataService,
+    private afAuth: AngularFireAuth,
+    private navCtrl: NavController,
+    private profileService: ProfileService
     // private modalCtrl: ModalController
   ) {
-    this.cities = this.dataService.cities;
+    if(!this.afAuth.auth.currentUser) {
+      this.navCtrl.navigateRoot('/login');
+    } else {
+      this.cities = this.dataService.cities;
+      this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
+      this.profileObser = this.profileAFObser.valueChanges();
+      this.getPro();
+    }
+    
   }
+
+  getPro() {
+    this.profileObser.subscribe((profile) => {
+      this.profile = profile;
+      if (this.profile.image != null)
+        this.loadImage(this.profile.image)
+    });
+  }
+  loadImage(imageName) {
+    var storageRef = firebase.storage().ref(imageName);
+    storageRef.getDownloadURL().then((url) => {
+      this.avatarImage = url;
+    });
+  }
+
 
   ngOnInit() {
     this.dataLoad(this.selectedCity);
@@ -39,19 +75,24 @@ export class WeatherPage implements OnInit{
 
 
   dataLoad(name: string) {
+    
+    this.forecastdays = [];
+
     this.weatherService.getWeater(name).subscribe(data => {
+      this.weather = null;
       this.weather = data.json();
     });
 
     this.weatherService.getForecastWeater(name).subscribe(data => {
       let weatherForecast: any = data.json();
-
+      console.log(weatherForecast);
       let forecastday = [], dt, dtTemp, k = -1;
 
       dt = new Date();
 
       for (let i = 0; i < weatherForecast.list.length; i++) {
-        dtTemp = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000));
+        // dtTemp = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000)); //tsagiin zoruutei uyd ashiglana
+        dtTemp = new Date(weatherForecast.list[i].dt * 1000);
         if (dt.getDate() == dtTemp.getDate() && k == -1) {
           k = 0;
         }
@@ -64,7 +105,8 @@ export class WeatherPage implements OnInit{
             forecastday = [];
             k++;
 
-            dt = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000));
+            // dt = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000)); //tsagiin zoruutei uyd ashiglana
+            dt = new Date(weatherForecast.list[i].dt * 1000);
             forecastday.push(weatherForecast.list[i]);
           }
       }
@@ -85,6 +127,8 @@ export class WeatherPage implements OnInit{
   }
 
   getPrepareData(datas) {
+    this.forecastPreData = [];
+
     let date;
     let param: any = {};
     let totalTemp = 0, totalHumidity = 0, totalWindSpeed = 0;
@@ -134,7 +178,7 @@ export class WeatherPage implements OnInit{
       }
 
       this.forecastPreData.push(param);
-
+      console.log(this.forecastPreData);
       totalTemp = 0;
       totalHumidity = 0;
       totalWindSpeed = 0;
