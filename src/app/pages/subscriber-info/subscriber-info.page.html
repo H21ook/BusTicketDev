@@ -1,12 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-        Захиалга хийх > Алхам 4
+      Захиалга хийх
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <fa-icon class="icon-normal" icon="times-circle" color="light"></fa-icon>
+        <ion-label class="btn-header">Цуцлах</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="show">
   <ion-list>
     <ion-item-divider class="custom-divider">
       <ion-label>Захиалагчийн мэдээлэл</ion-label>
@@ -17,12 +23,14 @@
         <ion-input placeholder="Овог.Нэр" [(ngModel)]="subscriber.name" (change)="changeName()"></ion-input>
       </ion-item>
       <ion-item lines="full">
-          <fa-icon icon="fingerprint" slot="start"></fa-icon>
-        <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="subscriber.register" (change)="changeRegister()"></ion-input>
+        <fa-icon icon="fingerprint" slot="start"></fa-icon>
+        <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="subscriber.register" (change)="changeRegister()">
+        </ion-input>
       </ion-item>
       <ion-item lines="full">
         <fa-icon icon="sim-card" slot="start"></fa-icon>
-        <ion-input placeholder="Утасны дугаар" [(ngModel)]="subscriber.phoneNumber" (change)="changePhone()"></ion-input>
+        <ion-input placeholder="Утасны дугаар" [(ngModel)]="subscriber.phoneNumber" (change)="changePhone()">
+        </ion-input>
       </ion-item>
       <ion-item lines="full">
         <fa-icon icon="envelope" slot="start"></fa-icon>
@@ -43,8 +51,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" [routerDirection]="'backward'"
-      [routerLink]="'/passenger-info'">
+    <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/passenger-info'">
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>

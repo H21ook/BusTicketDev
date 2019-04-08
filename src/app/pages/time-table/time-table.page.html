@@ -13,18 +13,17 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="show">
   <ion-list class="list">
+
     <!-- <ion-item-divider class="custom-divider">
-              <ion-label>Чиглэл сонгох</ion-label>
-            </ion-item-divider> -->
-    <ion-item-divider class="custom-divider">
       <ion-label>Хэзээ</ion-label>
     </ion-item-divider>
     <ion-item>
       <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
         [(ngModel)]="startDate" [min]="minDate" [max]="maxDate"></ion-datetime>
-    </ion-item>
+    </ion-item> -->
+
     <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
     </ion-item-divider>

@@ -1,12 +1,18 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-        Захиалга хийх
+      Захиалга хийх
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <fa-icon class="icon-normal" icon="times-circle" color="light"></fa-icon>
+        <ion-label class="btn-header">Цуцлах</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="show">
   <ion-list>
     <ion-item-divider class="custom-divider">
       <ion-label>Зорчигчдын мэдээлэл</ion-label>
@@ -24,7 +30,8 @@
         <ion-item>
           <fa-icon icon="sort-numeric-up" slot="start"></fa-icon>
           <ion-label style="padding-left:5px;">Нас</ion-label>
-          <ion-select class="custom-select" interface="popover" [(ngModel)]="passenger.age" (ionChange)="calcAmountAge(i)">
+          <ion-select class="custom-select" interface="popover" [(ngModel)]="passenger.age"
+            (ionChange)="calcAmountAge(i)">
             <ion-select-option value="1" selected>Том хүн</ion-select-option>
             <ion-select-option value="0">Хүүхэд /7-12 нас/</ion-select-option>
           </ion-select>
@@ -34,11 +41,12 @@
           <ion-input placeholder="Овог.Нэр" [(ngModel)]="passenger.name" (change)="changeName(i)"></ion-input>
         </ion-item>
         <ion-item>
-            <fa-icon icon="fingerprint" slot="start"></fa-icon>
-          <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="passenger.register" (change)="changeRegister(i)"></ion-input>
+          <fa-icon icon="fingerprint" slot="start"></fa-icon>
+          <ion-input placeholder="Регистерийн дугаар" [(ngModel)]="passenger.register" (change)="changeRegister(i)">
+          </ion-input>
         </ion-item>
         <ion-item lines="full">
-            <fa-icon icon="user-shield" slot="start"></fa-icon>
+          <fa-icon icon="user-shield" slot="start"></fa-icon>
           <ion-label>Амь даатгал /400₮/</ion-label>
           <ion-checkbox slot="end" [(ngModel)]="passenger.incur" (ionChange)="calcAmountAge(i)"></ion-checkbox>
         </ion-item>
@@ -58,8 +66,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" [routerDirection]="'backward'"
-      [routerLink]="'/seats-select'">
+    <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/seats-select'">
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>

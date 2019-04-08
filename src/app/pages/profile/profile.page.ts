@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
-import { NavController, PopoverController } from '@ionic/angular';
+import { NavController, PopoverController, LoadingController, MenuController } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Profile } from 'src/app/models/profile.model';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -30,6 +30,7 @@ export class ProfilePage implements OnInit {
   status: string;
   isNew: boolean = false;
   editable: boolean = false;
+  show: boolean = false;
 
   constructor(
     private popover: PopoverController,
@@ -39,17 +40,18 @@ export class ProfilePage implements OnInit {
     private route: ActivatedRoute,
     // private camera: Camera,
     private validator: ValidatorService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private loadingController: LoadingController,
+    private menuCtrl: MenuController
   ) {
     if(!this.afAuth.auth.currentUser) {
+      this.menuCtrl.enable(false);
       navCtrl.navigateRoot('/login');
     } else {
       this.status = this.route.snapshot.paramMap.get('id');
       this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
       this.profileObser = this.profileAFObser.valueChanges();
-
-
-      this.getPro();
+      this.loadingData();
     }
 
     // this.cameraOptions = {
@@ -63,18 +65,29 @@ export class ProfilePage implements OnInit {
     // };
   }
 
-  async getPro() {
-    const aaa = await this.profileObser.subscribe((profile) => {
+  async loadingData() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+    });
+    await loading.present();
+
+    this.profileObser.subscribe((profile) => {
       this.profile = profile;
       if(!this.isNew) {
       this.changeFN();
       this.changeLN();
       this.changeRegN();
+      } else {
+        this.menuCtrl.enable(false);
       }
       if (this.profile.image != null)
         this.loadImage(this.profile.image)
-    });
-    console.log(aaa);
+
+      loading.dismiss();
+      this.show = true;
+    }, err => loading.dismiss());
   }
 
   ngOnInit() {
@@ -112,10 +125,6 @@ export class ProfilePage implements OnInit {
       this.required[2] = false;
       this.error = res;
     }
-  }
-
-  ionViewDidLoad() {
-
   }
 
   loadImage(imageName) {

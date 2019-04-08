@@ -13,7 +13,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="show">
   <div class="full-100">
 
     <div class="wrap-slide">
@@ -35,7 +35,7 @@
             </ion-list>
             <ion-slides *ngIf="weather && forecastPreData" #mySlider>
               <ion-slide *ngFor="let forecastday of forecastPreData;">
-                <ion-grid style="width:100%; background: #e3edf6;">
+                <ion-grid style="width:100%; background: var(--ion-color-secondary-contrast);">
 
                   <ion-row class="normal-info">
                     <p class="date-text">{{forecastday.dateFull}}</p>
@@ -97,7 +97,7 @@
       </ion-grid>
     </div>
 
-    <div class="wrap-days-control">
+    <div>
 
       <ion-grid *ngIf="weather && forecastPreData" class="full-100" style="margin: 5px; width:auto;">
         <ion-row align-items-center class="full-100" style="width:auto;">

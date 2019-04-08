@@ -2,7 +2,7 @@
 	<style>
 		tspan { white-space:pre }
 		.shp0 { fill: #ceced5;stroke: #000000;stroke-linecap:round;stroke-linejoin:round;stroke-width: 3 } 
-		.shp1 { fill: #33e93c;stroke: #000000;stroke-linecap:round;stroke-linejoin:round;stroke-width: 3 } 
+		.shp1 { fill: #59ff62;stroke: #000000;stroke-linecap:round;stroke-linejoin:round;stroke-width: 3 } 
 	</style>
 	<path id="Shape 1" class="shp0" d="M20,115v160c0,8.3 6.7,15 15,15h230c8.3,0 15,-6.7 15,-15v-160c0,-19.36 -15.64,-35 -35,-35h-190c-19.36,0 -35,15.64 -35,35z" />
 	<path id="Shape 2" class="shp1" d="M55,25v190c0,8.29 6.7,15 15,15h160c8.29,0 15,-6.71 15,-15v-190c0,-8.3 -6.71,-15 -15,-15h-160c-8.3,0 -15,6.71 -15,15z" />

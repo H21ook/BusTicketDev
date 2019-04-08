@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController, IonSlides, PopoverController, NavController  } from '@ionic/angular';
+import { ModalController, IonSlides, PopoverController, NavController, LoadingController } from '@ionic/angular';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { AngularFireObject } from 'angularfire2/database';
@@ -15,11 +15,11 @@ import * as firebase from 'firebase';
   templateUrl: './weather.page.html',
   styleUrls: ['./weather.page.scss'],
 })
-export class WeatherPage implements OnInit{
+export class WeatherPage implements OnInit {
 
   private profileAFObser: AngularFireObject<Profile>;
   private profileObser: Observable<Profile>;
-  private profile : Profile;
+  private profile: Profile;
   avatarImage: any;
   cities: any;
   selectedCity: any = "Ulaanbaatar";
@@ -27,19 +27,21 @@ export class WeatherPage implements OnInit{
   private forecastdays: any = [];
   private forecastPreData: any = [];
   private weekday = ["Ням", "Даваа", "Мягмар", "Лхагва", "Пүрэв", "Баасан", "Бямба"];
+  show: boolean = false;
 
   @ViewChild('mySlider') slider: IonSlides;
-  
+
   constructor(
     private popover: PopoverController,
     private weatherService: WeatherService,
     private dataService: DataService,
     private afAuth: AngularFireAuth,
     private navCtrl: NavController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private loadingController: LoadingController
     // private modalCtrl: ModalController
   ) {
-    if(!this.afAuth.auth.currentUser) {
+    if (!this.afAuth.auth.currentUser) {
       this.navCtrl.navigateRoot('/login');
     } else {
       this.cities = this.dataService.cities;
@@ -47,7 +49,7 @@ export class WeatherPage implements OnInit{
       this.profileObser = this.profileAFObser.valueChanges();
       this.getPro();
     }
-    
+
   }
 
   getPro() {
@@ -57,6 +59,7 @@ export class WeatherPage implements OnInit{
         this.loadImage(this.profile.image)
     });
   }
+
   loadImage(imageName) {
     var storageRef = firebase.storage().ref(imageName);
     storageRef.getDownloadURL().then((url) => {
@@ -66,64 +69,12 @@ export class WeatherPage implements OnInit{
 
 
   ngOnInit() {
-    this.dataLoad(this.selectedCity);
+    this.show = false;
+    this.loadingData(this.selectedCity);
   }
 
   selectItem() {
-    this.dataLoad(this.selectedCity);
-  }
-
-
-  dataLoad(name: string) {
-    
-    this.forecastdays = [];
-
-    this.weatherService.getWeater(name).subscribe(data => {
-      this.weather = null;
-      this.weather = data.json();
-    });
-
-    this.weatherService.getForecastWeater(name).subscribe(data => {
-      let weatherForecast: any = data.json();
-      console.log(weatherForecast);
-      let forecastday = [], dt, dtTemp, k = -1;
-
-      dt = new Date();
-
-      for (let i = 0; i < weatherForecast.list.length; i++) {
-        // dtTemp = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000)); //tsagiin zoruutei uyd ashiglana
-        dtTemp = new Date(weatherForecast.list[i].dt * 1000);
-        if (dt.getDate() == dtTemp.getDate() && k == -1) {
-          k = 0;
-        }
-        if (k < 5 && k > -1)
-          if (dt.getDate() == dtTemp.getDate()) {
-            forecastday.push(weatherForecast.list[i]);
-          }
-          else {
-            this.forecastdays.push(forecastday.slice());
-            forecastday = [];
-            k++;
-
-            // dt = new Date((weatherForecast.list[i].dt * 1000) - (8 * 60 * 60 * 1000)); //tsagiin zoruutei uyd ashiglana
-            dt = new Date(weatherForecast.list[i].dt * 1000);
-            forecastday.push(weatherForecast.list[i]);
-          }
-      }
-
-      forecastday = [];
-      this.getPrepareData(this.forecastdays);
-    });
-
-    // this.network.onDisconnect().subscribe(() => {
-    //   this.presentToast({message:'network was disconnected :-(', duration: 2000, position: 'top'});
-    //   console.log('network was disconnected :-(');
-    // });
-
-    // this.network.onConnect().subscribe(() => {
-    //   this.presentToast({message:'Network connected!', duration: 2000, position: 'top'});
-    //   console.log('Network connected!');
-    // }); 
+    this.loadingData(this.selectedCity);
   }
 
   getPrepareData(datas) {
@@ -149,20 +100,21 @@ export class WeatherPage implements OnInit{
           maxTemp = datas[i][j].main.temp;
       }
 
-      date = new Date((datas[i][0].dt * 1000) - (8 * 60 * 60 * 1000));
+      date = new Date(datas[i][0].dt_txt);
+
       var options = { year: 'numeric', month: 'numeric', day: 'numeric' };
 
       if (i == 0 && this.weather) {
         param = {
           date: this.weekday[date.getDay()],
           dateFull: date.toLocaleDateString('en-GB', options),
-          weather: this.weather.weather ? this.weather.weather : null,
-          temp: this.weather.main.temp ? this.weather.main.temp : null,
-          humidity: this.weather.main.humidity ? this.weather.main.humidity : null,
-          windSpeed: this.weather.wind.speed ? this.weather.wind.speed : null,
+          weather: this.weather.weather,
+          temp: Math.round(this.weather.main.temp),
+          humidity: Math.round(this.weather.main.humidity),
+          windSpeed: Math.round(this.weather.wind.speed),
           temp_min: Math.round(minTemp),
-          temp_max: Math.round(maxTemp),
-        }
+          temp_max: Math.round(maxTemp) < this.weather.main.temp ? this.weather.main.temp : Math.round(maxTemp),
+        };
       }
       else {
         param = {
@@ -174,11 +126,11 @@ export class WeatherPage implements OnInit{
           windSpeed: Math.round(totalWindSpeed / datas[i].length),
           temp_min: Math.round(minTemp),
           temp_max: Math.round(maxTemp)
-        }
+        };
       }
 
       this.forecastPreData.push(param);
-      console.log(this.forecastPreData);
+      
       totalTemp = 0;
       totalHumidity = 0;
       totalWindSpeed = 0;
@@ -207,5 +159,61 @@ export class WeatherPage implements OnInit{
     });
 
     await popover.present();
+  }
+
+  async loadingData(name: string) {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+    });
+    await loading.present();
+    this.forecastdays = [];
+    this.weatherService.getWeater(name).subscribe(data => {
+      this.weather = data.json();
+      this.weather.main.temp = Math.round(this.weather.main.temp);
+
+      this.weatherService.getForecastWeater(name).subscribe(data => {
+        let weatherForecast: any = data.json();
+
+        let forecastday = [], dt, dtTemp, k = -1;
+
+        dt = new Date();
+
+        for (let i = 0; i < weatherForecast.list.length; i++) {
+          dtTemp = new Date(weatherForecast.list[i].dt_txt);
+          if (dt.getDate() == dtTemp.getDate() && k == -1) {
+            k = 0;
+          }
+          if (k < 6 && k > -1)
+            if (dt.getDate() == dtTemp.getDate()) {
+              forecastday.push(weatherForecast.list[i]);
+            }
+            else {
+              this.forecastdays.push(forecastday.slice());
+              forecastday = [];
+              k++;
+
+              dt = new Date(weatherForecast.list[i].dt_txt);
+              forecastday.push(weatherForecast.list[i]);
+            }
+        }
+
+        forecastday = [];
+        this.getPrepareData(this.forecastdays);
+        loading.dismiss();
+        this.show = true;
+      },err => loading.dismiss());
+    },err => loading.dismiss());
+
+    // this.network.onDisconnect().subscribe(() => {
+    //   this.presentToast({message:'network was disconnected :-(', duration: 2000, position: 'top'});
+    //   console.log('network was disconnected :-(');
+    // });
+
+    // this.network.onConnect().subscribe(() => {
+    //   this.presentToast({message:'Network connected!', duration: 2000, position: 'top'});
+    //   console.log('Network connected!');
+    // });
   }
 } 

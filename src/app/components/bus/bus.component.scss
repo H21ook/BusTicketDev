@@ -1,8 +1,8 @@
 .bus {
-    width: 127px;
-    height: 342px;
+    width: 177px;
+    height: 462px;
     border-radius: 5px;
-    border: 1px solid black;
+    border: 1px solid var(--ion-color-dark);
     margin: 10px auto 5px auto;
 }
 
@@ -15,7 +15,7 @@
 }
 
 .driver {
-    background: #981a1a;
+    background: var(--ion-color-aqua);
     margin-top: 0;
     padding-bottom: 5px;
     border-radius: 4px 4px 0px 0px;
@@ -39,8 +39,8 @@
 }
 
 .seat {
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     position: relative;
     padding-top: 3px;
 }

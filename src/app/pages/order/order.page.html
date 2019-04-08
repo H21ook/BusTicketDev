@@ -9,7 +9,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content *ngIf="show">
   <ion-slides #sliderMain (ionSlideWillChange)="changeSliderMain()">
     <ion-slide>
       <ion-list class="list">

@@ -8,8 +8,8 @@
       </ion-title>
       <ion-buttons slot="end" *ngIf="isNew">
         <ion-button (click)="logout()">
-          <fa-icon class="user-icon" icon="sign-out-alt" color="light"></fa-icon>
-          <ion-label>Гарах</ion-label>
+          <fa-icon class="icon-normal" icon="sign-out-alt" color="light"></fa-icon>
+          <ion-label class="btn-header">Гарах</ion-label>
         </ion-button>
       </ion-buttons>
       <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
@@ -32,10 +32,10 @@
             <div class="pic-edit-control" *ngIf="editable">
               <div class="edit-layer">
                 <ion-buttons class="icon-btn" slot="end" (click)="selectPhoto()">
-                  <fa-icon class="user-icon" icon="camera" color="ligth"></fa-icon>
+                  <fa-icon class="icon-normal" icon="camera" color="ligth"></fa-icon>
                 </ion-buttons>
                 <ion-buttons class="icon-btn" slot="end" (click)="takePhoto()">
-                  <fa-icon class="user-icon" icon="upload" color="ligth"></fa-icon>
+                  <fa-icon class="icon-normal" icon="upload" color="ligth"></fa-icon>
                 </ion-buttons>
               </div>
             </div>
@@ -46,11 +46,11 @@
                   <ion-input placeholder="Овог" [(ngModel)]="profile.firstName" [readonly]="!editable" name="fname" (ionChange)="changeFN()"></ion-input>
                 </ion-item>
                 <ion-item lines="full">
-                  <fa-icon icon="address-card" slot="start"></fa-icon>
+                  <fa-icon icon="portrait" slot="start"></fa-icon>
                   <ion-input placeholder="Нэр" [(ngModel)]="profile.lastName" [readonly]="!editable" name="lname" (ionChange)="changeLN()"></ion-input>
                 </ion-item>
                 <ion-item lines="full">
-                  <fa-icon icon="address-card" slot="start"></fa-icon>
+                  <fa-icon icon="fingerprint" slot="start"></fa-icon>
                   <ion-input placeholder="Регистерын дугаар" name="register" [readonly]="!editable" [(ngModel)]="profile.registerNumber"
                     (ionChange)="changeRegN()">
                   </ion-input>
@@ -60,7 +60,7 @@
                   <ion-input placeholder="Имэйл хаяг" [readonly]="true" name="email" [(ngModel)]="profile.email"></ion-input>
                 </ion-item>
                 <ion-item lines="full">
-                  <fa-icon icon="envelope" slot="start"></fa-icon>
+                  <fa-icon icon="sim-card" slot="start"></fa-icon>
                   <ion-input type="number" placeholder="Утасны дугаар" [readonly]="!editable" name="phone" [(ngModel)]="profile.phoneNumber"></ion-input>
                 </ion-item>
               </ion-list>

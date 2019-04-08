@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController, NavController, AlertController } from '@ionic/angular';
+import { LoadingController, NavController, AlertController, MenuController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -70,8 +70,9 @@ export class LoginPage implements OnInit {
   }
 
   login() {
-    if (this.validator.checkRequired(this.required)) {
+    // if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
+      this.user = {email: "tbeta40@gmail.com", password: "boomboom"};
       this.authService.login(this.user)
         .then(() => {
 		  if(this.afAuth.auth.currentUser.emailVerified) {
@@ -82,7 +83,7 @@ export class LoginPage implements OnInit {
 				if (profile.state == "new")
 				  this.navController.navigateRoot('/profile/new');
 				else
-				  this.navController.navigateRoot('/home');
+          this.navController.navigateRoot('/home');
 			  });
 		  } else {
 			  this.loginError = "Таны мэйл хаяг баталгаажаагүй байна! Мэйл хаягаа шалгана уу"
@@ -100,10 +101,11 @@ export class LoginPage implements OnInit {
           else
             this.loginError = error;
         });
-    }
+    // }
   }
   
   resetPassword() {
+    this.changeEmail();
 	  if(this.required[0]) {
 		  this.loginError = '';
 		  this.authService.resetPassword(this.user.email)

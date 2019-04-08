@@ -1,5 +1,5 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { AlertController, PopoverController, LoadingController, ModalController, NavController } from '@ionic/angular';
+import { AlertController, PopoverController, LoadingController, ModalController, NavController, MenuController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
@@ -30,6 +30,8 @@ export class HomePage implements OnInit {
     mn_name: "Улаанбаатар"
   };
   weatherData: any;
+  show: boolean = false;
+  
   constructor(
     private popover: PopoverController,
     private dataService: DataService,
@@ -37,10 +39,13 @@ export class HomePage implements OnInit {
     private afAuth: AngularFireAuth,
     private weatherService: WeatherService,
     private navCtrl: NavController,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private loadingController: LoadingController,
+    private menuCtrl: MenuController
   ) {
     this.sourceStops = this.dataService.sourceStops;
     if(!this.afAuth.auth.currentUser) {
+      this.menuCtrl.enable(false);
       navCtrl.navigateRoot('/login');
     } else {
       this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
@@ -50,8 +55,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    this.getWeather();
+    this.loadingData();
   }
   
   getPro() {
@@ -86,10 +90,22 @@ export class HomePage implements OnInit {
   }
 
   getWeather() {
-    this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
-      this.weatherData = data.json();
-    });
+    
   }
 
-
+  async loadingData() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+    });
+    await loading.present();
+    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
+    this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
+      this.weatherData = data.json();
+      this.menuCtrl.enable(true);
+      loading.dismiss();
+      this.show = true;
+    }, err => loading.dismiss());
+  };
 }

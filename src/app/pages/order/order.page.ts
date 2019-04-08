@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, LoadingController } from '@ionic/angular';
 import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
 
@@ -20,20 +20,32 @@ export class OrderPage implements OnInit {
   aimagData: any = []
   model: any = {};
   id: string;
+  show:boolean = false;
 
   constructor(
     private dataService: DataService,
     private functionsService: FunctionsService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private loadingController: LoadingController
   ) { 
     this.sourceStops = this.dataService.sourceStops;
   }
 
-  ngOnInit() {
+  async loadingData() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+    });
+    await loading.present();
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    console.log(this.aimagData);
     this.getDefaultValue();
     this.apiService.getSourceStops();
+    this.show = true;
+  }
+
+  ngOnInit() {
+    this.loadingData();
   }
 
   getDefaultValue() {

@@ -1,11 +1,17 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-        Захиалга хийх
+      Захиалга хийх
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cancel()">
+        <fa-icon class="icon-normal" icon="times-circle" color="light"></fa-icon>
+        <ion-label class="btn-header">Цуцлах</ion-label>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+<ion-content *ngIf="show">
   <ion-list>
     <ion-item-divider class="custom-divider">
       <ion-label>Суудал сонгох</ion-label>
@@ -15,8 +21,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" [routerDirection]="'backward'"
-      [routerLink]="'/time-table'">
+    <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/time-table'">
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
     </ion-button>

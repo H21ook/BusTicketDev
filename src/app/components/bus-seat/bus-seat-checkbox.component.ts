@@ -42,10 +42,17 @@ export class BusSeatCheckboxComponent implements OnInit {
           this.image = '../../../assets/other/images/special.svg';
       }
     } else {
-      if (this.status == "normal")
-        this.image = '../../../assets/other/images/normal_disabled.svg';
-      else if (this.status == "special")
-        this.image = '../../../assets/other/images/special_disabled.svg';
+      if (this.checked) {
+        if (this.status == "normal")
+          this.image = '../../../assets/other/images/normal_selected_disabled.svg';
+        else if (this.status == "special")
+          this.image = '../../../assets/other/images/special_selected_disabled.svg';
+      } else {
+        if (this.status == "normal")
+          this.image = '../../../assets/other/images/normal_disabled.svg';
+        else if (this.status == "special")
+          this.image = '../../../assets/other/images/special_disabled.svg';
+      }
     }
   }
   private toggleEmit() {

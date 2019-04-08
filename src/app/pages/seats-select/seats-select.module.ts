@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { SeatsSelectPage } from './seats-select.page';
 import { BusComponentsModule } from '../../components/bus-components/bus-components.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 const routes: Routes = [
   {
@@ -21,7 +22,8 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     RouterModule.forChild(routes),
-    BusComponentsModule
+    BusComponentsModule,
+    FontAwesomeModule
   ],
   declarations: [SeatsSelectPage]
 })

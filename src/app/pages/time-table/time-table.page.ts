@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
-import { PopoverController, NavController } from '@ionic/angular';
+import { PopoverController, NavController, LoadingController, MenuController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
@@ -34,6 +34,7 @@ export class TimeTablePage implements OnInit {
     slidesPerView: 3,
     effect: 'slide'
   };
+  show: boolean = false;
 
   constructor(
     private popover: PopoverController,
@@ -42,9 +43,12 @@ export class TimeTablePage implements OnInit {
     private apiService: ApiService,
     private profileService: ProfileService,
     private navCtrl: NavController,
-    private afAuth: AngularFireAuth
+    private afAuth: AngularFireAuth,
+    private loadingController: LoadingController,
+    private menuCtrl: MenuController
   ) { 
     if(!this.afAuth.auth.currentUser) {
+      this.menuCtrl.enable(false);
       this.navCtrl.navigateRoot('/login');
     } else {
       this.sourceStops = this.dataService.sourceStops;
@@ -70,20 +74,31 @@ export class TimeTablePage implements OnInit {
   }
 
   ngOnInit() {
+    this.loadingData();
+  }
+
+  async loadingData() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+    });
+    await loading.present();
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    console.log(this.aimagData);
-    this.getDefaultValue();
+    // this.getDefaultValue();
     this.apiService.getSourceStops();
+    loading.dismiss();
+    this.show = true;
   }
 
-  getDefaultValue() {
-    let now = new Date();
-    this.startDate = now.toISOString();
-    this.minDate = now.toISOString();
+  // getDefaultValue() {
+  //   let now = new Date();
+  //   this.startDate = now.toISOString();
+  //   this.minDate = now.toISOString();
 
-    now.setDate(now.getDate() + 7);
-    this.maxDate = now.toISOString();
-  }
+  //   now.setDate(now.getDate() + 7);
+  //   this.maxDate = now.toISOString();
+  // }
 
   changeFromAimag(e) {
     this.model.fromStop = null;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, PopoverController, NavController, LoadingController, Events } from '@ionic/angular';
+import { NavParams, PopoverController, NavController, LoadingController, Events, MenuController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -12,7 +12,8 @@ export class UserMethodsPage implements OnInit {
     private popover: PopoverController,
     private navCtrl: NavController,
     private loadingController: LoadingController,
-    private authService: AuthenticationService) { }
+    private authService: AuthenticationService,
+    private menuCtrl: MenuController) { }
 
   ngOnInit() {
   }
@@ -36,6 +37,7 @@ export class UserMethodsPage implements OnInit {
     await loading.present();
     this.authService.logOut().then((data) => {
       loading.dismiss().then(() => {
+        this.menuCtrl.enable(false);
         this.navCtrl.navigateRoot('/login');
       });
     }, err => {

@@ -24,12 +24,6 @@ export class WeatherService {
       const params = {};
       const headers = {};
 
-      response.subscribe(data => {
-        console.log(data.status);
-        console.log(data.json()); // JSON data returned by server
-        console.log(data.headers);
-      });
-
       return response;
     } catch (error) {
       console.error(error.status);
