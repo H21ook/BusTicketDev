@@ -35,6 +35,7 @@ export class TimeTablePage implements OnInit {
     effect: 'slide'
   };
   show: boolean = false;
+  dat: any;
 
   constructor(
     private popover: PopoverController,
@@ -86,8 +87,19 @@ export class TimeTablePage implements OnInit {
     await loading.present();
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
     // this.getDefaultValue();
-    this.apiService.getSourceStops();
-    loading.dismiss();
+    this.apiService.getWeekTimeTable(82).then(data => {
+      this.dat = data;
+      loading.dismiss();
+    })
+    .catch(error => {
+  
+      console.log(error.status);
+      console.log(error.error); // error message as string
+      this.dat = "error" + error.error;
+      console.log(error.headers);
+      loading.dismiss();
+    });
+    
     this.show = true;
   }
 

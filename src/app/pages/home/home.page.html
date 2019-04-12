@@ -37,7 +37,7 @@
 
     <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromAimag"
-        placeholder="Аймаг сонгох">
+        placeholder="Аймаг сонгох" (ionChange)="fromAimagChange()">
         <div *ngFor="let item of aimagData; let i = index;">
           <ion-select-option [value]="i">{{item.name}}</ion-select-option>
         </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="combo-item" *ngIf="model.fromAimag != null && model.fromAimag != undefined">
       <ion-select okText="Сонгох" class="custom-select stop" cancelText="Болих" [(ngModel)]="model.fromStop"
-        placeholder="Буудал сонгох">
+        placeholder="Буудал сонгох" (ionChange)="setStop()">
         <div *ngFor="let item of aimagData[model.fromAimag].data; let i = index;">
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
@@ -58,7 +58,7 @@
     <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.toAimag"
         placeholder="Аймаг сонгох">
-        <div *ngFor="let item of aimagData; let i = index;">
+        <div *ngFor="let item of distData; let i = index;">
           <ion-select-option [value]="i">{{item.name}}</ion-select-option>
         </div>
       </ion-select>
@@ -66,7 +66,7 @@
     <div class="combo-item" *ngIf="model.toAimag != null && model.toAimag != undefined">
       <ion-select okText="Сонгох" class="custom-select  stop" cancelText="Болих" [(ngModel)]="model.toStop"
         placeholder="Буудал сонгох">
-        <div *ngFor="let item of aimagData[model.toAimag].data; let i = index;">
+        <div *ngFor="let item of distData[model.toAimag].data; let i = index;">
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
       </ion-select>
@@ -75,14 +75,14 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>
-    <ion-item lines="full">
+    <ion-item lines="full" *ngIf="let item of timeTableData; let i=index;">
       <div slot="start" class="start-side">
         <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
-        <ion-label class="start-time">09:00</ion-label>
+        <ion-label class="start-time">item.time</ion-label>
       </div>
       <div class="body-side">
-        <ion-label>Улаанбаатар - Ар.Жаргалант</ion-label>
-        <ion-label class="sub-body">Том автобус</ion-label>
+        <ion-label>item.data.direction_name</ion-label>
+        <ion-label class="sub-body">item.data.car_type_name</ion-label>
       </div>
       <!-- <div slot="end" class="end-side">
         End

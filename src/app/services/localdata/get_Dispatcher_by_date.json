@@ -1,0 +1,15 @@
+{
+    "code": 1,
+    "msg": "",
+    "result": [{
+        "dis_id": 804226,
+        "dir_name": "Ар.Тариат - УБ",
+        "c_t_id": 1,
+        "leave": "2018-11-18T09:00:00",
+        "sitcnt": 45,
+        "e_sitcnt": 45,
+        "c_num": "01-00 АРХ"
+    }]
+}
+
+//http://rest.transdep.mn:7879/Mobile/Service.asmx/get_Dispatcher_by_date?aimag_id=22&direction_id=82&out_date=2018-11-18&from_country=1

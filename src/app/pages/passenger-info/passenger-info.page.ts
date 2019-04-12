@@ -18,7 +18,7 @@ export class PassengerInfoPage implements OnInit {
 
   passengersData: Passenger[] = [];
   totalAmount = 0;
-  required = [];
+  required: any =[];
   error: any;
   nextAgree: boolean = false;
   show: boolean = false;
@@ -62,8 +62,11 @@ export class PassengerInfoPage implements OnInit {
     let selectedSeats: any = this.passData.getSelectedSeats();
     if (selectedSeats) {
       for (let i = 0; i < selectedSeats.length; i++) {
+        this.required.push([]);
         this.passengersData.push({ seat_no: selectedSeats[i].seat_no, age: '1', name: '', register: '', incur: false, amount: 0 });
         this.calcAmountAge(i);
+        this.changeName(i);
+        this.changeRegister(i);
       }
     } else {
       this.nav.navigateBack('/seats-select');
@@ -91,27 +94,27 @@ export class PassengerInfoPage implements OnInit {
   changeName(index) {
     var res = this.validator.validateName(this.passengersData[index].name);
     if (res == true) {
-      this.required[0] = true;
+      this.required[index][0] = true;
     } else {
-      this.required[0] = false;
+      this.required[index][0] = false;
       this.error = res;
     }
-    this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
+    this.nextAgree = this.validator.checkRequired(this.required, true) ? true : false;
   }
 
   changeRegister(index) {
     var res = this.validator.validateRegister(this.passengersData[index].register);
     if (res == true) {
-      this.required[1] = true;
+      this.required[index][1] = true;
     } else {
-      this.required[1] = false;
+      this.required[index][1] = false;
       this.error = res;
     }
-    this.nextAgree = this.validator.checkRequired(this.required) ? true : false;
+    this.nextAgree = this.validator.checkRequired(this.required, true) ? true : false;
   }
 
   goToNextPage() {
-    if (this.validator.checkRequired(this.required)) {
+    if (this.validator.checkRequired(this.required, true)) {
       this.passData.setPassengerAndTotal(this.passengersData, this.totalAmount);
       this.nav.navigateForward("/subscriber-info");
     }

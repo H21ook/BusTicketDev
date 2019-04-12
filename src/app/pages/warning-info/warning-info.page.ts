@@ -30,4 +30,9 @@ export class WarningInfoPage implements OnInit {
   cancel() {
     this.nav.navigateBack("/time-table");
   }
+
+  goToPayment() {
+    this.passData.setIsAgree(true);
+    this.nav.navigateForward("/payment");
+  }
 }

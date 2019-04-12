@@ -1,0 +1,17 @@
+{
+    "code": 1,
+    "msg": "",
+    "result": [{
+        "s_seq": 1,
+        "e_seq": 10,
+        "t_type_id": 1,
+        "a_price": 32000,
+        "c_price": 16000,
+        "a_insur": 600,
+        "c_insur": 300,
+        "price_percent": 8,
+        "s_insu_com_id": 25
+    }]
+}
+
+//http://rest.transdep.mn:7879/Mobile/Service.asmx/get_Tariff_by_direction?direction_id=82&start_stop_id=218&end_stop_id=1&car_type_id=1

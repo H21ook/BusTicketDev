@@ -40,7 +40,6 @@ export class OrderPage implements OnInit {
     await loading.present();
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
     this.getDefaultValue();
-    this.apiService.getSourceStops();
     this.show = true;
   }
 

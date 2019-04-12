@@ -28,10 +28,19 @@ export class ValidatorService {
     return "Давтах нууц үг таарахгүй байна!";
   }
 
-  checkRequired(controls: Array<boolean>) {
-    for(let i = 0; i < controls.length; i++) {
-      if(controls[i] != true)
-        return false;
+  checkRequired(controls: any, is2D?:boolean) {
+    if(is2D){
+      for(let i = 0; i < controls.length; i++) {
+        for(let j = 0; j < controls[i].length; j++) {
+          if(controls[i][j] != true)
+            return false;
+        }
+      }
+    } else {
+      for(let i = 0; i < controls.length; i++) {
+        if(controls[i] != true)
+          return false;
+      }
     }
     return true;
   }
@@ -43,13 +52,16 @@ export class ValidatorService {
       for(let j = 0; j < name.length; j++) {
         let step1 = false, step2 = false, step3 = false;
         for(let i = 0; i < this.latinLetters.length; i++) {
-          if(name[j] == this.latinLetters[i]) {
+          if(name[j] != this.latinLetters[i]) {
             step1 = true;
+          } else {
+            step1 = false;
             break;
           }
         }
-        if(step1 == true) {
-          continue;
+        if(step1 == false) {
+          errMsg = "Зөвхөн крилл үсэг хэрэглэнэ үү!";
+          break;
         }
         for(let i = 0; i < this.mnLetters.length; i++) {
           if(name[j] == this.mnLetters[i]) {
@@ -91,8 +103,8 @@ export class ValidatorService {
 
   validatePhoneNumber(phone : string) : any  {
     let result: any;
-    if(phone.length < 9 && phone.length > 5) {
-      if(/^[0-9]{8}$/.test(phone))
+    if(phone.toString().length < 9 && phone.toString().length > 5) {
+      if(/^[0-9]{6,8}$/.test(phone))
         result = true;
       else
         result = "Утасны дугаарт зөвхөн тоо ашиглана уу!";

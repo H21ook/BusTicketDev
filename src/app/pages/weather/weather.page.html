@@ -19,9 +19,9 @@
     <div class="wrap-slide">
 
       <ion-grid class="full-100">
-        <ion-row align-items-center class="full-100">
+        <ion-row class="full-100">
 
-          <ion-col align-self-center>
+          <ion-col align-self-center style="height: 100%;">
             <ion-list style="background: var(--ion-color-divider); margin-bottom: 5px;">
               <div class="combo-item">
                 <ion-select okText="Сонгох" class="custom-select light-select" cancelText="Болих" [(ngModel)]="selectedCity"
@@ -35,7 +35,7 @@
             </ion-list>
             <ion-slides *ngIf="weather && forecastPreData" #mySlider>
               <ion-slide *ngFor="let forecastday of forecastPreData;">
-                <ion-grid style="width:100%; background: var(--ion-color-secondary-contrast);">
+                <ion-grid style="width:100%; height: 100%; background: var(--ion-color-secondary-contrast);">
 
                   <ion-row class="normal-info">
                     <p class="date-text">{{forecastday.dateFull}}</p>
@@ -97,7 +97,7 @@
       </ion-grid>
     </div>
 
-    <div>
+    <div style="height: 28%;">
 
       <ion-grid *ngIf="weather && forecastPreData" class="full-100" style="margin: 5px; width:auto;">
         <ion-row align-items-center class="full-100" style="width:auto;">

@@ -1,0 +1,102 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Төлбөр
+    </ion-title>
+    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+        <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+        <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="full-100">
+    <ion-item-divider class="custom-divider">
+      <ion-label>Захиалгын мэдээлэл</ion-label>
+    </ion-item-divider>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Захиалгын код</p>
+        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">201904100008</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</p>
+        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">18300₮</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Маршрут</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АР - УӨ - АР</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <ion-row>  
+          <ion-col style="width: 50%;">
+            <p style="width: 100%; text-align: left;">Суух</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">УБ</p>
+          </ion-col>
+          <ion-col style="width: 50%;">
+            <p style="width: 100%; text-align: left;">Буух</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">АР</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Хөдлөх огноо</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">2019-04-10</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%;">
+        <p style="width: 100%; text-align: left;">Зорчигчдын тоо</p>
+        <ion-row>
+          <ion-col style="padding: 0px; width: 50%;">
+            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">Том хүн: 1</p>
+          </ion-col>
+          <ion-col style="padding: 0px; width: 50%;">
+            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">Хүүхэд: 0</p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+
+    </ion-row>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Төлбөрийн мэдээлэл</ion-label>
+    </ion-item-divider>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Банкны нэр</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">Хаан банк</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Дансны дугаар</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">5057397049</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+        <p style="width: 100%; text-align: left;">Данс эзэмшигчийн нэр</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АВТО ТЭЭВРИЙН ҮНДЭСНИЙ ТӨВ</p>
+      </ion-col>
+    </ion-row>
+    <div style="height: 150px; margin: 10px; width: 100%; text-align: center" *ngIf="qrCode">
+      <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);" [src]="qrCode">
+    </div>
+    <div class="padding-wrap-tb">
+      <button class="custom-button" type="button" (click)="finish()">болсон</button>
+    </div>
+  </div>
+
+</ion-content>

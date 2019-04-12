@@ -1,0 +1,24 @@
+{
+    "code": 1,
+    "msg": "",
+    "result": [{
+        "dir_id": 26,
+        "is_rtrn": true,
+        "dir_name": "За.Улиастай - УБ - За.Улиастай ",
+        "es_A_id": 22,
+        "es_A_name": "Улаанбаатар",
+        "es_id": 1,
+        "es_name": "УБ.Сонгинохайрхан"
+    }, {
+        "dir_id": 89,
+        "is_rtrn": true,
+        "dir_name": "За.Тосонцэнгэл - УБ - За.Тосонцэнгэл",
+        "es_A_id": 22,
+        "es_A_name": "Улаанбаатар",
+        "es_id": 1,
+        "es_name": "УБ.Сонгинохайрхан"
+    }]
+}
+
+
+// http://rest.transdep.mn:7879/Mobile/Service.asmx/get_Destnation_stops?branch_id=2&aimag_id=9&start_stop_id=173

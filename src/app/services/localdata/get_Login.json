@@ -1,0 +1,19 @@
+{
+    "code": 1,
+    "msg": "",
+    "result": [{
+        "id": 956,
+        "fullname": "Нэр.О",
+        "branch_id": 2,
+        "branch_name": "АТҮТ",
+        "user_job_id": 5,
+        "user_job_name": "Касс",
+        "is_country": false,
+        "is_com": false,
+        "is_password": false,
+        "job_level": 4,
+        "aimag_id": 22
+    }]
+}
+
+http: //rest.transdep.mn:7879/Mobile/Service.asmx/get_Login?username=test&password=99002911

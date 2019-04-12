@@ -1,9 +1,12 @@
 import { Passenger } from "./passenger.model";
 import { Subscriber } from "./subscriber.model";
+import { Direction } from "./direction.model"
 
 export class Order {
-    passengers: Passenger[];
+    orderCode?: string;
+    passengers?: Passenger[];
     totalAmount?: number;
     subscriber?: Subscriber;
-    isAgree?: boolean
+    isAgree?: boolean;
+    direction?: Direction;
 }
