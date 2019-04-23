@@ -1,0 +1,6 @@
+{
+  "appId": "io.ionic.starter",
+  "appName": "BusTicketDev",
+  "bundledWebRuntime": false,
+  "webDir": "www"
+}

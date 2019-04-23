@@ -1,7 +1,8 @@
 {
   "name": "BusTicketDev",
   "integrations": {
-    "cordova": {}
+    "cordova": {},
+    "capacitor": {}
   },
   "type": "angular",
   "id": "878b8cfb"

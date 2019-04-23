@@ -11,7 +11,6 @@ import { Profile } from 'src/app/models/profile.model';
 import { ProfileService } from 'src/app/services/profile.service';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
-import { NullTemplateVisitor } from '@angular/compiler';
 import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
 
 import * as xml2js  from 'xml2js'
@@ -149,7 +148,7 @@ export class HomePage implements OnInit {
 
       this.distData = this.functionsService.groupBy(this.distSourceStop, "ss_A_id");
       
-      console.log(this.distData);
+      console.log("DIST: ", this.distData);
     }
   }
 
@@ -169,6 +168,7 @@ export class HomePage implements OnInit {
     this.timeTableData = [];
     let tempData;
     this.getTodayTimeTable(this.directions).then(data => {
+      console.log("RES3:",data);
       this.apiService.dateByDispatcherData = data;
       tempData = this.apiService.getDateDispatcher(this.directions, this.toStop.ss_id);
       for(let i = 0; i < tempData.length; i++) {
@@ -184,18 +184,22 @@ export class HomePage implements OnInit {
     let array:any = [];
     let result;
     let response;
-    // for(let j = 0; j < dirs.length; j++) {
+    for(let j = 0; j < dirs.length; j++) {
+      console.log("DIR: ", dirs[j]);
       response = this.apiService.getToday(dirs[0]).then(data => {
         this.test1 = data.data;
         xml2js.parseString(data.data, function (err, res) {
-          result = res.DataTable["diffgr:diffgram"][0].DocumentElement[0].get_Date_by_Dispatchers;
+          result = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["get_Date_by_Dispatchers"];
           array = array.concat(result);
-          return new Promise((resolve, reject) => {
-            resolve(array);
-          });
+          console.log("ARR LEN:", array.length);
+          console.log("ARR:", array);
+        });
+        console.log("RES2:", array);
+        return new Promise((resolve, reject) => {
+          resolve(array);
         });
       });
-    // }
+    }
     return response;
   }
 
