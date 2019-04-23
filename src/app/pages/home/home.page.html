@@ -37,7 +37,7 @@
 
     <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromAimag"
-        placeholder="Аймаг сонгох" (ionChange)="fromAimagChange()">
+        placeholder="Аймаг сонгох" (ionChange)="changeFromAimag()" name="fromAimag">
         <div *ngFor="let item of aimagData; let i = index;">
           <ion-select-option [value]="i">{{item.name}}</ion-select-option>
         </div>
@@ -45,7 +45,7 @@
     </div>
     <div class="combo-item" *ngIf="model.fromAimag != null && model.fromAimag != undefined">
       <ion-select okText="Сонгох" class="custom-select stop" cancelText="Болих" [(ngModel)]="model.fromStop"
-        placeholder="Буудал сонгох" (ionChange)="setStop()">
+        placeholder="Буудал сонгох" (ionChange)="changeFromStop()" name="fromStop">
         <div *ngFor="let item of aimagData[model.fromAimag].data; let i = index;">
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
@@ -57,7 +57,7 @@
     </ion-item-divider>
     <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.toAimag"
-        placeholder="Аймаг сонгох">
+        placeholder="Аймаг сонгох" name="toAimag" [disabled]="model.fromAimag == null || model.fromAimag == undefined">
         <div *ngFor="let item of distData; let i = index;">
           <ion-select-option [value]="i">{{item.name}}</ion-select-option>
         </div>
@@ -65,7 +65,7 @@
     </div>
     <div class="combo-item" *ngIf="model.toAimag != null && model.toAimag != undefined">
       <ion-select okText="Сонгох" class="custom-select  stop" cancelText="Болих" [(ngModel)]="model.toStop"
-        placeholder="Буудал сонгох">
+        placeholder="Буудал сонгох" name="toStop" (ionChange)="changeToStop()">
         <div *ngFor="let item of distData[model.toAimag].data; let i = index;">
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
@@ -75,20 +75,36 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>
-    <ion-item lines="full" *ngIf="let item of timeTableData; let i=index;">
+    <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
       <div slot="start" class="start-side">
         <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
-        <ion-label class="start-time">item.time</ion-label>
+        <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
+        <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
       </div>
       <div class="body-side">
-        <ion-label>item.data.direction_name</ion-label>
-        <ion-label class="sub-body">item.data.car_type_name</ion-label>
+        <ion-label>{{item.direction_name}}</ion-label>
+        <ion-label class="sub-body">{{item.car_type_name}}</ion-label>
       </div>
       <!-- <div slot="end" class="end-side">
         End
       </div> -->
     </ion-item>
 
+    <ion-row>
+      test1 {{test1}}
+    </ion-row>
+
+    <ion-row>
+      test2 {{test2}}
+    </ion-row>
+
+    <ion-row>
+      test3 {{test3}}
+    </ion-row>
+
+    <ion-row>
+      test4 {{test4}}
+    </ion-row>
 
   </ion-list>
 

@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
+import * as xml2js  from 'xml2js'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-
-  constructor(private http:HTTP) { }
+  
+  constructor(private http:HTTP) { 
+    
+  }
 
   getToday(dir) {
     let date = new Date();
@@ -33,50 +36,23 @@ export class ApiService {
     return this.http.get(url, {}, {});
   }
 
-  xmlToJson(xml) {
-	
-    var obj = {};
-  
-    if (xml.nodeType == 1) { // element
-      // do attributes
-      if (xml.attributes.length > 0) {
-      obj["@attributes"] = {};
-        for (var j = 0; j < xml.attributes.length; j++) {
-          var attribute = xml.attributes.item(j);
-          obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
-        }
-      }
-    } else if (xml.nodeType == 3) { // text
-      obj = xml.nodeValue;
-    }
-  
-    // do children
-    if (xml.hasChildNodes()) {
-      for(var i = 0; i < xml.childNodes.length; i++) {
-        var item = xml.childNodes.item(i);
-        var nodeName = item.nodeName;
-        if (typeof(obj[nodeName]) == "undefined") {
-          obj[nodeName] = this.xmlToJson(item);
-        } else {
-          if (typeof(obj[nodeName].push) == "undefined") {
-            var old = obj[nodeName];
-            obj[nodeName] = [];
-            obj[nodeName].push(old);
-          }
-          obj[nodeName].push(this.xmlToJson(item));
-        }
-      }
-    }
-    return obj;
-  };
-
-  getTodayTimeTable(dir) {
+  getTodayTimeTable(dirs) {
+    let array:any = [];
     let result;
-    return this.getToday(dir).then(data => {
-      return new Promise((resolve, reject) => {
-        resolve(result.diffgram.DocumentElement);
+    let response;
+    for(let j = 0; j < dirs.length; j++) {
+      response = this.getToday(dirs[j]).then(data => {
+        xml2js.parseString(data, function (err, res) {
+          result = res.DataTable["diffgr:diffgram"][0].DocumentElement[0].get_Date_by_Dispatchers;
+          array = array.concat(result);
+          
+          return new Promise((resolve, reject) => {
+            resolve(array);
+          });
+        });
       });
-    });
+    }
+    return response;
   }
 
   getWeekTimeTable(dir) {
@@ -33052,4 +33028,257 @@ export class ApiService {
     }
   ];
 
+  dateByDispatcherData: any = [
+    {
+       "@id": "get_Date_by_Dispatchers1",
+       "@rowOrder": "0",
+       "id": "893186",
+       "distribution_id": "1578",
+       "direction_id": "82",
+       "direction_name": "УБ - Ар.Тариат",
+       "direction_start_stop_id": "1",
+       "direction_end_stop_id": "218",
+       "company_id": "130",
+       "company_name": "Дэлгэр буян-Ар ХХК",
+       "car_id": "6080",
+       "car_number": "08-80 АРХ",
+       "car_type_id": "1",
+       "car_type_name": "Том автобус",
+       "driver_id": "2988",
+       "leave_date": "2019-04-17T10:00:00+08:00",
+       "is_rtrn": "true",
+       "from_country": "false",
+       "link_id": "893185",
+       "is_closed": "false",
+       "is_actived": "true",
+       "created_by": "390",
+       "created_branch_id": "130",
+       "created_firstname": "Дэлгэр буян-Ач",
+       "created_at": "2019-03-21T12:31:00+08:00",
+       "company_is_country": "true",
+       "is_added": "false",
+       "direction_start_stop_name": "УБ.Сонгинохайрхан",
+       "direction_end_stop_name": "Ар.Тариат",
+       "sitcount": "45",
+       "driver_name": "Ж.Энхтайван",
+       "model_name": "Granbird",
+       "register": "2778858",
+       "aimag_id": "1",
+       "phone": "99071681",
+       "is_active": "true",
+       "empty_seat_count": "45"
+    },
+    {
+       "@id": "get_Date_by_Dispatchers2",
+       "@rowOrder": "1",
+       "id": "893197",
+       "distribution_id": "1280",
+       "direction_id": "82",
+       "direction_name": "Ар.Тариат - УБ",
+       "direction_start_stop_id": "218",
+       "direction_end_stop_id": "1",
+       "company_id": "130",
+       "company_name": "Дэлгэр буян-Ар ХХК",
+       "car_id": "6030",
+       "car_number": "80-80 АРА",
+       "car_type_id": "1",
+       "car_type_name": "Том автобус",
+       "driver_id": "4720",
+       "leave_date": "2019-04-17T09:00:00+08:00",
+       "is_rtrn": "false",
+       "from_country": "true",
+       "link_id": "893198",
+       "is_closed": "false",
+       "is_actived": "true",
+       "created_by": "390",
+       "created_branch_id": "130",
+       "created_firstname": "Дэлгэр буян-Ач",
+       "created_at": "2019-03-21T12:38:00+08:00",
+       "company_is_country": "true",
+       "is_added": "false",
+       "direction_start_stop_name": "Ар.Тариат",
+       "direction_end_stop_name": "УБ.Сонгинохайрхан",
+       "sitcount": "45",
+       "driver_name": "Н.ЗОРИГТБААТАР",
+       "model_name": "Universe",
+       "register": "2778858",
+       "aimag_id": "1",
+       "phone": "91991615",
+       "is_active": "true",
+       "empty_seat_count": "45"
+    },
+    {
+       "@id": "get_Date_by_Dispatchers3",
+       "@rowOrder": "2",
+       "id": "893198",
+       "distribution_id": "1280",
+       "direction_id": "82",
+       "direction_name": "УБ - Ар.Тариат",
+       "direction_start_stop_id": "1",
+       "direction_end_stop_id": "218",
+       "company_id": "130",
+       "company_name": "Дэлгэр буян-Ар ХХК",
+       "car_id": "6030",
+       "car_number": "80-80 АРА",
+       "car_type_id": "1",
+       "car_type_name": "Том автобус",
+       "driver_id": "4720",
+       "leave_date": "2019-04-19T10:00:00+08:00",
+       "is_rtrn": "true",
+       "from_country": "false",
+       "link_id": "893197",
+       "is_closed": "false",
+       "is_actived": "true",
+       "created_by": "390",
+       "created_branch_id": "130",
+       "created_firstname": "Дэлгэр буян-Ач",
+       "created_at": "2019-03-21T12:38:00+08:00",
+       "company_is_country": "true",
+       "is_added": "false",
+       "direction_start_stop_name": "УБ.Сонгинохайрхан",
+       "direction_end_stop_name": "Ар.Тариат",
+       "sitcount": "45",
+       "driver_name": "Н.ЗОРИГТБААТАР",
+       "model_name": "Universe",
+       "register": "2778858",
+       "aimag_id": "1",
+       "phone": "91991615",
+       "is_active": "true",
+       "empty_seat_count": "45"
+    },
+    {
+       "@id": "get_Date_by_Dispatchers4",
+       "@rowOrder": "3",
+       "id": "893199",
+       "distribution_id": "1281",
+       "direction_id": "82",
+       "direction_name": "Ар.Тариат - УБ",
+       "direction_start_stop_id": "218",
+       "direction_end_stop_id": "1",
+       "company_id": "130",
+       "company_name": "Дэлгэр буян-Ар ХХК",
+       "car_id": "5895",
+       "car_number": "80-90 АРХ",
+       "car_type_id": "1",
+       "car_type_name": "Том автобус",
+       "driver_id": "3745",
+       "assist_driver_id": "5823",
+       "leave_date": "2019-04-19T09:00:00+08:00",
+       "is_rtrn": "false",
+       "from_country": "true",
+       "link_id": "893200",
+       "is_closed": "false",
+       "is_actived": "true",
+       "created_by": "390",
+       "created_branch_id": "130",
+       "created_firstname": "Дэлгэр буян-Ач",
+       "created_at": "2019-03-21T12:39:00+08:00",
+       "company_is_country": "true",
+       "is_added": "false",
+       "direction_start_stop_name": "Ар.Тариат",
+       "direction_end_stop_name": "УБ.Сонгинохайрхан",
+       "sitcount": "45",
+       "driver_name": "Ч.Эрдэнэбулган",
+       "model_name": "Granbird",
+       "assist_name": "А.Мөнхбат",
+       "register": "2778858",
+       "aimag_id": "1",
+       "phone": "99339597",
+       "is_active": "true",
+       "empty_seat_count": "45"
+    },
+    {
+      "@id": "get_Date_by_Dispatchers1",
+      "@rowOrder": "0",
+      "id": "896325",
+      "distribution_id": "2375",
+      "direction_id": "103",
+      "direction_name": "Хө.Галт - УБ",
+      "direction_start_stop_id": "334",
+      "direction_end_stop_id": "1",
+      "company_id": "123",
+      "company_name": "Минтранс ХХК",
+      "car_id": "4661",
+      "car_number": "81-46 УНЯ",
+      "car_type_id": "2",
+      "car_type_name": "Дунд оврын автобус",
+      "driver_id": "4411",
+      "leave_date": "2019-04-19T12:00:00+08:00",
+      "is_rtrn": "true",
+      "from_country": "true",
+      "link_id": "896324",
+      "is_closed": "false",
+      "is_actived": "true",
+      "created_by": "380",
+      "created_branch_id": "123",
+      "created_firstname": "Минтранс ХХК",
+      "created_at": "2019-03-25T23:46:00+08:00",
+      "company_is_country": "false",
+      "is_added": "false",
+      "direction_start_stop_name": "Хө.Галт",
+      "direction_end_stop_name": "УБ.Сонгинохайрхан",
+      "sitcount": "33",
+      "driver_name": "Б.БАТ-ӨЛЗИЙ",
+      "model_name": "AERO TOWN",
+      "register": "2625792",
+      "aimag_id": "22",
+      "phone": "99783366",
+      "is_active": "true",
+      "empty_seat_count": "33"
+    }
+ ];
+  
+  getDateDispatcher(directions, end_id) {
+    let result = [];  
+    for(let j = 0; j < directions.length; j++) {
+      for(let i = 0; i < this.dateByDispatcherData.length; i++) {
+        if(directions[j] == this.dateByDispatcherData[i].direction_id && end_id == this.dateByDispatcherData[i].direction_end_stop_id) {
+          result.push(this.dateByDispatcherData[i]);
+        }
+      }
+    }
+    return result;
+  }
+
+  getDistData(dists) {
+    let result: any = {};
+    let directions: any = [];
+    let distSourceStop:any = [];
+    if(dists && dists.length >= 1) {
+      for(let i = 0; i < dists.length; i++) {
+        let tempData = {
+          ss_A_id: dists[i].end_stop_aimag_id, 
+          ss_A_name: dists[i].end_stop_aimag_name,
+          ss_id: dists[i].end_stop_id,
+          ss_name: dists[i].end_stop_name,
+          orig_data: dists[i],
+          dispatcher: null
+        }
+        if(i == 0){
+          distSourceStop.push(tempData);
+          directions.push(dists[i].direction_id);
+        } else {
+          let check = false;
+          for(let j = 0; j < distSourceStop.length; j++) {
+            if(distSourceStop[j].ss_id == dists[i].end_stop_id ) {
+              check = false;
+              if(distSourceStop[j].orig_data.direction_id != dists[i].directio_id) {
+                directions.push(dists[i].direction_id);
+              }
+              break;
+            } else{
+              check = true;
+            }
+          }
+          if(check)
+            distSourceStop.push(tempData);
+        }
+        
+      }
+    }
+    result.directions = directions;
+    result.distSourceStop = distSourceStop;
+    console.log(result);
+    return result;
+  }
 }

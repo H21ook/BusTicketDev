@@ -12,6 +12,7 @@ export class PassingDataService {
 
   selectedSeats: Seat[];
   orderData: Order;
+  directionInfo: any = {};
 
   constructor() { }
 
@@ -44,5 +45,9 @@ export class PassingDataService {
   
   getOrderData() {
     return this.orderData;
+  }
+
+  setDirectionInfo(dirInfo: any) {
+    this.directionInfo = dirInfo;
   }
 }

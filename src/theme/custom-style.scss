@@ -73,12 +73,12 @@ ion-item {
     // }
 }
 
-.body-side, .start-side {
+.start-side {
     text-align: center;
 }
 
 .start-side {
-    width: 50px;
+    width: 60px;
     margin-right: 10px;
 }
 
@@ -86,15 +86,19 @@ ion-item {
     font-size: 16px !important;
     font-weight: bold;
 }
+.start-date {
+  font-size: 12px !important;
+    font-weight: bold;
+}
 
 .body-side {
-    padding: 0;
+    padding: 0 0 0 10px;
+    border-left: 1px solid var(--ion-color-dark);
     width: 100%;
 }
 
 .sub-body {
     font-size: 12px !important;
-    text-align: right;
     margin-right: 10px;
 }
 
