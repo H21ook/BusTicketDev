@@ -147,4 +147,36 @@ export class ApiService {
     console.log(result);
     return result;
   }
+
+
+  async getEmptySeats(dispatcher_id) {
+    let array:any = [];
+    let result;
+    let response;
+
+    response = await this.getSeat(dispatcher_id).then(data => {
+
+      xml2js.parseString(data.data, function (err, res) {
+        if(res.DataTable["diffgr:diffgram"][0]) {
+          if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
+              result = res.DataTable["diffgr:diffgram"][0]["DocumentElement"];
+              array = array.concat(result);
+          }
+        }
+        console.log("ARR LEN:", array.length);
+      });
+
+      return new Promise((resolve, reject) => {
+        resolve(array);
+      });
+    });
+    return response;
+  }
+
+  getSeat(dispatcher_id) {
+    let param = {};
+    let headers = {};
+    let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_Empty_Seat?id_dispatcher=" + dispatcher_id;
+    return this.http.get(url, {}, {});
+  }
 }

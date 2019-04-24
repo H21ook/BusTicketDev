@@ -29,7 +29,7 @@ export class PaymentPage implements OnInit {
     this.orderData = this.dataPass.orderData;
     this.leaveDate = new Date(this.directionInfo.leave_date).toISOString();
     let date = new Date();
-    this.orderNum = date.getFullYear() + date.getMonth() + date.getDay() + date.getHours() + date.getMinutes() + date.getSeconds();
+    this.orderNum = date.getFullYear() + "" + date.getMonth() + "" + date.getDay() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
     this.peopleNum = this.countOfChild(this.orderData.passengers);
   }
 

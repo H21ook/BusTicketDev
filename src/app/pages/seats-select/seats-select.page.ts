@@ -5,6 +5,7 @@ import { PassingDataService } from 'src/app/services/passing-data/passing-data.s
 import { NavController, LoadingController, MenuController } from '@ionic/angular';
 import { Seat } from 'src/app/models/seat.model';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-seats-select',
@@ -27,7 +28,8 @@ export class SeatsSelectPage implements OnInit {
     private passData: PassingDataService,
     private loadingController: LoadingController,
     private afAuth: AngularFireAuth,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+    private apiService: ApiService
   ) { 
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
@@ -48,6 +50,9 @@ export class SeatsSelectPage implements OnInit {
     });
     await loading.present();
     this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
+    // this.dataService.emptySeats = this.apiService.getEmptySeats(this.passData.directionInfo.id).then(data => {
+    //   console.log(data);
+    // });
     loading.dismiss();
     this.show = true;
   }

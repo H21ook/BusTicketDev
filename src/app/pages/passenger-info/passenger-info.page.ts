@@ -75,11 +75,11 @@ export class PassengerInfoPage implements OnInit {
 
   calcAmountAge(i) {
     if (this.passengersData[i].age == "0") {
-      this.passengersData[i].amount = 25000;
+      this.passengersData[i].amount = 13000;
     } else {
-      this.passengersData[i].amount = 50000;
+      this.passengersData[i].amount = 26000;
     }
-    this.passengersData[i].amount += this.passengersData[i].incur ? 400 : 0;
+    this.passengersData[i].amount += this.passengersData[i].incur ? 300 : 0;
     this.calcTotalAmout();
   }
 

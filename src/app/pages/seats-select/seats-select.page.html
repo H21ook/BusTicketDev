@@ -17,7 +17,7 @@
       <ion-label>Суудал сонгох</ion-label>
     </ion-item-divider>
   </ion-list>
-  <bus [seats]="dataService.emptySeats" (valueChange)='changeBusSeat($event)' busType="1"></bus>
+  <bus [seats]="dataService.emptySeats" (valueChange)='changeBusSeat($event)' busType="{{passData.directionInfo.car_type_id}}"></bus>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
