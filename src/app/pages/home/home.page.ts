@@ -33,10 +33,6 @@ export class HomePage implements OnInit {
   timeTableData: any = [];
   fromStop: any;
   toStop: any;
-  test1:any;
-  test2:any;
-  test3:any;
-  test4:any;
 
   model: any = {
     fromAimag: null,
@@ -147,8 +143,6 @@ export class HomePage implements OnInit {
       this.directions = result.directions;
 
       this.distData = this.functionsService.groupBy(this.distSourceStop, "ss_A_id");
-      
-      console.log("DIST: ", this.distData);
     }
   }
 
@@ -167,10 +161,11 @@ export class HomePage implements OnInit {
 	  this.toStop = this.distData[this.model.toAimag].data[this.model.toStop];
     this.timeTableData = [];
     let tempData;
-    this.getTodayTimeTable(this.directions).then(data => {
-      console.log("RES3:",data);
+    this.apiService.getTodayTimeTable(this.directions).then(data => {
+
       this.apiService.dateByDispatcherData = data;
       tempData = this.apiService.getDateDispatcher(this.directions, this.toStop.ss_id);
+
       for(let i = 0; i < tempData.length; i++) {
         tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
         tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
@@ -180,42 +175,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  getTodayTimeTable(dirs) {
-    let array:any = [];
-    let result;
-    let response;
-    for(let j = 0; j < dirs.length; j++) {
-      console.log("DIR: ", dirs[j]);
-      response = this.apiService.getToday(dirs[0]).then(data => {
-        this.test1 = data.data;
-        xml2js.parseString(data.data, function (err, res) {
-          result = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["get_Date_by_Dispatchers"];
-          array = array.concat(result);
-          console.log("ARR LEN:", array.length);
-          console.log("ARR:", array);
-        });
-        console.log("RES2:", array);
-        return new Promise((resolve, reject) => {
-          resolve(array);
-        });
-      });
-    }
-    return response;
-  }
-
   clickItem(item) {
     this.passData.setDirectionInfo(item);
     this.navCtrl.navigateForward('/seats-select');
   }
-
-  // getTimeTable() {
-  //   let resp;
-  //   resp = this.functionsService.findDirection(this.model.fromStop, this.model.toStop,  this.dists);
-  //   this.apiService.getTodayTimeTable(resp.direction_id).then(data => {
-  //     this.timeTableData = {
-  //       data : data,
-  //       time : new Date(this.timeTableData.leave_date).toTimeString().toString().substring(0,5)
-  //     };
-  //   });
-  // }
 }

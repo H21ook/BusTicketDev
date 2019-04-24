@@ -21,19 +21,19 @@
     <ion-row>
       <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
         <p style="width: 100%; text-align: left;">Захиалгын код</p>
-        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">201904100008</p>
+        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{orderNum}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
         <p style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</p>
-        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">18300₮</p>
+        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{orderData.totalAmount + '₮'}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
         <p style="width: 100%; text-align: left;">Маршрут</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АР - УӨ - АР</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{directionInfo.direction_name}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -41,11 +41,11 @@
         <ion-row>  
           <ion-col style="width: 50%;">
             <p style="width: 100%; text-align: left;">Суух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">УБ</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_start_stop_name}}</p>
           </ion-col>
           <ion-col style="width: 50%;">
             <p style="width: 100%; text-align: left;">Буух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">АР</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_end_stop_name}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
@@ -53,7 +53,7 @@
     <ion-row>
       <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
         <p style="width: 100%; text-align: left;">Хөдлөх огноо</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">2019-04-10</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{leaveDate}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -61,10 +61,10 @@
         <p style="width: 100%; text-align: left;">Зорчигчдын тоо</p>
         <ion-row>
           <ion-col style="padding: 0px; width: 50%;">
-            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">Том хүн: 1</p>
+            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">{{'Том хүн: ' + peopleNum.people}}</p>
           </ion-col>
           <ion-col style="padding: 0px; width: 50%;">
-            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">Хүүхэд: 0</p>
+            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">{{'Хүүхэд: ' + peopleNum.child}}</p>
           </ion-col>
         </ion-row>
       </ion-col>
