@@ -53,20 +53,14 @@ export class TimeTablePage implements OnInit {
       this.navCtrl.navigateRoot('/login');
     } else {
       this.sourceStops = this.dataService.sourceStops;
-      this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-      this.profileObser = this.profileAFObser.valueChanges();
-      this.getPro();
+      this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+        this.profile = profile;
+        if (this.profile.image != null)
+          this.loadImage(this.profile.image)
+      });
     }
-    
   }
 
-  getPro() {
-    this.profileObser.subscribe((profile) => {
-      this.profile = profile;
-      if (this.profile.image != null)
-        this.loadImage(this.profile.image)
-    });
-  }
   loadImage(imageName) {
     var storageRef = firebase.storage().ref(imageName);
     storageRef.getDownloadURL().then((url) => {

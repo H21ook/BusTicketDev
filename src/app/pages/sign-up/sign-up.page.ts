@@ -14,9 +14,9 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class SignUpPage implements OnInit {
 
-  user = {} as User;
-  profile = {} as Profile;
-  password2: any;
+  user: User = {};
+  profile: Profile = {};
+
   required = [];
   error: any; 
 
@@ -25,8 +25,8 @@ export class SignUpPage implements OnInit {
     private authService: AuthenticationService,
     private profileService: ProfileService,
     private validator: ValidatorService,
-	private alertController: AlertController,
-	private afAuth: AngularFireAuth
+    private alertController: AlertController,
+    private afAuth: AngularFireAuth
   ) { 
   }
 
@@ -41,7 +41,6 @@ export class SignUpPage implements OnInit {
       this.required[0] = false;
       this.error = res;
     }
-    console.log("email", res);
   }
 
   changePassword() {
@@ -52,12 +51,10 @@ export class SignUpPage implements OnInit {
       this.required[1] = false;
       this.error = res;
     }
-    console.log("passwords", this.error);
-    console.log("password", res);
   }
 
   changePassword2() {
-    var res =  this.validator.matchPassword(this.user.password, this.password2);
+    var res =  this.validator.matchPassword(this.user.password, this.user.password2);
     if(res == true) {
       this.required[2] = true;
     } else {
@@ -75,18 +72,17 @@ export class SignUpPage implements OnInit {
     if(this.validator.checkRequired(this.required)) {
       this.error = "";
       this.authService.register(this.user)
-      .then(() =>{
+      .then(() => {
+        this.profile.id = this.afAuth.auth.currentUser.uid;
         this.profile.email = this.user.email;
         this.profile.sex = '1';
         this.profile.state = 'new';
-        this.profileService.setProfile(this.profile);
-        console.log("Amjilttai");
+        this.profileService.createProfile(this.profile);
 		    this.verificationEmail();
       },
       error=>{
         console.log(error);
       });
-      this.navCtrl.navigateRoot('/login');
     }
   }
   
@@ -109,7 +105,14 @@ export class SignUpPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: massage,
-      buttons: [buttons ? buttons : 'ХААХ']
+      buttons: [ 
+        {
+          text: buttons ? buttons : 'ХААХ',
+          handler: () => {
+            this.navCtrl.navigateRoot('/login');
+          }
+        }
+      ]
     });
 
     await alert.present();

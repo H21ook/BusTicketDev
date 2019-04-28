@@ -10,6 +10,7 @@ import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { ActivatedRoute } from '@angular/router';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +23,7 @@ export class ProfilePage implements OnInit {
   private profileObser: Observable<Profile>;
   private profile : Profile;
   private avatarImage = null;
-  // private cameraOptions: CameraOptions;
+  private cameraOptions: CameraOptions;
 
   checkPhoto = false;
   required = [];
@@ -38,7 +39,7 @@ export class ProfilePage implements OnInit {
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
     private route: ActivatedRoute,
-    // private camera: Camera,
+    private camera: Camera,
     private validator: ValidatorService,
     private authService: AuthenticationService,
     private loadingController: LoadingController,
@@ -49,20 +50,22 @@ export class ProfilePage implements OnInit {
       navCtrl.navigateRoot('/login');
     } else {
       this.status = this.route.snapshot.paramMap.get('id');
-      this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-      this.profileObser = this.profileAFObser.valueChanges();
+      this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+        this.profile = profile;
+      });
       this.loadingData();
     }
 
-    // this.cameraOptions = {
-    //   quality: 100,
-    //   targetWidth: 400,
-    //   targetHeight: 400,
-    //   destinationType: this.camera.DestinationType.DATA_URL,
-    //   encodingType: this.camera.EncodingType.JPEG,
-    //   mediaType: this.camera.MediaType.PICTURE,
-    //   correctOrientation: true
-    // };
+    this.cameraOptions = {
+      quality: 100,
+      allowEdit: true,
+      targetWidth: 300,
+      targetHeight: 300,
+      mediaType: this.camera.MediaType.PICTURE,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      correctOrientation: true
+    };
   }
 
   async loadingData() {
@@ -73,21 +76,18 @@ export class ProfilePage implements OnInit {
     });
     await loading.present();
 
-    this.profileObser.subscribe((profile) => {
-      this.profile = profile;
-      if(!this.isNew) {
+    if(!this.isNew) {
       this.changeFN();
       this.changeLN();
       this.changeRegN();
-      } else {
-        this.menuCtrl.enable(false);
-      }
-      if (this.profile.image != null)
-        this.loadImage(this.profile.image)
+    } else {
+      this.menuCtrl.enable(false);
+    }
+    if (this.profile.image != null)
+      this.loadImage(this.profile.image)
 
-      loading.dismiss();
-      this.show = true;
-    }, err => loading.dismiss());
+    loading.dismiss();
+    this.show = true;
   }
 
   ngOnInit() {
@@ -108,6 +108,7 @@ export class ProfilePage implements OnInit {
       this.error = res;
     }
   }
+
   changeLN() {
     var res = this.validator.validateName(this.profile.lastName);
     if (res == true) {
@@ -117,6 +118,7 @@ export class ProfilePage implements OnInit {
       this.error = res;
     }
   }
+
   changeRegN() {
     var res = this.validator.validateRegister(this.profile.registerNumber);
     if (res == true) {
@@ -134,25 +136,25 @@ export class ProfilePage implements OnInit {
     });
   }
 
-  // selectPhoto() {
-  //   this.checkPhoto = true;
-  //   this.cameraOptions.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
-  //   this.camera.getPicture(this.cameraOptions).then((data) => {
-  //     this.avatarImage = "data:image/jpeg;base64," + data;
-  //   }, (err) => {
-  //     console.log(err.message);
-  //   });
-  // }
+  selectPhoto() {
+    this.cameraOptions.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+    this.camera.getPicture(this.cameraOptions).then((imageData) => {
+      this.avatarImage = 'data:image/jpeg;base64,' + imageData;
+      this.checkPhoto = true;
+    }, (err) => {
+      console.log(err.message);
+    });
+  }
 
-  // takePhoto() {
-  //   this.checkPhoto = true;
-  //   this.cameraOptions.sourceType = this.camera.PictureSourceType.CAMERA;
-  //   this.camera.getPicture(this.cameraOptions).then((data) => {
-  //     this.avatarImage = "data:image/jpeg;base64," + data;
-  //   }, (err) => {
-  //     console.log(err.message);
-  //   });
-  // }
+  takePhoto() {
+    this.cameraOptions.sourceType = this.camera.PictureSourceType.CAMERA;
+    this.camera.getPicture(this.cameraOptions).then((imageData) => {
+      this.avatarImage = 'data:image/jpeg;base64,' + imageData;
+      this.checkPhoto = true;
+    }, (err) => {
+      console.log(err.message);
+    });
+  }
 
   saveProfileData() {
     if(this.editable) {
@@ -163,17 +165,21 @@ export class ProfilePage implements OnInit {
           this.profile.image = 'avatar/image' + this.afAuth.auth.currentUser.uid;
         }
         if(this.isNew) {
-          this.profile.state = "old";
-          this.profileService.setProfile(this.profile);
-          this.navCtrl.navigateRoot('/home');
+          try {
+            this.profile.state = "old";
+            this.profileService.updateProfile(this.profile);
+            this.navCtrl.navigateRoot('/home');
+          } catch(error){
+            console.error(error);
+          } 
         } else {
           try {
-            this.profileService.setProfile(this.profile);
+            this.profileService.updateProfile(this.profile);
           } catch(error){
             console.error(error);
             this.navCtrl.navigateRoot('/home');
           } 
-          this.editable = !this.editable;
+          this.editable = false;
         } 
       }
     } else {

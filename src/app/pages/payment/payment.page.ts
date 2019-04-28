@@ -48,6 +48,7 @@ export class PaymentPage implements OnInit {
     }
     return {child: child, people: people};
   }
+  
   async openPopover(ev: Event) {
     const popover = await this.popover.create({
       component: UserMethodsPage,

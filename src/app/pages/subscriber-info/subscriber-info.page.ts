@@ -54,9 +54,8 @@ export class SubscriberInfoPage implements OnInit {
     });
     await loading.present();
     this.orderData = this.passData.getOrderData();
-    this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-    this.profileObser = this.profileAFObser.valueChanges();
-    this.profileObser.subscribe((profile) => {
+    this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+      this.profile = profile;
       this.subscriber.email = profile.email;
       this.subscriber.name = profile.firstName[0]+"."+profile.lastName;
       this.subscriber.register = profile.registerNumber;

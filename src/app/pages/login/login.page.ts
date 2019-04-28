@@ -17,9 +17,8 @@ import { ValidatorService } from 'src/app/services/validator/validator.service';
 })
 export class LoginPage implements OnInit {
 
-  user = {} as User;
-  profileAFObser: AngularFireObject<Profile>;
-  profileObser: Observable<Profile>;
+  user: User = {};
+  
   loginError: any = '';
   required = [];
 
@@ -31,7 +30,8 @@ export class LoginPage implements OnInit {
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
     private validator: ValidatorService,
-	private alertController: AlertController) { }
+    private alertController: AlertController
+  ) { }
 
   ngOnInit() {
   }
@@ -72,24 +72,22 @@ export class LoginPage implements OnInit {
   login() {
     // if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
-      this.user = {email: "tbeta40@gmail.com", password: "boomboom"};
-      this.authService.login(this.user)
-        .then(() => {
-		  if(this.afAuth.auth.currentUser.emailVerified) {
-			  this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-			  this.profileObser = this.profileAFObser.valueChanges();
+      this.user = { email: "tbeta40@gmail.com", password: "H21ook97" };
+      this.authService.login(this.user).then(() => {
 
-			  this.profileObser.subscribe((profile) => {
-				if (profile.state == "new")
-				  this.navController.navigateRoot('/profile/new');
-				else
-          this.navController.navigateRoot('/home');
-			  });
-		  } else {
-			  this.loginError = "Таны мэйл хаяг баталгаажаагүй байна! Мэйл хаягаа шалгана уу"
-			  this.authService.logOut();
-		  }
-        }, error => {
+        if(this.afAuth.auth.currentUser.emailVerified) {
+          this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+            if (profile.state == "new")
+              this.navController.navigateRoot('/profile/new');
+            else
+              this.navController.navigateRoot('/home');
+          });
+        } else {
+          this.loginError = "Таны мэйл хаяг баталгаажаагүй байна! Мэйл хаягаа шалгана уу"
+          this.authService.logOut();
+        }
+        
+      }, error => {
           if (error === 'The email address is badly formatted.')
             this.loginError = "Имэйл хаяг буруу бүтэцтэй байна!";
           else if (error === 'There is no user record corresponding to this identifier. The user may have been deleted.')

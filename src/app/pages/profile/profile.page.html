@@ -12,7 +12,7 @@
           <ion-label class="btn-header">Гарах</ion-label>
         </ion-button>
       </ion-buttons>
-      <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+      <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)" *ngIf="!isNew">
           <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
           <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
       </ion-buttons>
@@ -31,10 +31,10 @@
             </span>
             <div class="pic-edit-control" *ngIf="editable">
               <div class="edit-layer">
-                <ion-buttons class="icon-btn" slot="end" (click)="selectPhoto()">
+                <ion-buttons class="icon-btn" slot="end" (click)="takePhoto()">
                   <fa-icon class="icon-normal" icon="camera" color="ligth"></fa-icon>
                 </ion-buttons>
-                <ion-buttons class="icon-btn" slot="end" (click)="takePhoto()">
+                <ion-buttons class="icon-btn" slot="end" (click)="selectPhoto()">
                   <fa-icon class="icon-normal" icon="upload" color="ligth"></fa-icon>
                 </ion-buttons>
               </div>

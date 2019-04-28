@@ -4,8 +4,6 @@ import { Passenger } from 'src/app/models/passenger.model';
 import { NavController, LoadingController, AlertController, MenuController } from '@ionic/angular';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile.model';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -22,8 +20,7 @@ export class PassengerInfoPage implements OnInit {
   error: any;
   nextAgree: boolean = false;
   show: boolean = false;
-  private profileAFObser: AngularFireObject<Profile>;
-  private profileObser: Observable<Profile>;
+
   private profile: Profile;
 
   constructor(
@@ -58,6 +55,7 @@ export class PassengerInfoPage implements OnInit {
     this.show = true;
     this.useUserConfirm("Та өөрөө зорчих уу?", "Хувийн мэдээлэл хэрэглэх");
   }
+
   preparePassengers() {
     let selectedSeats: any = this.passData.getSelectedSeats();
     if (selectedSeats) {
@@ -142,9 +140,9 @@ export class PassengerInfoPage implements OnInit {
         }, {
           text: 'Тийм',
           handler: () => {
-            this.profileAFObser = this.profileService.getProfile(this.afAuth.auth.currentUser.uid);
-            this.profileObser = this.profileAFObser.valueChanges();
-            this.profileObser.subscribe((profile) => {
+
+            this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe((profile) => {
+              this.profile = profile;
               this.passengersData[0].age = Number(profile.age) > 12 ? "1" : "0";
               this.passengersData[0].name = profile.firstName[0] + "." + profile.lastName;
               this.passengersData[0].register = profile.registerNumber;
@@ -152,6 +150,7 @@ export class PassengerInfoPage implements OnInit {
               this.changeName(0);
               this.changeRegister(0);
             });
+
           }
         }
       ]

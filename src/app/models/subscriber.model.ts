@@ -1,6 +1,6 @@
 export class Subscriber {
-    name: string;
-    register: string;
-    email: string;
-    phoneNumber: string;
+    name?: string;
+    register?: string;
+    email?: string;
+    phoneNumber?: string;
 }

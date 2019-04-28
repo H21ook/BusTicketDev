@@ -23,6 +23,8 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { HTTP } from '@ionic-native/http/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
+import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 
 library.add(fas, fab, far);
 
@@ -36,6 +38,7 @@ library.add(fas, fab, far);
     AppRoutingModule,
     UserMethodsPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
+    AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     FontAwesomeModule
@@ -45,7 +48,9 @@ library.add(fas, fab, far);
     SplashScreen,
     Facebook,
     HTTP,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    Camera,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    { provide: FirestoreSettingsToken, useValue: {} }
   ],
   bootstrap: [AppComponent]
 })

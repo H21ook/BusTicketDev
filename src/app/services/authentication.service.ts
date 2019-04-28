@@ -67,7 +67,6 @@ export class AuthenticationService {
   verificationEmail(): Promise<any> {
     return new Promise((resolve, reject) => {
       var user = this.afAuth.auth.currentUser;
-      console.log(user);
       user.sendEmailVerification().then((data) => {
         resolve(data);
       }, error => {
