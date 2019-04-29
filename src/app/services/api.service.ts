@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import * as xml2js  from 'xml2js'
 import { FunctionsService } from './functions.service';
+import { DataService } from './data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,13 @@ export class ApiService {
   
   constructor(
     private http:HTTP,
+    private dataService: DataService,
     private functionsService: FunctionsService
-  ) { }
+  ) { 
+    this.getTarifData().then(() => {
+      console.log("ok TARIF");
+    });
+  }
 
   getToday(dir) {
     let date = new Date();
@@ -188,9 +194,16 @@ export class ApiService {
     let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_all_stop";
     return this.http.get(url, {}, {});
   }
+
+  getTarif() {
+    let param = {};
+    let headers = {};
+    let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_all_stop";
+    return this.http.get(url, {}, {});
+  }
   
-  getAllStopsData() {
-    return this.getAllStops().then(data => {
+  async getAllStopsData() {
+    await this.getAllStops().then(data => {
       let arrData: any[];
       xml2js.parseString(data.data, function (err, res) {
         if(res.DataTable["diffgr:diffgram"][0]) {
@@ -201,9 +214,23 @@ export class ApiService {
           }
         }
       });
-      return new Promise((resolve, reject) => {
-        resolve(this.functionsService.uniqueAllStops(arrData));
+      this.dataService.sourceStops =  this.functionsService.uniqueAllStops(arrData);
+    });
+  }
+
+  async getTarifData() {
+    await this.getTarif().then(data => {
+      let arrData: any[];
+      xml2js.parseString(data.data, function (err, res) {
+        if(res.DataTable["diffgr:diffgram"][0]) {
+          if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
+            if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]){
+              arrData = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["get_Tariff_to_Country"];
+            }
+          }
+        }
       });
-    })
+      this.dataService.getTarif = arrData;
+    });
   }
 }

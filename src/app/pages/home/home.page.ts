@@ -14,6 +14,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
 
 import * as xml2js  from 'xml2js'
+import { StopListPage } from '../stop-list/stop-list.page';
 
 @Component({
   selector: 'app-home',
@@ -29,7 +30,7 @@ export class HomePage implements OnInit {
   distSourceStop: any = [];
   distData: any = [];
   timeTableData: any = [];
-  fromStop: any;
+  fromStop: any = {};
   toStop: any;
 
   model: any = {
@@ -61,11 +62,12 @@ export class HomePage implements OnInit {
     private loadingController: LoadingController,
     private menuCtrl: MenuController,
     private apiService: ApiService,
-    private passData: PassingDataService
+    private passData: PassingDataService,
+    private modalCtrl: ModalController
   ) {
-    this.sourceStops = this.dataService.sourceStops;
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
+      this.loadingController.dismiss();
       navCtrl.navigateRoot('/login');
     } else {
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
@@ -112,13 +114,38 @@ export class HomePage implements OnInit {
       message: '',
     });
     await loading.present();
-    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");    
+    // this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id"); 
+
     this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
       this.weatherData = data.json();
       this.menuCtrl.enable(true);
-      this.show = true;
+      
+      this.apiService.getAllStopsData().then(() => {
+        this.show = true; 
+        this.sourceStops = this.dataService.sourceStops;
+        loading.dismiss();
+      });
     }, err => loading.dismiss());
+
+    
   };
+
+  async openModalList() {
+    const listModal = await this.modalCtrl.create({
+      component: StopListPage,
+      componentProps: {
+      },
+      animated: true
+    });
+    listModal.present(); 
+
+    listModal.onDidDismiss().then(data => {
+      if(data.data){
+        this.fromStop = data.data;
+      } 
+      console.log("RETURN:", data);
+    });
+  }
 
   changeFromStop() {
     if(this.model.fromStop != null && this.model.fromStop != undefined) {
@@ -171,5 +198,9 @@ export class HomePage implements OnInit {
   clickItem(item) {
     this.passData.setDirectionInfo(item);
     this.navCtrl.navigateForward('/seats-select');
+  }
+
+  fromStopChange(e) {
+    console.log(e);
   }
 }

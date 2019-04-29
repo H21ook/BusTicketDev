@@ -34,8 +34,19 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
     </ion-item-divider>
-
-    <div class="combo-item">
+    <ion-item (click)="openModalList()" lines="none">
+        <ion-label>{{ fromStop.stop_name ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
+        <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
+    </ion-item>
+    <!-- <div class="combo-item">
+      <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromStop"
+        placeholder="Буудал сонгох" (click)="openModalList()" name="fromStop">
+        <div *ngFor="let item of sourceStops; let i = index;">
+          <ion-select-option [value]="i">{{item.stop_name}}</ion-select-option>
+        </div>
+      </ion-select>
+    </div> -->
+    <!-- <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromAimag"
         placeholder="Аймаг сонгох" (ionChange)="changeFromAimag()" name="fromAimag">
         <div *ngFor="let item of aimagData; let i = index;">
@@ -50,7 +61,7 @@
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
       </ion-select>
-    </div>
+    </div> -->
 
     <ion-item-divider class="custom-divider">
       <ion-label>Хаашаа</ion-label>

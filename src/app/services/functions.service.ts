@@ -7,6 +7,7 @@ import { DataService } from './data.service';
 export class FunctionsService {
 
   constructor(
+    private dataService: DataService
   ) { }
 
   groupBy(array, prop) {
@@ -45,15 +46,16 @@ export class FunctionsService {
     return result;
   }
 
-  // searchDistinations(start_stop) {
-  //   let result = [];
-  //   for(let tarifInfo of this.dataService.getTarif) {
-  //     if(start_stop == tarifInfo.start_stop_id) {
-  //       result.push(tarifInfo);
-  //     }
-  //   }
-  //   return result;
-  // }
+  searchDistinations(start_stop) {
+    let result = [];
+    for(let tarifInfo of this.dataService.getTarif) {
+      console.log("TARIF-- ", tarifInfo);
+      if(start_stop == tarifInfo.start_stop_id) {
+        result.push(tarifInfo);
+      }
+    }
+    return result;
+  }
 
   findDirection(start_stop, end_stop, stops) {
     for(let stop of stops) {
@@ -64,7 +66,7 @@ export class FunctionsService {
   }
 
   uniqueAllStops(array: any[]) {
-    let result = Array.from(new Set(array.map(element => element.stop_id)))
+    let result = Array.from(new Set(array.map(element => element.stop_id[0])))
     .map(stop_id => {
       return {
         "stop_id": stop_id,

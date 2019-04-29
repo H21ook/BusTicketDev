@@ -19,7 +19,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
         component: HomePage
       }
     ]),
-	FontAwesomeModule
+  FontAwesomeModule
   ],
   declarations: [HomePage]
 })

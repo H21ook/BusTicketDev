@@ -8,6 +8,9 @@ import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
 import { Profile } from 'src/app/models/profile.model';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
+import { ApiService } from 'src/app/services/api.service';
+import { DataService } from 'src/app/services/data.service';
+import { error } from '@angular/compiler/src/util';
 
 
 @Component({
@@ -33,7 +36,8 @@ export class LoginPage implements OnInit {
     private afAuth: AngularFireAuth,
     private profileService: ProfileService,
     private validator: ValidatorService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
@@ -72,7 +76,13 @@ export class LoginPage implements OnInit {
     this.loginError = "";
   }
 
-  login() {
+  async login() {
+      const loading = await this.loadingController.create({
+        spinner: 'bubbles',
+        translucent: false,
+        message: '',
+      });
+      await loading.present();
     // if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
       this.user = { email: "tbeta40@gmail.com", password: "H21ook97" };
@@ -82,26 +92,33 @@ export class LoginPage implements OnInit {
           this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
             if (profile.state == "new")
               this.navController.navigateRoot('/profile/new');
-            else
+            else {
               this.navController.navigateRoot('/home');
+              loading.dismiss();
+            }
+          },err => {
+            loading.dismiss();
+            this.loginError = err;
           });
         } else {
+          loading.dismiss();
           this.loginError = "Таны мэйл хаяг баталгаажаагүй байна! Мэйл хаягаа шалгана уу"
           this.authService.logOut();
         }
         
       }, error => {
-          if (error === 'The email address is badly formatted.')
-            this.loginError = "Имэйл хаяг буруу бүтэцтэй байна!";
-          else if (error === 'There is no user record corresponding to this identifier. The user may have been deleted.')
-            this.loginError = "Бүртгэлгүй хаяг байна!";
-          else if (error === 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.')
-            this.loginError = "Интернэт холболт салсан байна";
-          else if (error === 'The password is invalid or the user does not have a password.' || 'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later')
-            this.loginError = "Нууц үг буруу байна!";
-          else
-            this.loginError = error;
-        });
+        loading.dismiss();
+        if (error === 'The email address is badly formatted.')
+          this.loginError = "Имэйл хаяг буруу бүтэцтэй байна!";
+        else if (error === 'There is no user record corresponding to this identifier. The user may have been deleted.')
+          this.loginError = "Бүртгэлгүй хаяг байна!";
+        else if (error === 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.')
+          this.loginError = "Интернэт холболт салсан байна";
+        else if (error === 'The password is invalid or the user does not have a password.' || 'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later')
+          this.loginError = "Нууц үг буруу байна!";
+        else
+          this.loginError = error;
+      });
     // }
   }
   

@@ -25,6 +25,7 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { StopListPageModule } from './pages/stop-list/stop-list.module';
 
 library.add(fas, fab, far);
 
@@ -41,7 +42,8 @@ library.add(fas, fab, far);
     AngularFirestoreModule,
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    StopListPageModule
   ],
   providers: [
     StatusBar,

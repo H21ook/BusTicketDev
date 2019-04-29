@@ -21,6 +21,7 @@ const routes: Routes = [
   { path: 'profile/:id', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'weather', loadChildren: './pages/weather/weather.module#WeatherPageModule' },
   { path: 'payment', loadChildren: './pages/payment/payment.module#PaymentPageModule' }
+
 ];
 
 @NgModule({
