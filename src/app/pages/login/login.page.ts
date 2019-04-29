@@ -17,7 +17,10 @@ import { ValidatorService } from 'src/app/services/validator/validator.service';
 })
 export class LoginPage implements OnInit {
 
-  user: User = {};
+  user: User = {
+    email: "",
+    password: ""
+  };
   
   loginError: any = '';
   required = [];

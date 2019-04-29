@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
+import { ApiService } from './api.service';
+import { LoadingController } from '@ionic/angular';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-  constructor() { }
+  constructor(
+    private apiService: ApiService,
+    private loadingCtrl: LoadingController
+  ) {
+    this.apiService.getAllStopsData().then(res => {
+      console.log("RESULT", res);
+      this.sourceStops = res;
+      loadingCtrl.dismiss();
+    });
+  }
 
   cities: any = [
     {

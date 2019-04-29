@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Profile } from '../models/profile.model';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { AuthenticationService } from './authentication.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class ProfileService {
 
   constructor(
     private afs: AngularFirestore,
-    private afAuth: AngularFireAuth
+    private authService: AuthenticationService
   ) { 
     this.profileCollection = this.afs.collection<Profile>('profile');
   }
@@ -34,7 +35,12 @@ export class ProfileService {
   }
 
   createProfile(profile: Profile) {
-    this.profileCollection.doc(profile.id).set(profile);
+    try{
+      this.profileCollection.doc(profile.id).set(profile);
+    } catch(error) {
+      this.authService.deleteUser();
+      return "Алдаа гарлаа дахин оролдоно уу?";
+    }
   }
 
   deleteProfile(id: string): Promise<void> {

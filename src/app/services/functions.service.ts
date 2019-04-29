@@ -1,15 +1,12 @@
 import { Injectable } from '@angular/core';
-import { groupBy } from 'rxjs/internal/operators/groupBy';
 import { DataService } from './data.service';
-import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FunctionsService {
 
-  constructor(private dataService: DataService,
-    private apiService: ApiService
+  constructor(
   ) { }
 
   groupBy(array, prop) {
@@ -48,15 +45,15 @@ export class FunctionsService {
     return result;
   }
 
-  searchDistinations(start_stop) {
-    let result = [];
-    for(let tarifInfo of this.dataService.getTarif) {
-      if(start_stop == tarifInfo.start_stop_id) {
-        result.push(tarifInfo);
-      }
-    }
-    return result;
-  }
+  // searchDistinations(start_stop) {
+  //   let result = [];
+  //   for(let tarifInfo of this.dataService.getTarif) {
+  //     if(start_stop == tarifInfo.start_stop_id) {
+  //       result.push(tarifInfo);
+  //     }
+  //   }
+  //   return result;
+  // }
 
   findDirection(start_stop, end_stop, stops) {
     for(let stop of stops) {
@@ -64,5 +61,19 @@ export class FunctionsService {
         return stop;
       }
     }
+  }
+
+  uniqueAllStops(array: any[]) {
+    let result = Array.from(new Set(array.map(element => element.stop_id)))
+    .map(stop_id => {
+      return {
+        "stop_id": stop_id,
+        "stop_name": array.find(data => data.stop_id == stop_id).stop_name,
+        "aimag_id": array.find(data => data.stop_id == stop_id).aimag_id,
+        "aimag_name": array.find(data => data.stop_id == stop_id).aimag_name,
+        "stop_data": array.find(data => data.stop_id == stop_id)
+      }
+    });
+    return result;
   }
 }

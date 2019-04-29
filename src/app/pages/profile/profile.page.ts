@@ -19,9 +19,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 })
 export class ProfilePage implements OnInit {
 
-  private profileAFObser: AngularFireObject<Profile>;
-  private profileObser: Observable<Profile>;
-  private profile : Profile;
+  private profile: Profile = {};
   private avatarImage = null;
   private cameraOptions: CameraOptions;
 
@@ -50,9 +48,6 @@ export class ProfilePage implements OnInit {
       navCtrl.navigateRoot('/login');
     } else {
       this.status = this.route.snapshot.paramMap.get('id');
-      this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
-        this.profile = profile;
-      });
       this.loadingData();
     }
 
@@ -71,23 +66,27 @@ export class ProfilePage implements OnInit {
   async loadingData() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
-      translucent: true,
+      translucent: false,
       message: '',
+      cssClass: "custom-class-loading"
     });
     await loading.present();
 
-    if(!this.isNew) {
-      this.changeFN();
-      this.changeLN();
-      this.changeRegN();
-    } else {
-      this.menuCtrl.enable(false);
-    }
-    if (this.profile.image != null)
-      this.loadImage(this.profile.image)
-
-    loading.dismiss();
-    this.show = true;
+    this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+      this.profile = profile;
+      if(!this.isNew) {
+        this.changeFN();
+        this.changeLN();
+        this.changeRegN();
+      } else {
+        this.menuCtrl.enable(false);
+      }
+      if (this.profile.image != null)
+        this.loadImage(this.profile.image)
+  
+      loading.dismiss();
+      this.show = true;
+    });
   }
 
   ngOnInit() {
@@ -160,9 +159,11 @@ export class ProfilePage implements OnInit {
     if(this.editable) {
       if (this.validator.checkRequired(this.required)) {
         if (this.checkPhoto) {
+          console.log("PHOTO CHEKC:", this.avatarImage);
           const picture = firebase.storage().ref('avatar/image' + this.afAuth.auth.currentUser.uid);
           picture.putString(this.avatarImage, 'data_url');
           this.profile.image = 'avatar/image' + this.afAuth.auth.currentUser.uid;
+          console.log("PHOTO LINK:", this.profile.image);
         }
         if(this.isNew) {
           try {

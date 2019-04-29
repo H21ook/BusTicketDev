@@ -22,8 +22,6 @@ import * as xml2js  from 'xml2js'
 })
 export class HomePage implements OnInit {
 
-  private profileAFObser: AngularFireObject<Profile>;
-  private profileObser: Observable<Profile>;
   private profile : Profile;
 
   sourceStops: any = [];
@@ -50,6 +48,7 @@ export class HomePage implements OnInit {
   show: boolean = false;
   dists: any;
   directions: any = [];
+  testData: any;
   
   constructor(
     private popover: PopoverController,
@@ -109,15 +108,14 @@ export class HomePage implements OnInit {
   async loadingData() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
-      translucent: true,
+      translucent: false,
       message: '',
     });
     await loading.present();
-    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
+    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");    
     this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
       this.weatherData = data.json();
       this.menuCtrl.enable(true);
-      loading.dismiss();
       this.show = true;
     }, err => loading.dismiss());
   };
@@ -131,7 +129,7 @@ export class HomePage implements OnInit {
       this.distData = [];
       this.model.toAimag = null;
       this.model.toStop = null;
-      this.dists = this.functionsService.searchDistinations(this.fromStop.ss_id);
+      // this.dists = this.functionsService.searchDistinations(this.fromStop.ss_id);
 
       let result: any = this.apiService.getDistData(this.dists);
       this.distSourceStop = result.distSourceStop;

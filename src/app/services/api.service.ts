@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import * as xml2js  from 'xml2js'
+import { FunctionsService } from './functions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,9 +10,10 @@ export class ApiService {
   
   dateByDispatcherData: any = [];
   
-  constructor(private http:HTTP) { 
-    
-  }
+  constructor(
+    private http:HTTP,
+    private functionsService: FunctionsService
+  ) { }
 
   getToday(dir) {
     let date = new Date();
@@ -178,5 +180,30 @@ export class ApiService {
     let headers = {};
     let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_Empty_Seat?id_dispatcher=" + dispatcher_id;
     return this.http.get(url, {}, {});
+  }
+
+  getAllStops() {
+    let param = {};
+    let headers = {};
+    let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_all_stop";
+    return this.http.get(url, {}, {});
+  }
+  
+  getAllStopsData() {
+    return this.getAllStops().then(data => {
+      let arrData: any[];
+      xml2js.parseString(data.data, function (err, res) {
+        if(res.DataTable["diffgr:diffgram"][0]) {
+          if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
+            if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]){
+              arrData = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["get_all_stop"];
+            }
+          }
+        }
+      });
+      return new Promise((resolve, reject) => {
+        resolve(this.functionsService.uniqueAllStops(arrData));
+      });
+    })
   }
 }

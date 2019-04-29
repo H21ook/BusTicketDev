@@ -14,7 +14,10 @@ import { AngularFireAuth } from 'angularfire2/auth';
 })
 export class SignUpPage implements OnInit {
 
-  user: User = {};
+  user: User = {
+    email: "",
+    password: ""
+  };
   profile: Profile = {};
 
   required = [];
@@ -31,6 +34,8 @@ export class SignUpPage implements OnInit {
   }
 
   ngOnInit() {
+    this.user.email = "";
+    this.user.password = "";
   }
 
   changeEmail() {
