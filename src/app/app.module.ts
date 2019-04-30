@@ -26,6 +26,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
 import { StopListPageModule } from './pages/stop-list/stop-list.module';
+import { DistinationStopListPageModule } from './pages/distination-stop-list/distination-stop-list.module';
 
 library.add(fas, fab, far);
 
@@ -43,7 +44,8 @@ library.add(fas, fab, far);
     AngularFireAuthModule,
     AngularFireDatabaseModule,
     FontAwesomeModule,
-    StopListPageModule
+    StopListPageModule,
+    DistinationStopListPageModule
   ],
   providers: [
     StatusBar,

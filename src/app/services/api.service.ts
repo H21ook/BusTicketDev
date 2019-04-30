@@ -17,7 +17,6 @@ export class ApiService {
     private functionsService: FunctionsService
   ) { 
     this.getTarifData().then(() => {
-      console.log("ok TARIF");
     });
   }
 
@@ -25,7 +24,7 @@ export class ApiService {
     let date = new Date();
     let start = date.toISOString().toString().substring(0,10);
     let date2 = new  Date();
-    date2.setDate(date.getDate() + 1);
+    date2.setDate(date.getDate() + 2);
     let end = date2.toISOString().toString().substring(0,10);
 
     let param = {};
@@ -38,7 +37,7 @@ export class ApiService {
     let date = new Date();
     let start = date.toISOString().toString().substring(0,10);
     let date2 = new  Date();
-    date2.setDate(date.getDate() + 7);
+    date2.setDate(date.getDate() + 8);
     let end = date2.toISOString().toString().substring(0,10);
     let param = {};
     let headers = {};
@@ -63,7 +62,6 @@ export class ApiService {
               }
             }
           }
-          console.log("ARR LEN:", array.length);
         });
 
         return new Promise((resolve, reject) => {
@@ -91,7 +89,6 @@ export class ApiService {
               }
             }
           }
-          console.log("ARR LEN:", array.length);
         });
 
         return new Promise((resolve, reject) => {
@@ -102,43 +99,59 @@ export class ApiService {
     return response;
   }
   
-  getDateDispatcher(directions, end_id) {
-    let result = [];  
-    for(let j = 0; j < directions.length; j++) {
-      for(let i = 0; i < this.dateByDispatcherData.length; i++) {
-        if(directions[j] == this.dateByDispatcherData[i].direction_id && end_id == this.dateByDispatcherData[i].direction_end_stop_id) {
-          result.push(this.dateByDispatcherData[i]);
+  async getDateDispatcher(directions, end_id) {
+
+    const dispatcherData = await this.getTodayTimeTable(directions).then(data => {
+      this.dataService.dateByDispatcherData = data;
+
+      let result = []; 
+      for(let j = 0; j < directions.length; j++) {
+        for(let i = 0; i < data.length; i++) {
+          if(directions[j] == data[i].direction_id[0] && end_id == data[i].direction_end_stop_id[0]) {
+            result.push(data[i]);
+          }
         }
       }
-    }
-    return result;
+      return new Promise((resolve, reject) => {
+        resolve(result);
+      });
+    });
+    return dispatcherData;
   }
 
   getDistData(dists) {
-    let result: any = {};
     let directions: any = [];
     let distSourceStop:any = [];
+    
     if(dists && dists.length >= 1) {
       for(let i = 0; i < dists.length; i++) {
         let tempData = {
-          ss_A_id: dists[i].end_stop_aimag_id, 
-          ss_A_name: dists[i].end_stop_aimag_name,
-          ss_id: dists[i].end_stop_id,
-          ss_name: dists[i].end_stop_name,
-          orig_data: dists[i],
+          aimag_id: dists[i].end_stop_aimag_id[0], 
+          stop_id: dists[i].end_stop_id[0],
+          stop_name: dists[i].end_stop_name[0],
+          stop_data: dists[i],
           dispatcher: null
         }
         if(i == 0){
           distSourceStop.push(tempData);
-          directions.push(dists[i].direction_id);
+          directions.push(dists[i].direction_id[0]);
         } else {
           let check = false;
           for(let j = 0; j < distSourceStop.length; j++) {
-            if(distSourceStop[j].ss_id == dists[i].end_stop_id ) {
+            if(distSourceStop[j].stop_id == dists[i].end_stop_id[0] ) {
               check = false;
-              if(distSourceStop[j].orig_data.direction_id != dists[i].directio_id) {
-                directions.push(dists[i].direction_id);
+
+              let checkDir = false;
+              for(let k = 0; k < directions.length; k++) {
+                if(directions[k] == dists[i].direction_id[0]) {
+                  checkDir = true;
+                  break;
+                }
               }
+              if(!checkDir) {
+                directions.push(dists[i].direction_id[0]);
+              }
+              
               break;
             } else{
               check = true;
@@ -150,10 +163,10 @@ export class ApiService {
         
       }
     }
-    result.directions = directions;
-    result.distSourceStop = distSourceStop;
-    console.log(result);
-    return result;
+
+    this.dataService.distSourceStops = distSourceStop;
+    
+    return directions;
   }
 
 
@@ -171,7 +184,6 @@ export class ApiService {
               array = array.concat(result);
           }
         }
-        console.log("ARR LEN:", array.length);
       });
 
       return new Promise((resolve, reject) => {
@@ -198,7 +210,7 @@ export class ApiService {
   getTarif() {
     let param = {};
     let headers = {};
-    let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_all_stop";
+    let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_Tariff_to_Country";
     return this.http.get(url, {}, {});
   }
   

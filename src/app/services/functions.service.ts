@@ -49,8 +49,7 @@ export class FunctionsService {
   searchDistinations(start_stop) {
     let result = [];
     for(let tarifInfo of this.dataService.getTarif) {
-      console.log("TARIF-- ", tarifInfo);
-      if(start_stop == tarifInfo.start_stop_id) {
+      if(start_stop == tarifInfo.start_stop_id[0]) {
         result.push(tarifInfo);
       }
     }
@@ -70,9 +69,9 @@ export class FunctionsService {
     .map(stop_id => {
       return {
         "stop_id": stop_id,
-        "stop_name": array.find(data => data.stop_id == stop_id).stop_name,
-        "aimag_id": array.find(data => data.stop_id == stop_id).aimag_id,
-        "aimag_name": array.find(data => data.stop_id == stop_id).aimag_name,
+        "stop_name": array.find(data => data.stop_id == stop_id).stop_name[0],
+        "aimag_id": array.find(data => data.stop_id == stop_id).aimag_id[0],
+        // "aimag_name": array.find(data => data.stop_id == stop_id).aimag_name,
         "stop_data": array.find(data => data.stop_id == stop_id)
       }
     });

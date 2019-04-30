@@ -1,12 +1,10 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { AlertController, PopoverController, LoadingController, ModalController, NavController, MenuController } from '@ionic/angular';
+import { PopoverController, LoadingController, ModalController, NavController, MenuController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { WeatherService } from 'src/app/services/weather/weather.service';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile.model';
 import { ProfileService } from 'src/app/services/profile.service';
 import * as firebase from 'firebase';
@@ -15,6 +13,7 @@ import { PassingDataService } from 'src/app/services/passing-data/passing-data.s
 
 import * as xml2js  from 'xml2js'
 import { StopListPage } from '../stop-list/stop-list.page';
+import { DistinationStopListPage } from '../distination-stop-list/distination-stop-list.page';
 
 @Component({
   selector: 'app-home',
@@ -29,9 +28,9 @@ export class HomePage implements OnInit {
   aimagData: any = [];
   distSourceStop: any = [];
   distData: any = [];
-  timeTableData: any = [];
+  timeTableData: any = null;
   fromStop: any = {};
-  toStop: any;
+  toStop: any = {};
 
   model: any = {
     fromAimag: null,
@@ -48,8 +47,7 @@ export class HomePage implements OnInit {
   weatherData: any;
   show: boolean = false;
   dists: any;
-  directions: any = [];
-  testData: any;
+  directions: any;
   
   constructor(
     private popover: PopoverController,
@@ -114,7 +112,6 @@ export class HomePage implements OnInit {
       message: '',
     });
     await loading.present();
-    // this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id"); 
 
     this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
       this.weatherData = data.json();
@@ -130,68 +127,56 @@ export class HomePage implements OnInit {
     
   };
 
-  async openModalList() {
+  async changeFromStop() {
     const listModal = await this.modalCtrl.create({
       component: StopListPage,
       componentProps: {
-      },
-      animated: true
+      }
     });
     listModal.present(); 
 
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.fromStop = data.data;
-      } 
-      console.log("RETURN:", data);
+        this.toStop = {};
+        this.timeTableData = null;
+        this.distSourceStop = [];
+        this.distData = [];
+        this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
+        this.directions = this.apiService.getDistData(this.dists);
+      }
     });
   }
 
-  changeFromStop() {
-    if(this.model.fromStop != null && this.model.fromStop != undefined) {
-      this.fromStop = this.aimagData[this.model.fromAimag].data[this.model.fromStop];
-      this.toStop = null;
-      this.timeTableData = [];
-      this.distSourceStop = [];
-      this.distData = [];
-      this.model.toAimag = null;
-      this.model.toStop = null;
-      // this.dists = this.functionsService.searchDistinations(this.fromStop.ss_id);
-
-      let result: any = this.apiService.getDistData(this.dists);
-      this.distSourceStop = result.distSourceStop;
-      this.directions = result.directions;
-
-      this.distData = this.functionsService.groupBy(this.distSourceStop, "ss_A_id");
-    }
-  }
-
-  changeFromAimag() {
-    if(this.model.fromAimag != null && this.model.fromAimag != undefined) {
-      this.model.fromStop = null;
-      this.model.toAimag = null;
-      this.model.toStop = null;
-      this.timeTableData = [];
-      this.distSourceStop = [];
-      this.distData = [];
-    }
-  }
-
-  changeToStop() {
-	  this.toStop = this.distData[this.model.toAimag].data[this.model.toStop];
-    this.timeTableData = [];
-    let tempData;
-    this.apiService.getTodayTimeTable(this.directions).then(data => {
-
-      this.apiService.dateByDispatcherData = data;
-      tempData = this.apiService.getDateDispatcher(this.directions, this.toStop.ss_id);
-
-      for(let i = 0; i < tempData.length; i++) {
-        tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
-        tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
+  async changeToStop() {
+    const listModal = await this.modalCtrl.create({
+      component: DistinationStopListPage,
+      componentProps: {
       }
-      this.timeTableData = this.timeTableData.concat(tempData);
-      console.log(this.timeTableData);  
+    });
+    listModal.present(); 
+
+    listModal.onDidDismiss().then(data => {
+      if(data.data){
+        this.toStop = data.data;
+
+        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(data => {
+          let resultArray = [];
+          let tempData: any = data;
+          let dataNow = new Date();
+          for(let i = 0; i < tempData.length; i++) {
+            let leaveDate = new Date(tempData[i].leave_date[0]);
+            if(dataNow.getTime() < leaveDate.getTime()) {
+              tempData[i].leave_date_time = new Date(tempData[i].leave_date[0]).toTimeString().substring(0, 5);
+              tempData[i].leave_date_text = new Date(tempData[i].leave_date[0]).toISOString().substring(0, 10);
+              resultArray.push(tempData[i]);
+            }
+          }
+          if(resultArray.length > 0) {
+            this.timeTableData = resultArray;
+          }
+        });
+      }  
     });
   }
 

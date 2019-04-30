@@ -34,7 +34,7 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
     </ion-item-divider>
-    <ion-item (click)="openModalList()" lines="none">
+    <ion-item (click)="changeFromStop()" lines="none">
         <ion-label>{{ fromStop.stop_name ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
         <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
@@ -66,7 +66,11 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Хаашаа</ion-label>
     </ion-item-divider>
-    <div class="combo-item">
+    <ion-item (click)="changeToStop()" lines="none">
+      <ion-label>{{ toStop.stop_name ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
+      <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
+    </ion-item>
+    <!-- <div class="combo-item">
       <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.toAimag"
         placeholder="Аймаг сонгох" name="toAimag" [disabled]="model.fromAimag == null || model.fromAimag == undefined">
         <div *ngFor="let item of distData; let i = index;">
@@ -81,30 +85,33 @@
           <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
         </div>
       </ion-select>
-    </div>
+    </div> -->
 
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>
-    <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
-      <div slot="start" class="start-side">
-        <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
-        <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
-        <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
-      </div>
-      <div class="body-side">
-        <ion-label>{{item.direction_name}}</ion-label>
-        <ion-label class="sub-body">{{item.car_type_name}}</ion-label>
-      </div>
-      <!-- <div slot="end" class="end-side">
-        End
-      </div> -->
-    </ion-item>
-    <ion-item style="padding: 10px">
-      {{testData}}
-
-    </ion-item>
-
+    <div *ngIf="timeTableData != null">
+      <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
+        <div slot="start" class="start-side">
+          <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
+          <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
+          <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
+        </div>
+        <div class="body-side">
+          <ion-label>{{item.direction_name ? item.direction_name[0] : ''}}</ion-label>
+          <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name[0] : ''}}</ion-label>
+        </div>
+        <div slot="end" class="end-side">
+            {{item.car_number ? item.car_number[0] : ""}}
+        </div>
+        <!-- <div slot="end" class="end-side">
+          End
+        </div> -->
+      </ion-item>
+    </div>
+    <div *ngIf="timeTableData == null" style="padding: 10px; width: 100%; height: 60px; text-align: center;">
+      Хуваарь байхгүй байна
+    </div>
   </ion-list>
 
 </ion-content>

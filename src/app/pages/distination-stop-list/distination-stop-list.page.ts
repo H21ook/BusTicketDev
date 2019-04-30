@@ -3,14 +3,13 @@ import { DataService } from 'src/app/services/data.service';
 import { ModalController } from '@ionic/angular';
 
 @Component({
-  selector: 'app-stop-list',
-  templateUrl: './stop-list.page.html',
-  styleUrls: ['./stop-list.page.scss'],
+  selector: 'app-distination-stop-list',
+  templateUrl: './distination-stop-list.page.html',
+  styleUrls: ['./distination-stop-list.page.scss'],
 })
-export class StopListPage implements OnInit {
-
+export class DistinationStopListPage implements OnInit {
   stop_name: string;
-  sourceStops: any;
+  distSourceStops: any;
   result: any;
   constructor(
     private dataService: DataService,
@@ -18,17 +17,17 @@ export class StopListPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.sourceStops = this.dataService.sourceStops;
-    this.result = this.dataService.sourceStops;
+    this.distSourceStops = this.dataService.distSourceStops;
+    this.result = this.dataService.distSourceStops;
   }
 
   onInput (e) {
     var search = e.target.value;
     if (!search) {
-      this.result = this.sourceStops;
+      this.result = this.distSourceStops;
     } else {
       this.result = [];
-      this.sourceStops.filter(data => {
+      this.distSourceStops.filter(data => {
         if (data.stop_name.trim().toLowerCase().includes(search.trim().toLowerCase())) {
           this.result.push(data);
         }
