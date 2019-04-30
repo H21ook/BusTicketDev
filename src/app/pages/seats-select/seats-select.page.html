@@ -14,17 +14,48 @@
 <ion-content *ngIf="show">
   <ion-list>
     <ion-item-divider class="custom-divider">
+      <ion-label>Мэдээлэл</ion-label>
+    </ion-item-divider>
+    <div>
+      <ion-row>
+        <ion-label class="text-info">Чиглэл:<b>{{' ' + passData.toStop.stop_data.direction_name ? passData.toStop.stop_data.direction_name[0] : ''}}</b></ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-label class="text-info">ААН нэр:<b>{{' ' + passData.dispatcher.company_name ? passData.dispatcher.company_name[0] : ''}}</b></ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-label class="text-info">Марк загвар:<b>{{' ' + passData.dispatcher.model_name ? passData.dispatcher.model_name[0] : ''}}</b></ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-label class="text-info">Улсын дугаар:<b>{{' ' + passData.dispatcher.car_number ? passData.dispatcher.car_number[0] : ''}}</b></ion-label>
+      </ion-row>
+    </div>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Үнэ</ion-label>
+    </ion-item-divider>
+    <div>
+      <ion-row>
+        <ion-label class="text-info">Том хүн:<b>{{' ' + passData.toStop.stop_data.big_price ? passData.toStop.stop_data.big_price[0] + '₮ /Амь даатгал: ' + (passData.toStop.stop_data.big_insurance ? passData.toStop.stop_data.big_insurance[0] : '0') + '₮/' : '0₮'}}</b></ion-label>
+      </ion-row>
+      <ion-row>
+        <ion-label class="text-info">Хүүхэд /7-12нас/:<b>{{' ' + passData.toStop.stop_data.big_childprice ? passData.toStop.stop_data.big_childprice[0]  + '₮ /Амь даатгал: ' + (passData.toStop.stop_data.big_childinsurance ? passData.toStop.stop_data.big_childinsurance[0] : '0') + '₮/' : '0₮'}}</b></ion-label>
+      </ion-row>
+    </div>
+    <ion-item-divider class="custom-divider">
       <ion-label>Суудал сонгох</ion-label>
     </ion-item-divider>
   </ion-list>
-  <bus [seats]="dataService.emptySeats" (valueChange)='changeBusSeat($event)' busType="{{passData.directionInfo.car_type_id}}"></bus>
+  <bus [seats]="emptySeats" (valueChange)='changeBusSeat($event)' busType="{{passData.dispatcher.car_type_id ? passData.dispatcher.car_type_id[0] : 1}}"></bus>
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/time-table'">
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home" text="Буцах" color="primary"></ion-back-button>
+      </ion-buttons>
+    <!-- <ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/time-table'">
       <ion-icon name="arrow-back" slot="start"></ion-icon>
       <ion-label>Буцах</ion-label>
-    </ion-button>
+    </ion-button> -->
     <ion-button slot="end" fill="clear" [disabled]="!nextAgree" (click)="goToNextPage()">
       <ion-icon name="arrow-forward" slot="end"></ion-icon>
       <ion-label>Үргэлжлүүлэх</ion-label>

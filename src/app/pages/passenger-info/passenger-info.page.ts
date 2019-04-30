@@ -62,9 +62,6 @@ export class PassengerInfoPage implements OnInit {
       for (let i = 0; i < selectedSeats.length; i++) {
         this.required.push([]);
         this.passengersData.push({ seat_no: selectedSeats[i].seat_no, age: '1', name: '', register: '', incur: false, amount: 0 });
-        this.calcAmountAge(i);
-        this.changeName(i);
-        this.changeRegister(i);
       }
     } else {
       this.nav.navigateBack('/seats-select');
@@ -72,19 +69,25 @@ export class PassengerInfoPage implements OnInit {
   }
 
   calcAmountAge(i) {
+    this.passengersData[i].totalAmount = 0;
     if (this.passengersData[i].age == "0") {
-      this.passengersData[i].amount = 13000;
+      //huuhed 0
+      this.passengersData[i].amount = Number(this.passData.toStop.stop_data.big_childprice[0]);
+      this.passengersData[i].incurAmount = Number(this.passData.toStop.stop_data.big_childinsurance[0]);
     } else {
-      this.passengersData[i].amount = 26000;
+      //tom hun 1
+      this.passengersData[i].amount = Number(this.passData.toStop.stop_data.big_price[0]);
+      this.passengersData[i].incurAmount = Number(this.passData.toStop.stop_data.big_insurance[0]);
     }
-    this.passengersData[i].amount += this.passengersData[i].incur ? 300 : 0;
+    this.passengersData[i].totalAmount += this.passengersData[i].amount;
+    this.passengersData[i].totalAmount += this.passengersData[i].incur ? this.passengersData[i].incurAmount : 0;
     this.calcTotalAmout();
   }
 
   calcTotalAmout() {
     let total = 0;
     for (let i = 0; i < this.passengersData.length; i++) {
-      total += this.passengersData[i].amount;
+      total += this.passengersData[i].totalAmount;
     }
     this.totalAmount = total;
   }
@@ -143,7 +146,6 @@ export class PassengerInfoPage implements OnInit {
 
             this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe((profile) => {
               this.profile = profile;
-              this.passengersData[0].age = Number(profile.age) > 12 ? "1" : "0";
               this.passengersData[0].name = profile.firstName[0] + "." + profile.lastName;
               this.passengersData[0].register = profile.registerNumber;
               this.calcAmountAge(0);

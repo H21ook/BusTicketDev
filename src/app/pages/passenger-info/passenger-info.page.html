@@ -24,7 +24,7 @@
     <div *ngFor="let passenger of passengersData; let i=index">
       <ion-item-divider class="custom-divider bg-aqua">
         <ion-label>{{passenger.seat_no}} дугаартай суудал</ion-label>
-        <ion-label class="amount-text ">{{passenger.amount}}₮</ion-label>
+        <ion-label class="amount-text ">{{passenger.totalAmount}}₮</ion-label>
       </ion-item-divider>
       <div class="padding-list">
         <ion-item>
@@ -47,7 +47,7 @@
         </ion-item>
         <ion-item lines="full">
           <fa-icon icon="user-shield" slot="start"></fa-icon>
-          <ion-label>Амь даатгал /400₮/</ion-label>
+          <ion-label>{{'Амь даатгал /' + passenger.incurAmount + '₮/'}}</ion-label>
           <ion-checkbox slot="end" [(ngModel)]="passenger.incur" (ionChange)="calcAmountAge(i)"></ion-checkbox>
         </ion-item>
       </div>

@@ -100,9 +100,7 @@ export class ApiService {
   }
   
   async getDateDispatcher(directions, end_id) {
-
-    const dispatcherData = await this.getTodayTimeTable(directions).then(data => {
-      this.dataService.dateByDispatcherData = data;
+    return this.getTodayTimeTable(directions).then(data => {
 
       let result = []; 
       for(let j = 0; j < directions.length; j++) {
@@ -112,11 +110,8 @@ export class ApiService {
           }
         }
       }
-      return new Promise((resolve, reject) => {
-        resolve(result);
-      });
+      this.dataService.dateByDispatcherData = result;
     });
-    return dispatcherData;
   }
 
   getDistData(dists) {
@@ -171,26 +166,18 @@ export class ApiService {
 
 
   async getEmptySeats(dispatcher_id) {
-    let array:any = [];
-    let result;
-    let response;
-
-    response = await this.getSeat(dispatcher_id).then(data => {
-
+    return this.getSeat(dispatcher_id).then(data => {
+      let result;
       xml2js.parseString(data.data, function (err, res) {
         if(res.DataTable["diffgr:diffgram"][0]) {
           if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
-              result = res.DataTable["diffgr:diffgram"][0]["DocumentElement"];
-              array = array.concat(result);
+              result = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["get_Empty_Seat"];
           }
         }
       });
 
-      return new Promise((resolve, reject) => {
-        resolve(array);
-      });
+      this.dataService.emptySeats = result;
     });
-    return response;
   }
 
   getSeat(dispatcher_id) {

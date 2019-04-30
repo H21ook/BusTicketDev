@@ -8,9 +8,10 @@ import { LoadingController } from '@ionic/angular';
 export class DataService {
 
   sourceStops: any;
-  distSourceStops: any;
   getTarif: any;
+  distSourceStops: any;
   dateByDispatcherData: any = [];
+  emptySeats: any = [];
 
   constructor() {
     
@@ -839,7 +840,7 @@ export class DataService {
   //   }
   // ];
 
-  emptySeats: any = [
+  /* emptySeats: any = [
     {
       "seat_no": 1
     }, {
@@ -931,7 +932,7 @@ export class DataService {
     }, {
       "seat_no": 45
     }
-  ]
+  ] */
 
   // getTarif: any = [
   //   {

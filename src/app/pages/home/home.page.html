@@ -19,7 +19,7 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Өнөөдөр</ion-label>
     </ion-item-divider>
-    <ion-item class="text-center" (click)="openModalWeather($event)" lines="none" *ngIf="weatherData">
+    <ion-item class="text-center" (click)="openWeather($event)" lines="none" *ngIf="weatherData">
       <ion-thumbnail slot="start">
         <img src="{{'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png'}}">
       </ion-thumbnail>

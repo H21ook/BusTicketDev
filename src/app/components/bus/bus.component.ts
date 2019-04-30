@@ -29,7 +29,13 @@ export class BusComponent implements OnInit {
   }
 
   fillSeatData() {
-    this.seatData = this.functionsService.seatArrayFill(this.seats, 45);
+    let length = 0;
+    if(this.busType == 1)
+      length = 45;
+    else if(this.busType == 2) {
+      length = 25;
+    }
+    this.seatData = this.functionsService.seatArrayFill(this.seats, length);
   }
 
   getSelectedSeats() : Seat[] {

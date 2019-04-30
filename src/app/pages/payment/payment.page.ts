@@ -25,9 +25,9 @@ export class PaymentPage implements OnInit {
     
   
   ngOnInit() {
-    this.directionInfo = this.dataPass.directionInfo;
+    this.directionInfo = this.dataPass.dispatcher;
     this.orderData = this.dataPass.orderData;
-    this.leaveDate = new Date(this.directionInfo.leave_date).toISOString();
+    this.leaveDate = new Date(this.directionInfo.leave_date[0]).toISOString();
     let date = new Date();
     this.orderNum = date.getFullYear() + "" + date.getMonth() + "" + date.getDay() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
     this.peopleNum = this.countOfChild(this.orderData.passengers);

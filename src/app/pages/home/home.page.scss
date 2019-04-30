@@ -8,3 +8,10 @@
   width: 32px;
   margin-right: 5px;
 }
+
+.pop-over-style {
+  .popover-content {
+      //width: 80% !important; - this wont work or the bottom one.
+      --width: 300px !important;
+  }
+}

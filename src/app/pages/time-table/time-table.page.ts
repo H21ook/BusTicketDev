@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
-import { PopoverController, NavController, LoadingController, MenuController } from '@ionic/angular';
+import { PopoverController, NavController, ModalController, LoadingController, MenuController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { AngularFireObject } from 'angularfire2/database';
 import { Observable } from 'rxjs';
@@ -10,6 +10,9 @@ import { Profile } from 'src/app/models/profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
 import * as firebase from 'firebase';
+import { StopListPage } from '../stop-list/stop-list.page';
+import { DistinationStopListPage } from '../distination-stop-list/distination-stop-list.page';
+import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
 
 @Component({
   selector: 'app-time-table',
@@ -18,22 +21,21 @@ import * as firebase from 'firebase';
 })
 export class TimeTablePage implements OnInit {
 
-  private profileAFObser: AngularFireObject<Profile>;
-  private profileObser: Observable<Profile>;
   private profile : Profile;
   avatarImage: any;
   startDate: string;
   minDate: string;
   maxDate: string;
   sourceStops: any = [];
-  aimagData: any = []
+  distData: any = [];
+  timeTableData: any = null;
+  fromStop: any = {};
+  toStop: any = {};
+  dists: any;
+  directions: any;
+  
   model: any = {};
   id: string;
-  slideConfig: any = {
-    centeredSiles: true, 
-    slidesPerView: 3,
-    effect: 'slide'
-  };
   show: boolean = false;
   dat: any;
 
@@ -46,13 +48,14 @@ export class TimeTablePage implements OnInit {
     private navCtrl: NavController,
     private afAuth: AngularFireAuth,
     private loadingController: LoadingController,
-    private menuCtrl: MenuController
+    private menuCtrl: MenuController,
+	private modalCtrl: ModalController,
+	private passData: PassingDataService
   ) { 
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
-      this.navCtrl.navigateRoot('/login');
+      navCtrl.navigateRoot('/login');
     } else {
-      this.sourceStops = this.dataService.sourceStops;
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
         this.profile = profile;
         if (this.profile.image != null)
@@ -79,24 +82,72 @@ export class TimeTablePage implements OnInit {
       message: '',
     });
     await loading.present();
-    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    // this.getDefaultValue();
-    this.apiService.getWeekTimeTable(82).then(data => {
-      this.dat = data;
-      loading.dismiss();
-    })
-    .catch(error => {
-  
-      console.log(error.status);
-      console.log(error.error); // error message as string
-      this.dat = "error" + error.error;
-      console.log(error.headers);
-      loading.dismiss();
-    });
     
+	this.sourceStops = this.dataService.sourceStops;
     this.show = true;
+	loading.dismiss();
+  }
+	
+  async changeFromStop() {
+    const listModal = await this.modalCtrl.create({
+      component: StopListPage,
+      componentProps: {
+      }
+    });
+    listModal.present(); 
+
+    listModal.onDidDismiss().then(data => {
+      if(data.data){
+        this.fromStop = data.data;
+        this.toStop = {};
+        this.timeTableData = null;
+        this.distData = [];
+        this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
+        this.directions = this.apiService.getDistData(this.dists);
+
+        this.passData.fromStop = this.fromStop;
+      }
+    });
+  }
+  
+  async changeToStop() {
+    const listModal = await this.modalCtrl.create({
+      component: DistinationStopListPage,
+      componentProps: {
+      }
+    });
+    listModal.present(); 
+
+    listModal.onDidDismiss().then(data => {
+      if(data.data){
+        this.toStop = data.data;
+
+        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(() => {
+          let resultArray = [];
+          let tempData: any = this.dataService.dateByDispatcherData;
+          let dataNow = new Date();
+          for(let i = 0; i < tempData.length; i++) {
+            let leaveDate = new Date(tempData[i].leave_date[0]);
+            if(dataNow.getTime() < leaveDate.getTime()) {
+              tempData[i].leave_date_time = new Date(tempData[i].leave_date[0]).toTimeString().substring(0, 5);
+              tempData[i].leave_date_text = new Date(tempData[i].leave_date[0]).toISOString().substring(0, 10);
+              resultArray.push(tempData[i]);
+            }
+          }
+          if(resultArray.length > 0) {
+            this.timeTableData = resultArray;
+          }
+        });
+
+        this.passData.toStop = this.toStop;
+      }  
+    });
   }
 
+  clickItem(item) {
+    this.passData.dispatcher = item;
+    this.navCtrl.navigateForward('/seats-select');
+  }
   // getDefaultValue() {
   //   let now = new Date();
   //   this.startDate = now.toISOString();
@@ -105,14 +156,6 @@ export class TimeTablePage implements OnInit {
   //   now.setDate(now.getDate() + 7);
   //   this.maxDate = now.toISOString();
   // }
-
-  changeFromAimag(e) {
-    this.model.fromStop = null;
-  }
-
-  changeToAimag(e) {
-    this.model.toStop = null;
-  }
 
   async openPopover(ev: Event) {
     const popover = await this.popover.create({
@@ -126,5 +169,6 @@ export class TimeTablePage implements OnInit {
 
     await popover.present();
   }
+  
 }
 

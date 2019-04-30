@@ -8,15 +8,30 @@
       </ion-header>
       <ion-content>
         <ion-list>
-          <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item [routerDirection]="'root'" [routerLink]="['/home']">
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <fa-icon slot="start" icon="home" color="dark"></fa-icon>
+              <ion-label>
+                Нүүр
+              </ion-label>
+            </ion-item>
+            <ion-item [routerDirection]="'forward'" [routerLink]="['/time-table']">
+              <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
+              <fa-icon slot="start" icon="list-alt" color="dark"></fa-icon>
+              <ion-label>
+                Тээврийн хуваарийн жагсаалт
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <!-- <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
+            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <fa-icon slot="start" icon="{{p.icon}}" color="dark"></fa-icon>
               <ion-label>
                 {{p.title}}
               </ion-label>
             </ion-item>
-          </ion-menu-toggle>
+          </ion-menu-toggle> -->
         </ion-list>
       </ion-content>
     </ion-menu>

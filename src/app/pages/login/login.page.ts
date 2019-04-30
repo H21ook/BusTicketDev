@@ -80,7 +80,7 @@ export class LoginPage implements OnInit {
       const loading = await this.loadingController.create({
         spinner: 'bubbles',
         translucent: false,
-        message: '',
+        message: ''
       });
       await loading.present();
     // if (this.validator.checkRequired(this.required)) {

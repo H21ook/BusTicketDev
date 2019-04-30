@@ -18,6 +18,7 @@ export class SeatsSelectPage implements OnInit {
   aimagData: any = []
   model: any = {};
   selectedSeats: Seat[];
+  emptySeats: any;
   nextAgree: boolean = false;
   show: boolean = false;
 
@@ -49,13 +50,22 @@ export class SeatsSelectPage implements OnInit {
       message: '',
     });
     await loading.present();
-    this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
-    // this.dataService.emptySeats = this.apiService.getEmptySeats(this.passData.directionInfo.id).then(data => {
-    //   console.log(data);
-    // });
-    loading.dismiss();
-    this.show = true;
+    // this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
+    if(this.passData.dispatcher) {
+      this.apiService.getEmptySeats(this.passData.dispatcher.id[0]).then(() => {
+        this.emptySeats = this.dataService.emptySeats;
+        loading.dismiss();
+        this.show = true;
+      });
+      // this.dataService.emptySeats = this.apiService.getEmptySeats(this.passData.directionInfo.id).then(data => {
+      //   console.log(data);
+      // });
+    } else {
+      loading.dismiss();
+      this.show = true;
+    }
   }
+
   changeBusSeat(e) {
     this.selectedSeats = e.selectedSeats;
     if(this.selectedSeats) {

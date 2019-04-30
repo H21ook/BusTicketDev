@@ -36,10 +36,10 @@ export class FunctionsService {
     result.push({ seat_no: null, checked: null });
     let j = 0;
     for (let i = 1; i <= length; i++) {
-      if (array[j].seat_no != i) {
+      if (array[j].seat_no[0] != i) {
         result.push({ seat_no: i, checked: true, status: 1});
       } else {
-        result.push({ seat_no: array[j].seat_no, checked: false, status: 0});
+        result.push({ seat_no: array[j].seat_no[0], checked: false, status: 0});
         j++;
       }
     }

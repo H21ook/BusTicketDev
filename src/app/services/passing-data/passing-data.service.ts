@@ -3,7 +3,6 @@ import { Seat } from 'src/app/models/seat.model';
 import { Passenger } from 'src/app/models/passenger.model';
 import { Subscriber } from 'src/app/models/subscriber.model';
 import { Order } from 'src/app/models/order.model';
-import { Direction } from 'src/app/models/direction.model';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +11,9 @@ export class PassingDataService {
 
   selectedSeats: Seat[];
   orderData: Order;
-  directionInfo: any = {};
+  dispatcher: any = {}; //dispatcher data
+  fromStop: any = {}; //sourceStop data
+  toStop: any = {}; //tarif data
 
   constructor() { }
 
@@ -38,16 +39,8 @@ export class PassingDataService {
   setIsAgree(data: boolean) {
     this.orderData.isAgree = data;
   }
-
-  setDirection(dir: Direction) {
-    this.orderData.direction = dir;
-  }
   
   getOrderData() {
     return this.orderData;
-  }
-
-  setDirectionInfo(dirInfo: any) {
-    this.directionInfo = dirInfo;
   }
 }

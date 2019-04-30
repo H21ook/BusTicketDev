@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, OnInit } from '@angular/core';
-import { PopoverController, LoadingController, ModalController, NavController, MenuController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { PopoverController, LoadingController, ModalController, NavController, MenuController, Platform } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
@@ -26,7 +26,6 @@ export class HomePage implements OnInit {
 
   sourceStops: any = [];
   aimagData: any = [];
-  distSourceStop: any = [];
   distData: any = [];
   timeTableData: any = null;
   fromStop: any = {};
@@ -50,6 +49,7 @@ export class HomePage implements OnInit {
   directions: any;
   
   constructor(
+    private platform: Platform,
     private popover: PopoverController,
     private dataService: DataService,
     private functionsService: FunctionsService,
@@ -65,7 +65,6 @@ export class HomePage implements OnInit {
   ) {
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
-      this.loadingController.dismiss();
       navCtrl.navigateRoot('/login');
     } else {
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
@@ -95,13 +94,13 @@ export class HomePage implements OnInit {
         ev: ev
       },
       event: ev,
-      mode: 'ios'
+      mode: 'ios',
+      cssClass: 'pop-over-style'
     });
-
     await popover.present();
   }
 
-  async openModalWeather(event) {
+  openWeather(event) {
     this.navCtrl.navigateForward('/weather');
   }
 
@@ -116,15 +115,13 @@ export class HomePage implements OnInit {
     this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
       this.weatherData = data.json();
       this.menuCtrl.enable(true);
-      
-      this.apiService.getAllStopsData().then(() => {
-        this.show = true; 
-        this.sourceStops = this.dataService.sourceStops;
-        loading.dismiss();
-      });
+	  
+		this.apiService.getAllStopsData().then(() => {
+		  this.show = true; 
+		  this.sourceStops = this.dataService.sourceStops;
+		  loading.dismiss();
+		});
     }, err => loading.dismiss());
-
-    
   };
 
   async changeFromStop() {
@@ -140,10 +137,11 @@ export class HomePage implements OnInit {
         this.fromStop = data.data;
         this.toStop = {};
         this.timeTableData = null;
-        this.distSourceStop = [];
         this.distData = [];
         this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
         this.directions = this.apiService.getDistData(this.dists);
+
+        this.passData.fromStop = this.fromStop;
       }
     });
   }
@@ -160,9 +158,9 @@ export class HomePage implements OnInit {
       if(data.data){
         this.toStop = data.data;
 
-        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(data => {
+        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(() => {
           let resultArray = [];
-          let tempData: any = data;
+          let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
           for(let i = 0; i < tempData.length; i++) {
             let leaveDate = new Date(tempData[i].leave_date[0]);
@@ -176,12 +174,14 @@ export class HomePage implements OnInit {
             this.timeTableData = resultArray;
           }
         });
+
+        this.passData.toStop = this.toStop;
       }  
     });
   }
 
   clickItem(item) {
-    this.passData.setDirectionInfo(item);
+    this.passData.dispatcher = item;
     this.navCtrl.navigateForward('/seats-select');
   }
 

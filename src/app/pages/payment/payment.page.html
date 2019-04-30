@@ -33,7 +33,7 @@
     <ion-row>
       <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
         <p style="width: 100%; text-align: left;">Маршрут</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{directionInfo.direction_name}}</p>
+        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{directionInfo.direction_name ? directionInfo.direction_name[0] : ''}}</p>
       </ion-col>
     </ion-row>
     <ion-row>
@@ -41,11 +41,11 @@
         <ion-row>  
           <ion-col style="width: 50%;">
             <p style="width: 100%; text-align: left;">Суух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_start_stop_name}}</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_start_stop_name ? directionInfo.direction_start_stop_name[0] : ''}}</p>
           </ion-col>
           <ion-col style="width: 50%;">
             <p style="width: 100%; text-align: left;">Буух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_end_stop_name}}</p>
+            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_end_stop_name ? directionInfo.direction_end_stop_name[0] : ''}}</p>
           </ion-col>
         </ion-row>
       </ion-col>

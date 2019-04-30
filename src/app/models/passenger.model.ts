@@ -4,5 +4,7 @@ export class Passenger {
     register: string;
     age: string = "1"
     incur: boolean = false;
+    incurAmount?: number;
     amount: number;
+    totalAmount?: number;
 }
