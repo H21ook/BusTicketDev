@@ -102,14 +102,16 @@
           <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name[0] : ''}}</ion-label>
         </div>
         <div slot="end" class="end-side">
-            {{item.car_number ? item.car_number[0] : ""}}
+            <ion-label class="start-date">Суудал</ion-label>
+            <ion-label class="start-time">{{item.sitcount ? (item.sitcount[0] - (item.empty_seat_count ? item.empty_seat_count[0] : 0)) + ' / ' + item.sitcount[0] : 'NaN'}}</ion-label>
+            
         </div>
         <!-- <div slot="end" class="end-side">
           End
         </div> -->
       </ion-item>
     </div>
-    <div *ngIf="timeTableData == null" style="padding: 10px; width: 100%; height: 60px; text-align: center;">
+    <div class="no-item" *ngIf="timeTableData == null">
       Хуваарь байхгүй байна
     </div>
   </ion-list>
