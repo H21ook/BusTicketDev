@@ -112,6 +112,6 @@ export class SubscriberInfoPage implements OnInit {
     this.error = "";
   }
   cancel() {
-    this.nav.navigateBack("/time-table");
+    this.nav.navigateBack("/home");
   }
 }

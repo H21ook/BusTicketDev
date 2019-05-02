@@ -126,7 +126,7 @@ export class PassengerInfoPage implements OnInit {
   }
 
   cancel() {
-    this.nav.navigateBack("/time-table");
+    this.nav.navigateBack("/home");
   }
 
   async useUserConfirm(massage: string, header?: string) {

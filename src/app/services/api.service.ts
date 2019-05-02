@@ -90,7 +90,7 @@ export class ApiService {
             }
           }
         });
-
+        console.log("WEEK", array);
         return new Promise((resolve, reject) => {
           resolve(array);
         });
@@ -99,8 +99,23 @@ export class ApiService {
     return response;
   }
   
-  async getDateDispatcher(directions, end_id) {
+  async getDateDispatcherToday(directions, end_id) {
     return this.getTodayTimeTable(directions).then(data => {
+
+      let result = []; 
+      for(let j = 0; j < directions.length; j++) {
+        for(let i = 0; i < data.length; i++) {
+          if(directions[j] == data[i].direction_id[0] && end_id == data[i].direction_end_stop_id[0]) {
+            result.push(data[i]);
+          }
+        }
+      }
+      this.dataService.dateByDispatcherData = result;
+    });
+  }
+
+  async getDateDispatcherWeek(directions, end_id) {
+    return this.getWeekTimeTable(directions).then(data => {
 
       let result = []; 
       for(let j = 0; j < directions.length; j++) {

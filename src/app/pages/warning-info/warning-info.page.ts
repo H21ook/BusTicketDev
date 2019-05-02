@@ -28,7 +28,7 @@ export class WarningInfoPage implements OnInit {
   }
 
   cancel() {
-    this.nav.navigateBack("/time-table");
+    this.nav.navigateBack("/home");
   }
 
   goToPayment() {
