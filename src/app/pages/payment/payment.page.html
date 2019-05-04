@@ -7,96 +7,107 @@
       Төлбөр
     </ion-title>
     <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
-        <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
-        <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
+      <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+      <img class="user-icon" *ngIf="(avatarImage == null)" color="light"
+        src="../../../assets/other/user-circle-solid.svg">
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="full-100">
-    <ion-item-divider class="custom-divider">
-      <ion-label>Захиалгын мэдээлэл</ion-label>
-    </ion-item-divider>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Захиалгын код</p>
-        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{orderNum}}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</p>
-        <p style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{orderData.totalAmount + '₮'}}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Маршрут</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{directionInfo.direction_name ? directionInfo.direction_name[0] : ''}}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <ion-row>  
-          <ion-col style="width: 50%;">
-            <p style="width: 100%; text-align: left;">Суух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_start_stop_name ? directionInfo.direction_start_stop_name[0] : ''}}</p>
-          </ion-col>
-          <ion-col style="width: 50%;">
-            <p style="width: 100%; text-align: left;">Буух</p>
-            <p style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">{{directionInfo.direction_end_stop_name ? directionInfo.direction_end_stop_name[0] : ''}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Хөдлөх огноо</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{leaveDate}}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%;">
-        <p style="width: 100%; text-align: left;">Зорчигчдын тоо</p>
-        <ion-row>
-          <ion-col style="padding: 0px; width: 50%;">
-            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">{{'Том хүн: ' + peopleNum.people}}</p>
-          </ion-col>
-          <ion-col style="padding: 0px; width: 50%;">
-            <p style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">{{'Хүүхэд: ' + peopleNum.child}}</p>
-          </ion-col>
-        </ion-row>
-      </ion-col>
+    <ion-list>
+      <ion-item-divider class="custom-divider">
+        <ion-label>Захиалгын мэдээлэл</ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Захиалгын код</ion-label><br>
+          <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
+            {{orderNum ? orderNum : ''}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</ion-label><br>
+          <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
+            {{orderData ? (orderData.totalAmount ? orderData.totalAmount : '0') : '0'}} ₮</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Маршрут</ion-label><br>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
+            {{directionInfo.direction_name ? directionInfo.direction_name[0] : ''}}</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-row>
+            <ion-col style="width: 50%; padding:0;">
+              <ion-label style="width: 100%; text-align: left;">Суух</ion-label><br>
+              <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
+                {{directionInfo.direction_start_stop_name ? directionInfo.direction_start_stop_name[0] : ''}}</ion-label>
+            </ion-col>
+            <ion-col style="width: 50%; padding:0;">
+              <ion-label style="width: 100%; text-align: left;">Буух</ion-label><br>
+              <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
+                {{directionInfo.direction_end_stop_name ? directionInfo.direction_end_stop_name[0] : ''}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Хөдлөх огноо</ion-label>
+          <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{leaveDate ? leaveDate : ''}}</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%;">
+          <ion-label style="width: 100%; text-align: left;">Зорчигчдын тоо</ion-label>
+          <ion-row>
+            <ion-col style="padding: 0px; width: 50%;">
+              <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
+                  Том хүн: {{peopleNum.people ? peopleNum.people : '0'}}</ion-label>
+            </ion-col>
+            <ion-col style="padding: 0px; width: 50%;">
+              <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
+                  Хүүхэд: {{peopleNum.child ? peopleNum.child : '0'}}</ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-col>
 
-    </ion-row>
-    <ion-item-divider class="custom-divider">
-      <ion-label>Төлбөрийн мэдээлэл</ion-label>
-    </ion-item-divider>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Банкны нэр</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">Хаан банк</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Дансны дугаар</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">5057397049</p>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-        <p style="width: 100%; text-align: left;">Данс эзэмшигчийн нэр</p>
-        <p style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АВТО ТЭЭВРИЙН ҮНДЭСНИЙ ТӨВ</p>
-      </ion-col>
-    </ion-row>
-    <div style="height: 150px; margin: 10px; width: 100%; text-align: center" *ngIf="qrCode">
-      <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);" [src]="qrCode">
-    </div>
-    <div class="padding-wrap-tb">
-      <button class="custom-button" type="button" (click)="finish()">болсон</button>
-    </div>
+      </ion-row>
+      <ion-item-divider class="custom-divider">
+        <ion-label>Төлбөрийн мэдээлэл</ion-label>
+      </ion-item-divider>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Банкны нэр</ion-label><br>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">Хаан банк</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Дансны дугаар</ion-label><br>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">5057397049</ion-label>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+          <ion-label style="width: 100%; text-align: left;">Данс эзэмшигчийн нэр</ion-label><br>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АВТО ТЭЭВРИЙН ҮНДЭСНИЙ ТӨВ</ion-label>
+        </ion-col>
+      </ion-row>
+      <div style="height: 150px; margin: 10px; width: 100%; text-align: center" *ngIf="qrCode">
+        <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);"
+          [src]="qrCode">
+      </div>
+      <div class="padding-wrap-tb">
+        <button class="custom-button2 ripple" type="button" size="full" (click)="finish()">болсон</button>
+      </div>
+    </ion-list>
   </div>
 
 </ion-content>

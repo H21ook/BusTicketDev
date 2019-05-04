@@ -3,8 +3,8 @@ export class Passenger {
     name: string;
     register: string;
     age: string = "1"
-    incur: boolean = false;
+    incur: boolean = true;
     incurAmount?: number;
-    amount: number;
+    amount?: number;
     totalAmount?: number;
 }
