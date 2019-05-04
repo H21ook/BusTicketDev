@@ -158,7 +158,7 @@ export class HomePage implements OnInit {
       if(data.data){
         this.toStop = data.data;
 
-        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(() => {
+        this.apiService.getDateDispatcherToday(this.directions, this.toStop.stop_id).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();

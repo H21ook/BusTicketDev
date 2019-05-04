@@ -122,7 +122,7 @@ export class TimeTablePage implements OnInit {
       if(data.data){
         this.toStop = data.data;
 
-        this.apiService.getDateDispatcher(this.directions, this.toStop.stop_id).then(() => {
+        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
