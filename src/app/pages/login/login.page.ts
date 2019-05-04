@@ -3,20 +3,32 @@ import { LoadingController, NavController, AlertController, MenuController } fro
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
-import { AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/models/user.model';
-import { Profile } from 'src/app/models/profile.model';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
-import { ApiService } from 'src/app/services/api.service';
-import { DataService } from 'src/app/services/data.service';
-import { error } from '@angular/compiler/src/util';
-
+import { trigger, animate, keyframes, transition, style } from '@angular/animations';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
+  animations: [
+    trigger('btn', [
+      transition('true <=> false', [
+        style({
+          height: '{{height}}', 
+          opacity: 0, 
+          width: '{{width}}', 
+          left: '{{left}}',
+          top: '{{top}}'
+        }),
+        animate(300, keyframes([
+          style({ opacity: 1, transform: ' scale(0)', offset: 0 }),
+          style({ opacity: 1, transform: ' scale(1.5)', offset: 0.6 }),
+          style({ opacity: 0, transform: ' scale(2.5)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
 })
 export class LoginPage implements OnInit {
 
@@ -27,6 +39,10 @@ export class LoginPage implements OnInit {
   
   loginError: any = '';
   required = [];
+
+
+  private rippleData: any = {}
+  ripple: boolean = true;
 
   @ViewChild('errMsg', {read: ElementRef}) private errMsg: ElementRef;
 
@@ -76,7 +92,9 @@ export class LoginPage implements OnInit {
     this.loginError = "";
   }
 
-  async login() {
+  async login(e) {
+    this.rippleData = this.rippleEffect(e);
+    this.ripple = !this.ripple;
       const loading = await this.loadingController.create({
         spinner: 'bubbles',
         translucent: false,
@@ -144,5 +162,18 @@ export class LoginPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  rippleEffect(e) {
+    var x = Math.max(e.target.clientWidth - e.offsetX, e.offsetX);
+    var y = Math.max(e.target.clientHeight - e.offsetY, e.offsetY);
+    var l = Math.max(x, y);
+    let param = {
+      width: l +'px',
+      height: l +'px',
+      left: (e.offsetX - l/2) + "px",
+      top: (e.offsetY - l/2) + "px"
+    };
+    return param;
   }
 }

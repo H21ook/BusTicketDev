@@ -11,11 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { UserMethodsPageModule } from './pages/user-methods/user-methods.module';
 import { HttpModule } from '@angular/http';
 import { FIREBASE_CONFIG } from './firebase.config';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { Facebook } from "@ionic-native/facebook/ngx";
-import { WeatherPageModule } from './pages/weather/weather.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -25,9 +21,13 @@ import { far } from '@fortawesome/free-regular-svg-icons';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { AngularFirestoreModule, FirestoreSettingsToken } from '@angular/fire/firestore';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { StopListPageModule } from './pages/stop-list/stop-list.module';
 import { DistinationStopListPageModule } from './pages/distination-stop-list/distination-stop-list.module';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 library.add(fas, fab, far);
 
 @NgModule({
@@ -41,11 +41,12 @@ library.add(fas, fab, far);
     UserMethodsPageModule,
     AngularFireModule.initializeApp(FIREBASE_CONFIG),
     AngularFirestoreModule,
-    AngularFireAuthModule,
     AngularFireDatabaseModule,
+    AngularFireAuthModule,
     FontAwesomeModule,
     StopListPageModule,
-    DistinationStopListPageModule
+    DistinationStopListPageModule,
+    BrowserAnimationsModule
   ],
   providers: [
     StatusBar,
@@ -53,6 +54,7 @@ library.add(fas, fab, far);
     Facebook,
     HTTP,
     Camera,
+    LocalNotifications,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

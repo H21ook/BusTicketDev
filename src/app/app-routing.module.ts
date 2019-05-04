@@ -20,7 +20,8 @@ const routes: Routes = [
   { path: 'warning-info', loadChildren: './pages/warning-info/warning-info.module#WarningInfoPageModule' },
   { path: 'profile/:id', loadChildren: './pages/profile/profile.module#ProfilePageModule' },
   { path: 'weather', loadChildren: './pages/weather/weather.module#WeatherPageModule' },
-  { path: 'payment', loadChildren: './pages/payment/payment.module#PaymentPageModule' },  { path: 'distination-stop-list', loadChildren: './pages/distination-stop-list/distination-stop-list.module#DistinationStopListPageModule' }
+  { path: 'payment', loadChildren: './pages/payment/payment.module#PaymentPageModule' },  { path: 'distination-stop-list', loadChildren: './pages/distination-stop-list/distination-stop-list.module#DistinationStopListPageModule' },
+  { path: 'order-histtory', loadChildren: './pages/order-histtory/order-histtory.module#OrderHisttoryPageModule' }
 
 
 ];

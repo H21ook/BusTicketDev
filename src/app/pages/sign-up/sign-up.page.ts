@@ -5,12 +5,31 @@ import { NavController, AlertController } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { ProfileService } from 'src/app/services/profile.service';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { trigger, animate, keyframes, transition, style } from '@angular/animations';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
   styleUrls: ['./sign-up.page.scss'],
+  animations: [
+    trigger('btn', [
+      transition('true <=> false', [
+        style({
+          height: '{{height}}', 
+          opacity: 0, 
+          width: '{{width}}', 
+          left: '{{left}}',
+          top: '{{top}}'
+        }),
+        animate(300, keyframes([
+          style({ opacity: 1, transform: ' scale(0)', offset: 0 }),
+          style({ opacity: 1, transform: ' scale(1.5)', offset: 0.6 }),
+          style({ opacity: 0, transform: ' scale(2.5)', offset: 1 })
+        ]))
+      ])
+    ])
+  ]
 })
 export class SignUpPage implements OnInit {
 
@@ -22,6 +41,9 @@ export class SignUpPage implements OnInit {
 
   required = [];
   error: any; 
+
+  private rippleData: any = {}
+  ripple: boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -73,7 +95,9 @@ export class SignUpPage implements OnInit {
     this.error = "";
   }
 
-  register() {
+  register(e) {
+    this.rippleData = this.rippleEffect(e);
+    this.ripple = !this.ripple;
     if(this.validator.checkRequired(this.required)) {
       this.error = "";
       this.authService.register(this.user)
@@ -121,5 +145,18 @@ export class SignUpPage implements OnInit {
     });
 
     await alert.present();
+  }
+
+  rippleEffect(e) {
+    var x = Math.max(e.target.clientWidth - e.offsetX, e.offsetX);
+    var y = Math.max(e.target.clientHeight - e.offsetY, e.offsetY);
+    var l = Math.max(x, y);
+    let param = {
+      width: l +'px',
+      height: l +'px',
+      left: (e.offsetX - l/2) + "px",
+      top: (e.offsetY - l/2) + "px"
+    };
+    return param;
   }
 }

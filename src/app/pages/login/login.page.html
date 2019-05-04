@@ -18,32 +18,32 @@
 							</ion-item> -->
 							<div class="wrap-input">
 								<span class="label-input">И-мэйл</span>
-								<ion-grid>
+								<ion-grid class="field-input">
 									<ion-row align-items-center>
-										<ion-col size="1" align-self-center>
+										<ion-col size="2" align-self-center>
 											<ion-icon name="person" class="input-icon"></ion-icon>
 										</ion-col>
-										<ion-col size="11">
+										<ion-col size="10">
 											<input class="input" (change)="changeEmail()" [(ngModel)]="user.email" type="text" name="username" placeholder="Type your username">
 										</ion-col>
 									</ion-row>
 								</ion-grid>
-								<span class="focus-input"></span>
+								<div class="focus-input"></div>
 							</div>
 							
 							<div class="wrap-input">
 								<span class="label-input">Нууц үг</span>
-								<ion-grid>
+								<ion-grid class="field-input">
 									<ion-row align-items-center>
-										<ion-col size="1" align-self-center>
+										<ion-col size="2" align-self-center>
 											<ion-icon name="lock" class="input-icon"></ion-icon>
 										</ion-col>
-										<ion-col size="11">
+										<ion-col size="10">
 											<input class="input" (change)="changePassword()" [(ngModel)]="user.password" type="password" name="pass" placeholder="Type your password">
 										</ion-col>
 									</ion-row>
 								</ion-grid>
-								<span class="focus-input"></span>
+								<div class="focus-input"></div>
 							</div>
 							
 							<ion-row>
@@ -74,7 +74,11 @@
 							</ion-grid>
 			
 							<div class="padding-wrap-tb">
-								<button class="custom-button" (click)="login()">Нэвтрэх</button>
+								<button class="custom-button" (click)="login($event)">
+									<div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
+									</div>
+									Нэвтрэх
+								</button>
 							</div>
 
 							<!-- <div class="txt1 text-center">

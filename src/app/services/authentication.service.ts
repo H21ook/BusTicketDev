@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { User } from '../models/user.model';
 import { Facebook } from '@ionic-native/facebook/ngx';
 import * as firebase from 'firebase';

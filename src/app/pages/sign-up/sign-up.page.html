@@ -5,54 +5,58 @@
 				<div class="login-wrap login-wrap-limiter">
 					<form class="login-form">
 						<span class="login-form-icon">
-							<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" >
+							<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo">
 						</span>
 						<div class="login-input-wrap">
 							<div class="wrap-input">
 								<span class="label-input">И-мэйл</span>
-								<ion-grid>
+								<ion-grid class="field-input">
 									<ion-row align-items-center>
-										<ion-col size="1" align-self-center>
+										<ion-col size="2" align-self-center>
 											<ion-icon name="person" class="input-icon"></ion-icon>
 										</ion-col>
-										<ion-col size="11">
-											<input class="input" (change)="changeEmail()" [(ngModel)]="user.email" type="email" name="email" placeholder="Type your username">
+										<ion-col size="10">
+												<input class="input" (change)="changeEmail()" [(ngModel)]="user.email"
+												type="email" name="email" placeholder="Type your username">
 										</ion-col>
 									</ion-row>
 								</ion-grid>
-								<span class="focus-input"></span>
+								<div class="focus-input"></div>
 							</div>
 							
 							<div class="wrap-input">
 								<span class="label-input">Нууц үг</span>
-								<ion-grid>
+								<ion-grid class="field-input">
 									<ion-row align-items-center>
-										<ion-col size="1" align-self-center>
+										<ion-col size="2" align-self-center>
 											<ion-icon name="lock" class="input-icon"></ion-icon>
 										</ion-col>
-										<ion-col size="11">
-											<input class="input" (change)="changePassword()" [(ngModel)]="user.password" type="password" name="pass" placeholder="Type your password">
+										<ion-col size="10">
+												<input class="input" (change)="changePassword()" [(ngModel)]="user.password"
+												type="password" name="pass" placeholder="Type your password">
 										</ion-col>
 									</ion-row>
 								</ion-grid>
-								<span class="focus-input"></span>
-              </div>
-              
-              <div class="wrap-input">
+								<div class="focus-input"></div>
+							</div>
+
+							<div class="wrap-input">
 								<span class="label-input">Нууц үг давтах</span>
-								<ion-grid>
+								<ion-grid class="field-input">
 									<ion-row align-items-center>
-										<ion-col size="1" align-self-center>
+										<ion-col size="2" align-self-center>
 											<ion-icon name="lock" class="input-icon"></ion-icon>
 										</ion-col>
-										<ion-col size="11">
-											<input class="input" (change)="changePassword2()" [(ngModel)]="user.password2" type="password" name="pass2" placeholder="Type your password">
+										<ion-col size="10">
+												<input class="input" (change)="changePassword2()"
+												[(ngModel)]="user.password2" type="password" name="pass2"
+												placeholder="Type your password">
 										</ion-col>
 									</ion-row>
 								</ion-grid>
-								<span class="focus-input"></span>
-              </div>
-              
+								<div class="focus-input"></div>
+							</div>
+
 							<ion-grid class="error error-msg" *ngIf="error">
 								<ion-row align-items-center>
 									<ion-col size="10" style="text-align:center;">
@@ -63,9 +67,13 @@
 									</ion-col>
 								</ion-row>
 							</ion-grid>
-			
+
 							<div class="padding-wrap-tb">
-								<button class="custom-button" (click)="register()">Бүртгүүлэх</button>
+								<button class="custom-button" (click)="register($event)">
+									<div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
+										</div>
+									Бүртгүүлэх
+								</button>
 							</div>
 						</div>
 					</form>
@@ -76,11 +84,10 @@
 </ion-content>
 
 <ion-footer>
-		<ion-toolbar>
-			<ion-button slot="start" fill="clear" [routerDirection]="'backward'"
-				[routerLink]="'/login'">
-				<ion-icon name="arrow-back" slot="start"></ion-icon>
-				<ion-label>Буцах</ion-label>
-			</ion-button>
-		</ion-toolbar>
-	</ion-footer>
+	<ion-toolbar>
+		<ion-button slot="start" fill="clear" [routerDirection]="'backward'" [routerLink]="'/login'">
+			<ion-icon name="arrow-back" slot="start"></ion-icon>
+			<ion-label>Буцах</ion-label>
+		</ion-button>
+	</ion-toolbar>
+</ion-footer>
