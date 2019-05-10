@@ -1,11 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { LoadingController, NavController, AlertController, MenuController } from '@ionic/angular';
+import { LoadingController, NavController, AlertController, MenuController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
 import { User } from 'src/app/models/user.model';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { trigger, animate, keyframes, transition, style } from '@angular/animations';
+import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 
 @Component({
   selector: 'app-login',
@@ -53,8 +54,18 @@ export class LoginPage implements OnInit {
     private profileService: ProfileService,
     private validator: ValidatorService,
     private alertController: AlertController,
-    private loadingController: LoadingController
-  ) { }
+    private loadingController: LoadingController,
+    private platform: Platform,
+    private localNotify: LocalNotifications
+  ) { 
+    this.platform.ready().then(() => {
+      this.localNotify.on('click').subscribe(notif => {
+        if(notif.data) {
+          this.navController.navigateForward(notif.data.page);
+        }
+      });
+    })
+  }
 
   ngOnInit() {
   }
@@ -175,5 +186,17 @@ export class LoginPage implements OnInit {
       top: (e.offsetY - l/2) + "px"
     };
     return param;
+  }
+
+  testF() {
+    this.localNotify.schedule({
+      title: 'Bus Ticket',
+      text: 'Таны захиалга амжилттай боллоо',
+      foreground: true,
+      data: {
+        page: "/order-history", 
+        id: 1
+      }
+    });
   }
 }

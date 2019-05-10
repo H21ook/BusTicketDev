@@ -7,6 +7,11 @@
   </feature>
 
 
+  <feature name="Badge">
+    <param name="android-package" value="de.appplant.cordova.plugin.badge.Badge"/>
+  </feature>
+
+
   <feature name="BrowserTab">
     <param name="android-package" value="com.google.cordova.plugin.browsertab.BrowserTab"/>
   </feature>
@@ -35,6 +40,11 @@
 
   <feature name="Keyboard">
     <param name="android-package" value="org.apache.cordova.labs.keyboard.Keyboard" onload="true"/>
+  </feature>
+
+
+  <feature name="LocalNotification">
+    <param name="android-package" value="de.appplant.cordova.plugin.localnotification.LocalNotification"/>
   </feature>
 
   </widget>
