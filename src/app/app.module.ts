@@ -28,6 +28,7 @@ import { StopListPageModule } from './pages/stop-list/stop-list.module';
 import { DistinationStopListPageModule } from './pages/distination-stop-list/distination-stop-list.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Network } from '@ionic-native/network/ngx';
 library.add(fas, fab, far);
 
 @NgModule({
@@ -55,6 +56,7 @@ library.add(fas, fab, far);
     HTTP,
     Camera,
     LocalNotifications,
+    Network,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: FirestoreSettingsToken, useValue: {} }
   ],

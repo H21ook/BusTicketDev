@@ -1,105 +1,113 @@
 <ion-content>
-	<ion-grid class="height-100 mp-0">
-		<ion-row class="height-100 bg-img">
-			<ion-col>
-				<div class="login-wrap login-wrap-limiter">
-					<form class="login-form">
-						<span class="login-form-icon">
-							<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" >
-						</span>
-						<div class="login-input-wrap">
-							<!-- <ion-item lines="full">
-								<fa-icon icon="id-badge" slot="start" color="dark"></fa-icon>
-								<ion-input placeholder="И-мэйл" type="email" name="email" [(ngModel)]="user.email" (ionChange)="changeEmail()"></ion-input>
-							</ion-item>
-							<ion-item lines="full">
-								<fa-icon icon="lock" slot="start" color="dark"></fa-icon>
-								<ion-input placeholder="Нууц үг" type="password" name="password" [(ngModel)]="user.password" (ionChange)="changePassword()"></ion-input>
-							</ion-item> -->
-							<div class="wrap-input">
-								<span class="label-input">И-мэйл</span>
-								<ion-grid class="field-input">
-									<ion-row align-items-center>
-										<ion-col size="2" align-self-center>
-											<ion-icon name="person" class="input-icon"></ion-icon>
-										</ion-col>
-										<ion-col size="10">
-											<input class="input" (change)="changeEmail()" [(ngModel)]="user.email" type="text" name="username" placeholder="Type your username">
-										</ion-col>
-									</ion-row>
-								</ion-grid>
-								<div class="focus-input"></div>
-							</div>
-							
-							<div class="wrap-input">
-								<span class="label-input">Нууц үг</span>
-								<ion-grid class="field-input">
-									<ion-row align-items-center>
-										<ion-col size="2" align-self-center>
-											<ion-icon name="lock" class="input-icon"></ion-icon>
-										</ion-col>
-										<ion-col size="10">
-											<input class="input" (change)="changePassword()" [(ngModel)]="user.password" type="password" name="pass" placeholder="Type your password">
-										</ion-col>
-									</ion-row>
-								</ion-grid>
-								<div class="focus-input"></div>
-							</div>
-							
-							<ion-row>
-								<ion-col>
-									<div class="text-left">
-										<a (click)="goToSignUp()">
-											Бүртгүүлэх
-										</a>
-									</div>
-								</ion-col>
-								<ion-col>
-									<div class="text-right">
-										<a (click)="resetPassword()">
-											Нууц үг мартсан
-										</a>
-									</div>
-								</ion-col>
-							</ion-row>
-							<ion-grid class="error error-msg" *ngIf="loginError">
-								<ion-row align-items-center>
-									<ion-col size="10" style="text-align:center;">
-										<span>{{loginError}}</span>
-									</ion-col>
-									<ion-col size="2">
-										<i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
-									</ion-col>
-								</ion-row>
-							</ion-grid>
-			
-							<div class="padding-wrap-tb">
-								<button class="custom-button" (click)="login($event)">
-									<div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
-									</div>
-									Нэвтрэх
-								</button>
-							</div>
-							<ion-button size="small" expand="full" color="primary" (click)="testF()">TEST</ion-button>
-							<!-- <div class="txt1 text-center">
-								<span>
-									ЭСВЭЛ
-								</span>
-							</div>
-
-							<div class="linear-flex">
-								<a href="#" class="login-social-item bg1">
-									<ion-icon name="logo-facebook"></ion-icon>
-								</a>
-
-								<a href="#" class="login-social-item bg3">
-									<ion-icon name="logo-google"></ion-icon>
-								</a>
-							</div> -->
-						</div>
-					</form>
-				</div>
+	<ion-grid *ngIf="!onNetwork" style="width: 100%; height: 100%; padding: 0; background: var(--ion-color-primary);">
+		<ion-row align-items-center style="width: 100%; height: 100%; background: rgba(255,255,255,0.5);">
+			<ion-col size="10" align-self-center style="background: #fff; text-align: center; margin: auto;">
+				<h4 style="margin:20px auto; ">Network was disconnected</h4>
+				<ion-button style="margin-bottom: 10px;" (click)="connect()">Connect</ion-button>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
+	<ion-grid *ngIf="onNetwork" class="height-100 mp-0" style ="padding: 0; background: var(--ion-color-primary);">
+			<ion-row class="height-100">
+				<ion-col>
+					<div class="login-wrap login-wrap-limiter">
+						<form class="login-form">
+							<span class="login-form-icon">
+								<img src=" ../../assets/icon/transport_logo.png" alt="transport-logo" >
+							</span>
+							<div class="login-input-wrap">
+								<!-- <ion-item lines="full">
+									<fa-icon icon="id-badge" slot="start" color="dark"></fa-icon>
+									<ion-input placeholder="И-мэйл" type="email" name="email" [(ngModel)]="user.email" (ionChange)="changeEmail()"></ion-input>
+								</ion-item>
+								<ion-item lines="full">
+									<fa-icon icon="lock" slot="start" color="dark"></fa-icon>
+									<ion-input placeholder="Нууц үг" type="password" name="password" [(ngModel)]="user.password" (ionChange)="changePassword()"></ion-input>
+								</ion-item> -->
+								<div class="wrap-input">
+									<span class="label-input">И-мэйл</span>
+									<ion-grid class="field-input">
+										<ion-row align-items-center>
+											<ion-col size="2" align-self-center>
+												<ion-icon name="person" class="input-icon"></ion-icon>
+											</ion-col>
+											<ion-col size="10">
+												<input class="input" (change)="changeEmail()" [(ngModel)]="user.email" type="text" name="username" placeholder="Type your username">
+											</ion-col>
+										</ion-row>
+									</ion-grid>
+									<div class="focus-input"></div>
+								</div>
+								
+								<div class="wrap-input">
+									<span class="label-input">Нууц үг</span>
+									<ion-grid class="field-input">
+										<ion-row align-items-center>
+											<ion-col size="2" align-self-center>
+												<ion-icon name="lock" class="input-icon"></ion-icon>
+											</ion-col>
+											<ion-col size="10">
+												<input class="input" (change)="changePassword()" [(ngModel)]="user.password" type="password" name="pass" placeholder="Type your password">
+											</ion-col>
+										</ion-row>
+									</ion-grid>
+									<div class="focus-input"></div>
+								</div>
+								
+								<ion-row>
+									<ion-col>
+										<div class="text-left">
+											<a (click)="goToSignUp()">
+												Бүртгүүлэх
+											</a>
+										</div>
+									</ion-col>
+									<ion-col>
+										<div class="text-right">
+											<a (click)="resetPassword()">
+												Нууц үг мартсан
+											</a>
+										</div>
+									</ion-col>
+								</ion-row>
+								<ion-grid class="error error-msg" *ngIf="loginError">
+									<ion-row align-items-center>
+										<ion-col size="10" style="text-align:center;">
+											<span>{{loginError}}</span>
+										</ion-col>
+										<ion-col size="2">
+											<i class="ico-times close-icon" (click)="closeErrorMsg()"></i>
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+				
+								<div class="padding-wrap-tb">
+									<button class="custom-button" (click)="login($event)">
+										<div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
+										</div>
+										Нэвтрэх
+									</button>
+								</div>
+								<ion-button size="small" expand="full" color="primary" (click)="testF()">TEST</ion-button>
+								<!-- <div class="txt1 text-center">
+									<span>
+										ЭСВЭЛ
+									</span>
+								</div>
+	
+								<div class="linear-flex">
+									<a href="#" class="login-social-item bg1">
+										<ion-icon name="logo-facebook"></ion-icon>
+									</a>
+	
+									<a href="#" class="login-social-item bg3">
+										<ion-icon name="logo-google"></ion-icon>
+									</a>
+								</div> -->
+							</div>
+						</form>
+					</div>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
 </ion-content>

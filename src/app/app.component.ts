@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { Platform, MenuController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -8,7 +8,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   selector: 'app-root',
   templateUrl: 'app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+  
   public appPages = [
     {
       title: 'Нүүр',
@@ -29,6 +30,7 @@ export class AppComponent {
   ) {
     this.initializeApp();
     this.menuCtrl.enable(false);
+    
   }
 
   initializeApp() {
@@ -36,5 +38,9 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
+  }
+
+  ngOnInit(): void {
+    
   }
 }

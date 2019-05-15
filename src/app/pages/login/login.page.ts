@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.model';
 import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { trigger, animate, keyframes, transition, style } from '@angular/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { Network } from '@ionic-native/network/ngx';
 
 @Component({
   selector: 'app-login',
@@ -44,6 +45,7 @@ export class LoginPage implements OnInit {
 
   private rippleData: any = {}
   ripple: boolean = true;
+  onNetwork: boolean = true; 
 
   @ViewChild('errMsg', {read: ElementRef}) private errMsg: ElementRef;
 
@@ -56,7 +58,8 @@ export class LoginPage implements OnInit {
     private alertController: AlertController,
     private loadingController: LoadingController,
     private platform: Platform,
-    private localNotify: LocalNotifications
+    private localNotify: LocalNotifications,
+    private network: Network
   ) { 
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
@@ -68,6 +71,12 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
+    // this.network.onConnect().subscribe(() => {
+    //   this.onNetwork = true;
+    // });
+    // this.network.onDisconnect().subscribe(() => {
+    //   this.onNetwork = false;
+    // });
   }
 
   goToSignUp() {
@@ -109,7 +118,8 @@ export class LoginPage implements OnInit {
       const loading = await this.loadingController.create({
         spinner: 'bubbles',
         translucent: false,
-        message: ''
+        message: '',
+        duration: 5000
       });
       await loading.present();
     // if (this.validator.checkRequired(this.required)) {
