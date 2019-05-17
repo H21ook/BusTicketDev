@@ -33,12 +33,12 @@ export class ApiService {
     return this.http.get(url, {}, {});
   }
 
-  getWeek(dir) {
-    let date = new Date("2018/12/01");
-    let start = date.toISOString().toString().substring(0,10);
-    let date2 = new  Date("2018/12/01");
-    date2.setDate(date.getDate() + 8);
-    let end = date2.toISOString().toString().substring(0,10);
+  getWeek(dir, start, end) {
+    // let date = new Date("2018/12/01");
+    // let start = date.toISOString().toString().substring(0,10);
+    // let date2 = new  Date("2018/12/01");
+    // date2.setDate(date.getDate() + 8);
+    // let end = date2.toISOString().toString().substring(0,10);
     let param = {};
     let headers = {};
     let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_Date_by_Dispatchers?id_direction=" + dir + "&start=" + start + "&end=" + end;
@@ -72,13 +72,13 @@ export class ApiService {
     return response;
   }
 
-  async getWeekTimeTable(dirs) {
+  async getWeekTimeTable(dirs, start, end) {
     let array:any = [];
     let result;
     let response;
 
     for(let j = 0; j < dirs.length; j++) {
-      response = await this.getWeek(dirs[j]).then(data => {
+      response = await this.getWeek(dirs[j], start, end).then(data => {
 
         xml2js.parseString(data.data, function (err, res) {
           if(res.DataTable["diffgr:diffgram"][0]) {
@@ -90,7 +90,6 @@ export class ApiService {
             }
           }
         });
-        console.log("WEEK", array);
         return new Promise((resolve, reject) => {
           resolve(array);
         });
@@ -114,9 +113,8 @@ export class ApiService {
     });
   }
 
-  async getDateDispatcherWeek(directions, end_id) {
-    return this.getWeekTimeTable(directions).then(data => {
-
+  async getDateDispatcherWeek(directions, end_id, startDate, endDate) {
+    return this.getWeekTimeTable(directions, startDate, endDate).then(data => {
       let result = []; 
       for(let j = 0; j < directions.length; j++) {
         for(let i = 0; i < data.length; i++) {

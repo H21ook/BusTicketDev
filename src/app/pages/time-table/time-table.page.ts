@@ -24,6 +24,7 @@ export class TimeTablePage implements OnInit {
   private profile : Profile;
   avatarImage: any;
   startDate: string;
+  endDate: string;
   minDate: string;
   maxDate: string;
   sourceStops: any = [];
@@ -37,7 +38,7 @@ export class TimeTablePage implements OnInit {
   model: any = {};
   id: string;
   show: boolean = false;
-  dat: any;
+  test: any;
 
   constructor(
     private popover: PopoverController,
@@ -83,9 +84,10 @@ export class TimeTablePage implements OnInit {
     });
     await loading.present();
     
-	this.sourceStops = this.dataService.sourceStops;
+    this.sourceStops = this.dataService.sourceStops;
+    this.getDefaultValue();
     this.show = true;
-	loading.dismiss();
+	  loading.dismiss();
   }
 	
   async changeFromStop() {
@@ -121,18 +123,21 @@ export class TimeTablePage implements OnInit {
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.toStop = data.data;
-
-        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id).then(() => {
+        var date = new Date(this.startDate);
+        var date2 = new Date(this.endDate);
+        console.log(this.directions);
+        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
           for(let i = 0; i < tempData.length; i++) {
-            let leaveDate = new Date(tempData[i].leave_date[0]);
-            if(dataNow.getTime() < leaveDate.getTime()) {
+            // orig heregleen deer ashiglana
+            // let leaveDate = new Date(tempData[i].leave_date[0]);
+            // if(dataNow.getTime() < leaveDate.getTime()) {
               tempData[i].leave_date_time = new Date(tempData[i].leave_date[0]).toTimeString().substring(0, 5);
               tempData[i].leave_date_text = new Date(tempData[i].leave_date[0]).toISOString().substring(0, 10);
               resultArray.push(tempData[i]);
-            }
+            // }
           }
           if(resultArray.length > 0) {
             this.timeTableData = resultArray;
@@ -148,14 +153,20 @@ export class TimeTablePage implements OnInit {
     this.passData.dispatcher = item;
     this.navCtrl.navigateForward('/seats-select');
   }
-  // getDefaultValue() {
-  //   let now = new Date();
-  //   this.startDate = now.toISOString();
-  //   this.minDate = now.toISOString();
 
-  //   now.setDate(now.getDate() + 7);
-  //   this.maxDate = now.toISOString();
-  // }
+  getDefaultValue() {
+    let now = new Date();
+    this.startDate = now.toISOString();
+    this.endDate = now.toISOString();
+    // this.minDate = now.toISOString();
+
+    // now.setDate(now.getDate() + 7);
+    // this.maxDate = now.toISOString();
+  }
+
+  changeEndDate() {
+    
+  }
 
   async openPopover(ev: Event) {
     const popover = await this.popover.create({
@@ -169,6 +180,5 @@ export class TimeTablePage implements OnInit {
 
     await popover.present();
   }
-  
 }
 

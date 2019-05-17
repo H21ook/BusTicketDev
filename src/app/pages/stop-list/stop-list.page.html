@@ -1,8 +1,9 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-searchbar
       [(ngModel)]="stop_name"
       animated
+      mode="ios"
       (ionInput)="onInput($event)"
       (ionCancel)="onCancel($event)">
     </ion-searchbar>
@@ -12,9 +13,17 @@
 <ion-content>
   
   <ion-list>
-    <ion-item *ngFor="let item of result; let i=index;" (click)="selectItem(item)">{{item.stop_name}}</ion-item>
+    <div *ngFor="let lists of displayList">
+      <ion-item-divider color="primary">
+        <ion-label>
+          {{lists[0].aimag_id}}
+        </ion-label>
+      </ion-item-divider>
+      <ion-item (click)="selectItem(item)" *ngFor="let item of lists">
+        {{item.stop_name}}
+      </ion-item>
+    </div>
   </ion-list>
-
 </ion-content>
 
 <ion-footer>

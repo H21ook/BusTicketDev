@@ -22,6 +22,13 @@ export class FunctionsService {
     return arr;
   }
 
+  groupByArray(array, key) {
+    return array.reduce(function(element, x) {
+      (element[x[key]] = element[x[key]] || []).push(x);
+      return element;
+    }, {});
+  }
+
   groupByStep1(array, prop) {
     return Object.values(array.reduce(function (groups, currentValue) {
       const val = currentValue[prop]

@@ -16,18 +16,24 @@
 <ion-content *ngIf="show">
   <ion-list class="list">
 
-    <!-- <ion-item-divider class="custom-divider">
-      <ion-label>Хэзээ</ion-label>
+    <ion-item-divider class="custom-divider">
+      <ion-label>Хугацаа</ion-label>
     </ion-item-divider>
     <ion-item>
+      <ion-label>Эхлэх</ion-label>
       <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
-        [(ngModel)]="startDate" [min]="minDate" [max]="maxDate"></ion-datetime>
-    </ion-item> -->
+        [(ngModel)]="startDate"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Дуусах</ion-label>
+      <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
+        [(ngModel)]="endDate" (ionChange)="changeEndDate()" [disabled]="!startDate"></ion-datetime>
+    </ion-item>
 
     <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
     </ion-item-divider>
-	<ion-item (click)="changeFromStop()" lines="none">
+	<ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate">
         <ion-label>{{ fromStop.stop_name ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
         <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
@@ -67,7 +73,7 @@
         </div>
       </ion-select>
     </div>-->
-	<ion-item (click)="changeToStop()" lines="none">
+	  <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
       <ion-label>{{ toStop.stop_name ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
       <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
@@ -104,6 +110,9 @@
     </div>
     <div class="no-item" *ngIf="timeTableData == null">
       Хуваарь байхгүй байна
+    </div>
+    <div style="padding: 10px;">
+        {{test}}
     </div>
   </ion-list>
   <p>{{dat}}</p>

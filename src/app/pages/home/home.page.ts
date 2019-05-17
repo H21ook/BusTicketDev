@@ -131,7 +131,6 @@ export class HomePage implements OnInit {
       }
     });
     listModal.present(); 
-
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.fromStop = data.data;
@@ -188,4 +187,5 @@ export class HomePage implements OnInit {
   fromStopChange(e) {
     console.log(e);
   }
+
 }

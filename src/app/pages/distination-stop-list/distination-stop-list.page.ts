@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, LoadingController } from '@ionic/angular';
+import { FunctionsService } from 'src/app/services/functions.service';
 
 @Component({
   selector: 'app-distination-stop-list',
@@ -11,20 +12,26 @@ export class DistinationStopListPage implements OnInit {
   stop_name: string;
   distSourceStops: any;
   result: any;
+  displayList: any;
   constructor(
     private dataService: DataService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private functionsService: FunctionsService,
+    private loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.distSourceStops = this.dataService.distSourceStops;
-    this.result = this.dataService.distSourceStops;
+    this.result = this.distSourceStops;
+    this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
+    this.loadingList();
   }
 
   onInput (e) {
     var search = e.target.value;
     if (!search) {
       this.result = this.distSourceStops;
+      this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
     } else {
       this.result = [];
       this.distSourceStops.filter(data => {
@@ -32,6 +39,7 @@ export class DistinationStopListPage implements OnInit {
           this.result.push(data);
         }
       });
+      this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
     }
   } 
   
@@ -45,5 +53,15 @@ export class DistinationStopListPage implements OnInit {
 
   close() {
     this.modalCtrl.dismiss();
+  }
+
+  async loadingList() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+      duration: 1000
+    });
+    await loading.present();
   }
 }
