@@ -115,13 +115,15 @@ export class LoginPage implements OnInit {
   async login(e) {
     this.rippleData = this.rippleEffect(e);
     this.ripple = !this.ripple;
-      const loading = await this.loadingController.create({
-        spinner: 'bubbles',
-        translucent: false,
-        message: '',
-        duration: 5000
-      });
-      await loading.present();
+
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: false,
+      message: '',
+      duration: 5000
+    });
+    await loading.present();
+    
     // if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
       this.user = { email: "tbeta40@gmail.com", password: "H21ook97" };

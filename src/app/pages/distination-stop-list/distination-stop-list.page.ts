@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
 import { ModalController, LoadingController } from '@ionic/angular';
 import { FunctionsService } from 'src/app/services/functions.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-distination-stop-list',
@@ -13,18 +14,32 @@ export class DistinationStopListPage implements OnInit {
   distSourceStops: any;
   result: any;
   displayList: any;
+
+  readTarif: boolean = false;
+
   constructor(
     private dataService: DataService,
     private modalCtrl: ModalController,
     private functionsService: FunctionsService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private modal: ModalController,
+    private apiService: ApiService
   ) { }
 
   ngOnInit() {
     this.distSourceStops = this.dataService.distSourceStops;
     this.result = this.distSourceStops;
     this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
-    this.loadingList();
+    if(this.readTarif) {
+      this.loadingList();
+    } else {
+      this.modal.dismiss();
+    }
+    
+    this.apiService.readTarif.subscribe(data => {
+        this.readTarif = data;
+        console.log(this.readTarif);
+    });
   }
 
   onInput (e) {

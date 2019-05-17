@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from 'src/app/services/data.service';
-import { ModalController, LoadingController } from '@ionic/angular';
+import { ModalController, LoadingController, ToastController, NavController } from '@ionic/angular';
 import { FunctionsService } from 'src/app/services/functions.service';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-stop-list',
@@ -15,12 +16,15 @@ export class StopListPage implements OnInit {
   result: any;
   displayList: any;
 
+  readTarif: boolean = false;
 
   constructor(
     private dataService: DataService,
     private modalCtrl: ModalController,
     private functionsService: FunctionsService,
-    private loadingController: LoadingController
+    private loadingController: LoadingController,
+    private apiService: ApiService,
+    private modal: ModalController
   ) { 
     
   }
@@ -29,7 +33,16 @@ export class StopListPage implements OnInit {
     this.sourceStops = this.dataService.sourceStops;
     this.result = this.dataService.sourceStops;
     this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
-    this.loadingList();
+    if(this.readTarif) {
+      this.loadingList();
+    } else {
+      this.modal.dismiss();
+    }
+    
+    this.apiService.readTarif.subscribe(data => {
+        this.readTarif = data;
+        console.log(this.readTarif);
+    });
   }
 
 

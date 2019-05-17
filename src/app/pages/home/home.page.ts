@@ -66,18 +66,18 @@ export class HomePage implements OnInit {
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
       navCtrl.navigateRoot('/login');
-    } else {
+    }
+  }
+  
+  ngOnInit() {
+    if(this.afAuth.auth.currentUser) {
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
         this.profile = profile;
         if (this.profile.image != null)
           this.loadImage(this.profile.image)
       });
-
+      this.loadingData();
     }
-  }
-  
-  ngOnInit() {
-    this.loadingData();
   }
   
   loadImage(imageName) {
@@ -116,11 +116,11 @@ export class HomePage implements OnInit {
       this.weatherData = data.json();
       this.menuCtrl.enable(true);
 	  
-		this.apiService.getAllStopsData().then(() => {
-		  this.show = true; 
-		  this.sourceStops = this.dataService.sourceStops;
-		  loading.dismiss();
-		});
+      this.apiService.getAllStopsData().then(() => {
+        this.show = true; 
+        this.sourceStops = this.dataService.sourceStops;
+        loading.dismiss();
+      });
     }, err => loading.dismiss());
   };
 
@@ -131,6 +131,7 @@ export class HomePage implements OnInit {
       }
     });
     listModal.present(); 
+
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.fromStop = data.data;

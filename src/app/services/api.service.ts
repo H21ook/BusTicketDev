@@ -3,6 +3,7 @@ import { HTTP } from '@ionic-native/http/ngx';
 import * as xml2js  from 'xml2js'
 import { FunctionsService } from './functions.service';
 import { DataService } from './data.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +11,14 @@ import { DataService } from './data.service';
 export class ApiService {
   
   dateByDispatcherData: any = [];
-  
+  readTarif: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private http:HTTP,
     private dataService: DataService,
     private functionsService: FunctionsService
   ) { 
     this.getTarifData().then(() => {
+      this.readTarif.next(true);
     });
   }
 
