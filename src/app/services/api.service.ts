@@ -21,9 +21,9 @@ export class ApiService {
   }
 
   getToday(dir) {
-    let date = new Date();
+    let date = new Date("2018/12/01");
     let start = date.toISOString().toString().substring(0,10);
-    let date2 = new  Date();
+    let date2 = new Date("2018/12/01");
     date2.setDate(date.getDate() + 2);
     let end = date2.toISOString().toString().substring(0,10);
 
@@ -34,9 +34,9 @@ export class ApiService {
   }
 
   getWeek(dir) {
-    let date = new Date();
+    let date = new Date("2018/12/01");
     let start = date.toISOString().toString().substring(0,10);
-    let date2 = new  Date();
+    let date2 = new  Date("2018/12/01");
     date2.setDate(date.getDate() + 8);
     let end = date2.toISOString().toString().substring(0,10);
     let param = {};

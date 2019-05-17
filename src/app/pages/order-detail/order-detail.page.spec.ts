@@ -1,23 +1,23 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 
-import { OrderPage } from './order.page';
+import { OrderDetailPage } from './order-detail.page';
 
-describe('OrderPage', () => {
-  let component: OrderPage;
-  let fixture: ComponentFixture<OrderPage>;
-  let OrderPage: HTMLElement;
+describe('OrderDetailPage', () => {
+  let component: OrderDetailPage;
+  let fixture: ComponentFixture<OrderDetailPage>;
+  let OrderDetailPage: HTMLElement;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OrderPage],
+      declarations: [OrderDetailPage],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
       .compileComponents();
   }));
 
   beforeEach(async () => {
-    fixture = await TestBed.createComponent(OrderPage);
+    fixture = await TestBed.createComponent(OrderDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -27,8 +27,8 @@ describe('OrderPage', () => {
   });
 
   it('should have a list of 10 elements', () => {
-    OrderPage = fixture.nativeElement;
-    const items = OrderPage.querySelectorAll('ion-item');
+    OrderDetailPage = fixture.nativeElement;
+    const items = OrderDetailPage.querySelectorAll('ion-item');
     expect(items.length).toEqual(10);
   });
 

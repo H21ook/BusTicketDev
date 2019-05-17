@@ -64,19 +64,19 @@ export class LoginPage implements OnInit {
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
         if(notif.data) {
-          this.navController.navigateForward(notif.data.page);
+          this.navController.navigateForward(notif.data.page, {queryParams: {id: notif.data.id}});
         }
       });
     })
   }
 
   ngOnInit() {
-    // this.network.onConnect().subscribe(() => {
-    //   this.onNetwork = true;
-    // });
-    // this.network.onDisconnect().subscribe(() => {
-    //   this.onNetwork = false;
-    // });
+    this.network.onConnect().subscribe(() => {
+      this.onNetwork = true;
+    });
+    this.network.onDisconnect().subscribe(() => {
+      this.onNetwork = false;
+    });
   }
 
   goToSignUp() {
@@ -207,6 +207,15 @@ export class LoginPage implements OnInit {
         page: "/order-history", 
         id: 1
       }
+    });
+  }
+
+  connect() {
+    this.network.onConnect().subscribe(() => {
+      this.onNetwork = true;
+    });
+    this.network.onDisconnect().subscribe(() => {
+      this.onNetwork = false;
     });
   }
 }

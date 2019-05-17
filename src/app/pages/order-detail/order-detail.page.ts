@@ -5,11 +5,11 @@ import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
 
 @Component({
-  selector: 'app-order',
-  templateUrl: 'order.page.html',
-  styleUrls: ['order.page.scss']
+  selector: 'app-order-detail',
+  templateUrl: 'order-detail.page.html',
+  styleUrls: ['order-detail.page.scss']
 })
-export class OrderPage implements OnInit {
+export class OrderDetailPage implements OnInit {
   private seatsData: any = this.dataService.emptySeats;
   @ViewChild('sliderMain') sliderMain: IonSlides;
 

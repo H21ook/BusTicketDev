@@ -62,6 +62,7 @@ export class PassengerInfoPage implements OnInit {
       for (let i = 0; i < selectedSeats.length; i++) {
         this.required.push([]);
         this.passengersData.push({ seat_no: selectedSeats[i].seat_no, age: '1', name: '', register: '', incur: true });
+        this.calcAmountAge(i);
       }
     } else {
       this.nav.navigateBack('/seats-select');

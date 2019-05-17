@@ -1,22 +1,22 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OrderHisttoryPage } from './order-histtory.page';
+import { OrderHistoryPage } from '../order-history/order-history.page';
 
-describe('OrderHisttoryPage', () => {
-  let component: OrderHisttoryPage;
-  let fixture: ComponentFixture<OrderHisttoryPage>;
+describe('OrderHistoryPage', () => {
+  let component: OrderHistoryPage;
+  let fixture: ComponentFixture<OrderHistoryPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrderHisttoryPage ],
+      declarations: [ OrderHistoryPage ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(OrderHisttoryPage);
+    fixture = TestBed.createComponent(OrderHistoryPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
