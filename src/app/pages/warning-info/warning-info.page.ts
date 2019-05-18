@@ -24,7 +24,6 @@ export class WarningInfoPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.passData.getOrderData());
   }
 
   cancel() {

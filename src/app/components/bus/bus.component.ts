@@ -41,8 +41,8 @@ export class BusComponent implements OnInit {
   getSelectedSeats() : Seat[] {
     let result: Seat[] = [];
     for(let i = 0; i < this.seatData.length; i++) {
-      if(this.seatData[i].checked && this.seatData[i].status == 0) {
-        result.push({seat_no: this.seatData[i].seat_no, checked: this.seatData[i].checked, status: this.seatData[i].status});
+      if(this.seatData[i].checked && !this.seatData[i].disabled) {
+        result.push({seat_no: this.seatData[i].seat_no, checked: this.seatData[i].checked, disabled: this.seatData[i].disabled});
       }
     }
     return result;

@@ -4,6 +4,8 @@ import * as xml2js  from 'xml2js'
 import { FunctionsService } from './functions.service';
 import { DataService } from './data.service';
 import { BehaviorSubject } from 'rxjs';
+import { Order } from '../models/order.model';
+import { OrderHistoryService } from './order-history.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +14,18 @@ export class ApiService {
   
   dateByDispatcherData: any = [];
   readTarif: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  readAllStop: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor(
     private http:HTTP,
     private dataService: DataService,
-    private functionsService: FunctionsService
+    private functionsService: FunctionsService,
+    private orderHistoryService: OrderHistoryService
   ) { 
     this.getTarifData().then(() => {
       this.readTarif.next(true);
+    });
+    this.getAllStopsData().then(() => {
+      this.readAllStop.next(true);
     });
   }
 
@@ -29,8 +36,6 @@ export class ApiService {
     date2.setDate(date.getDate() + 2);
     let end = date2.toISOString().toString().substring(0,10);
 
-    let param = {};
-    let headers = {};
     let url = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/get_Date_by_Dispatchers?id_direction=" + dir + "&start=" + start + "&end=" + end;
     return this.http.get(url, {}, {});
   }
@@ -229,6 +234,7 @@ export class ApiService {
         }
       });
       this.dataService.sourceStops =  this.functionsService.uniqueAllStops(arrData);
+      // console.log(this.functionsService.uniqueAllStops1(arrData));
     });
   }
 
@@ -246,5 +252,31 @@ export class ApiService {
       });
       this.dataService.getTarif = arrData;
     });
+  }
+
+  setOrderSeat(order: Order) {
+    var body = {
+      "dispatcher_id": order.dispatcherId, 
+      "seat_no": order.passengers[0].seat_no, 
+      "zahialagch_id": order.subscriberId, 
+      "expired": order.expired
+    };
+    const apiUrl = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/set_Order_Seat?"+'dispatcher_id='+ body.dispatcher_id + '&seat_no=' + body.seat_no + '&zahialagch_id=' + body.zahialagch_id + '&expired=' + body.expired;
+
+    console.log("POST mae", body);
+    this.http.get(apiUrl, {}, {}).then(data => {
+      let arrData: any[];
+      xml2js.parseString(data.data, function (err, res) {
+        if(res.DataTable["diffgr:diffgram"][0]) {
+          if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
+            if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]){
+              arrData = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["set_Order_Seat"];
+            }
+          }
+        }
+      });
+      this.orderHistoryService.orderSeat = arrData[0];
+    });
+
   }
 }

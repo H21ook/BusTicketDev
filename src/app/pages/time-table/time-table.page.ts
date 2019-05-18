@@ -30,12 +30,11 @@ export class TimeTablePage implements OnInit {
   sourceStops: any = [];
   distData: any = [];
   timeTableData: any = null;
-  fromStop: any = {};
-  toStop: any = {};
+  fromStop: any;
+  toStop: any;
   dists: any;
   directions: any;
   
-  model: any = {};
   id: string;
   show: boolean = false;
   test: any;
@@ -101,7 +100,7 @@ export class TimeTablePage implements OnInit {
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.fromStop = data.data;
-        this.toStop = {};
+        this.toStop = null;
         this.timeTableData = null;
         this.distData = [];
         this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
@@ -125,7 +124,6 @@ export class TimeTablePage implements OnInit {
         this.toStop = data.data;
         var date = new Date(this.startDate);
         var date2 = new Date(this.endDate);
-        console.log(this.directions);
         this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
@@ -140,7 +138,7 @@ export class TimeTablePage implements OnInit {
             // }
           }
           if(resultArray.length > 0) {
-            this.timeTableData = resultArray;
+            this.timeTableData = this.functionsService.sortByArray(resultArray, "leave_date_text");
           }
         });
 

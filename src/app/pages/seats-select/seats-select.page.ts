@@ -68,7 +68,7 @@ export class SeatsSelectPage implements OnInit {
 
   changeBusSeat(e) {
     this.selectedSeats = e.selectedSeats;
-    if(this.selectedSeats) {
+    if(this.selectedSeats && this.selectedSeats.length > 0) {
       this.nextAgree = true;
     } else {
       this.nextAgree = false;

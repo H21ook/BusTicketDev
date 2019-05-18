@@ -30,8 +30,8 @@ export class StopListPage implements OnInit {
   }
 
   ngOnInit() {
-    this.sourceStops = this.dataService.sourceStops;
-    this.result = this.dataService.sourceStops;
+    this.sourceStops = this.functionsService.checkSourceStops(this.dataService.sourceStops);
+    this.result = this.sourceStops;
     this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
     if(this.readTarif) {
       this.loadingList();

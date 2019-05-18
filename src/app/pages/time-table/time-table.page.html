@@ -7,8 +7,9 @@
       Тээврийн хуваарь
     </ion-title>
     <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
-        <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
-        <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
+      <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+      <img class="user-icon" *ngIf="(avatarImage == null)" color="light"
+        src="../../../assets/other/user-circle-solid.svg">
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
@@ -33,66 +34,25 @@
     <ion-item-divider class="custom-divider">
       <ion-label>Хаанаас</ion-label>
     </ion-item-divider>
-	<ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate">
-        <ion-label>{{ fromStop.stop_name ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
-        <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
+    <ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate">
+      <ion-label>{{ fromStop ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
+      <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
-    <!--<div class="combo-item">
-      <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.fromAimag"
-        placeholder="Аймаг сонгох" (ionChange)="changeFromAimag($event)">
-        <div *ngFor="let item of aimagData; let i = index;">
-          <ion-select-option [value]="i">{{item.name}}</ion-select-option>
-        </div>
-      </ion-select>
-    </div>
-    <div class="combo-item" *ngIf="model.fromAimag != null && model.fromAimag != undefined">
-      <ion-select okText="Сонгох" class="custom-select stop" cancelText="Болих" [(ngModel)]="model.fromStop"
-        placeholder="Буудал сонгох">
-        <div *ngFor="let item of aimagData[model.fromAimag].data; let i = index;">
-          <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
-        </div>
-      </ion-select>
-    </div>-->
 
     <ion-item-divider class="custom-divider">
       <ion-label>Хаашаа</ion-label>
     </ion-item-divider>
-    <!--<div class="combo-item">
-      <ion-select okText="Сонгох" class="custom-select" cancelText="Болих" [(ngModel)]="model.toAimag"
-        placeholder="Аймаг сонгох" (change)="changeToAimag($event)">
-        <div *ngFor="let item of aimagData; let i = index;">
-          <ion-select-option [value]="i">{{item.name}}</ion-select-option>
-        </div>
-      </ion-select>
-    </div>
-    <div class="combo-item" *ngIf="model.toAimag != null && model.toAimag != undefined">
-      <ion-select okText="Сонгох" class="custom-select  stop" cancelText="Болих" [(ngModel)]="model.toStop"
-        placeholder="Буудал сонгох">
-        <div *ngFor="let item of aimagData[model.toAimag].data; let i = index;">
-          <ion-select-option [value]="i">{{item.ss_name}}</ion-select-option>
-        </div>
-      </ion-select>
-    </div>-->
-	  <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
-      <ion-label>{{ toStop.stop_name ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
+    <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
+      <ion-label>{{ toStop ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
       <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
-	
+
     <ion-item-divider class="custom-divider">
       <ion-label>Цагийн хуваарь</ion-label>
     </ion-item-divider>
-    <!--<ion-item-sliding>
-      <ion-item>
-        <div slot="start" class="start-side">
-          <ion-label class="start-time">09:00</ion-label>
-        </div>
-        <div class="body-side">
-          <ion-label>Улаанбаатар - Ар.Жаргалант</ion-label>
-          <ion-label class="sub-body">Том автобус</ion-label>
-        </div>
-      </ion-item>
-    </ion-item-sliding>-->
-	<div *ngIf="timeTableData != null">
+
+
+    <div *ngIf="timeTableData != null">
       <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
         <div slot="start" class="start-side">
           <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
@@ -103,8 +63,10 @@
           <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name[0] : ''}}</ion-label>
         </div>
         <div slot="end" class="end-side">
-            <ion-label class="start-date">Суудал</ion-label>
-            <ion-label class="start-time">{{item.sitcount ? (item.sitcount[0] - (item.empty_seat_count ? item.empty_seat_count[0] : 0)) + ' / ' + item.sitcount[0] : 'NaN'}}</ion-label>
+          <ion-label class="start-date">Суудал</ion-label>
+          <ion-label class="start-time">
+            {{item.sitcount ? (item.sitcount[0] - (item.empty_seat_count ? item.empty_seat_count[0] : 0)) + ' / ' + item.sitcount[0] : 'NaN'}}
+          </ion-label>
         </div>
       </ion-item>
     </div>
@@ -112,7 +74,7 @@
       Хуваарь байхгүй байна
     </div>
     <div style="padding: 10px;">
-        {{test}}
+      {{test}}
     </div>
   </ion-list>
   <p>{{dat}}</p>

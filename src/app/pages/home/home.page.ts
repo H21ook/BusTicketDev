@@ -14,6 +14,7 @@ import { PassingDataService } from 'src/app/services/passing-data/passing-data.s
 import * as xml2js  from 'xml2js'
 import { StopListPage } from '../stop-list/stop-list.page';
 import { DistinationStopListPage } from '../distination-stop-list/distination-stop-list.page';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -28,15 +29,8 @@ export class HomePage implements OnInit {
   aimagData: any = [];
   distData: any = [];
   timeTableData: any = null;
-  fromStop: any = {};
-  toStop: any = {};
-
-  model: any = {
-    fromAimag: null,
-    fromStop: null,
-    toAimag: null,
-    toStop: null
-  };
+  fromStop: any;
+  toStop: any;
 
   avatarImage: any;
   selectedCity: any = {
@@ -47,6 +41,10 @@ export class HomePage implements OnInit {
   show: boolean = false;
   dists: any;
   directions: any;
+
+  readAllStop: boolean;
+  readTarif: boolean;
+  readData: BehaviorSubject<boolean> = new BehaviorSubject(false);
   
   constructor(
     private platform: Platform,
@@ -78,6 +76,29 @@ export class HomePage implements OnInit {
       });
       this.loadingData();
     }
+    this.apiService.readAllStop.subscribe(data => {
+      this.readAllStop = data;
+      if(this.readAllStop && this.readTarif)
+        this.readData.next(true);
+    });
+    this.apiService.readTarif.subscribe(data => {
+      this.readTarif = data;
+      if(this.readAllStop && this.readTarif)
+        this.readData.next(true);
+    });
+    this.readData.subscribe(data => {
+      if(data) {
+        this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
+          this.weatherData = data.json();
+          this.menuCtrl.enable(true);
+        
+          // this.apiService.getAllStopsData().then(() => {
+          this.show = true; 
+          this.loadingController.dismiss();
+          // });
+        }, err => this.loadingController.dismiss());
+      }
+    });
   }
   
   loadImage(imageName) {
@@ -111,17 +132,6 @@ export class HomePage implements OnInit {
       message: '',
     });
     await loading.present();
-
-    this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
-      this.weatherData = data.json();
-      this.menuCtrl.enable(true);
-	  
-      this.apiService.getAllStopsData().then(() => {
-        this.show = true; 
-        this.sourceStops = this.dataService.sourceStops;
-        loading.dismiss();
-      });
-    }, err => loading.dismiss());
   };
 
   async changeFromStop() {
@@ -135,7 +145,7 @@ export class HomePage implements OnInit {
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.fromStop = data.data;
-        this.toStop = {};
+        this.toStop = null;
         this.timeTableData = null;
         this.distData = [];
         this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);

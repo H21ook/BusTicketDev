@@ -6,6 +6,7 @@ import { Order } from 'src/app/models/order.model';
 import { Passenger } from 'src/app/models/passenger.model';
 import { trigger, animate, keyframes, transition, style } from '@angular/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-payment',
@@ -50,7 +51,8 @@ export class PaymentPage implements OnInit {
     private popover: PopoverController,
     private dataPass: PassingDataService,
     private platform: Platform,
-    private localNotify: LocalNotifications
+    private localNotify: LocalNotifications,
+    private apiService: ApiService
   ) { 
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
@@ -67,14 +69,28 @@ export class PaymentPage implements OnInit {
     this.orderData = this.dataPass.orderData;
     if(this.directionInfo.leave_date) {
       let tempDate = new Date(this.directionInfo.leave_date[0]);
-      this.leaveDate = tempDate.getFullYear() + "-" + tempDate.getMonth() + "-" + tempDate.getDate() + " " + tempDate.getHours() + ":" + tempDate.getMinutes();
+      this.leaveDate = tempDate.getFullYear() + "-" + (tempDate.getMonth() < 10 ? "0" : "") + tempDate.getMonth() + "-" + (tempDate.getDate() < 10 ? "0" : "") + tempDate.getDate() + " " + (tempDate.getHours() < 10 ? "0" : "") + tempDate.getHours() + ":" + (tempDate.getMinutes() < 10 ? "0" : "") + tempDate.getMinutes();
       
       let date = new Date();
-      this.orderNum = date.getFullYear() + "" + date.getMonth() + "" + date.getDay() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+      this.orderNum = date.getFullYear() + "" + (date.getMonth() < 10 ? "0" : "") + date.getMonth() + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     }
     if(this.orderData)
       if(this.orderData.passengers)
         this.peopleNum = this.countOfChild(this.orderData.passengers);
+
+    this.dataPass.orderData.subscriberId = 400;
+    this.dataPass.orderData.bigCount = this.peopleNum.people;
+    this.dataPass.orderData.childCount = this.peopleNum.child;
+    this.dataPass.orderData.orderNumber = this.orderNum;
+    this.dataPass.orderData.dispatcherId = this.dataPass.dispatcher.id[0];
+    this.dataPass.orderData.expired = new Date(Date.now() + 60*33*1000).toISOString();
+
+    this.apiService.setOrderSeat(this.dataPass.orderData);
+    // console.log("1", this.dataPass.dispatcher);
+    // console.log("2", this.dataPass.orderData);
+    // console.log("3", this.dataPass.fromStop);
+    // console.log("4", this.dataPass.selectedSeats);
+    // console.log("5", this.dataPass.toStop);
   }
 
   finish(e) {
