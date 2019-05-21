@@ -32,7 +32,7 @@ export class ValidatorService {
     if(is2D){
       for(let i = 0; i < controls.length; i++) {
         for(let j = 0; j < controls[i].length; j++) {
-          if(controls[i][j] != true)
+          if(controls[i][j] != true || controls[i][j] == null || controls[i][j] == undefined)
             return false;
         }
       }

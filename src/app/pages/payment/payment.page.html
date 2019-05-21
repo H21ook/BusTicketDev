@@ -24,21 +24,21 @@
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Захиалгын код</ion-label><br>
           <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{orderNum ? orderNum : ''}}</ion-label>
+            {{order ? order.orderNumber : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</ion-label><br>
           <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{orderData ? (orderData.totalAmount ? orderData.totalAmount : '0') : '0'}} ₮</ion-label>
+            {{order ? (order.totalAmount ? order.totalAmount : '0') : '0'}}₮</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Маршрут</ion-label><br>
           <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{directionInfo.direction_name ? directionInfo.direction_name[0] : ''}}</ion-label>
+            {{order ? (order.dispatcher.direction_name ? order.dispatcher.direction_name[0] : '') : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -47,12 +47,12 @@
             <ion-col style="width: 50%; padding:0;">
               <ion-label style="width: 100%; text-align: left;">Суух</ion-label><br>
               <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
-                {{directionInfo.direction_start_stop_name ? directionInfo.direction_start_stop_name[0] : ''}}</ion-label>
+                {{order ? (order.dispatcher.direction_start_stop_name ? order.dispatcher.direction_start_stop_name[0] : '') : ''}}</ion-label>
             </ion-col>
             <ion-col style="width: 50%; padding:0;">
               <ion-label style="width: 100%; text-align: left;">Буух</ion-label><br>
               <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
-                {{directionInfo.direction_end_stop_name ? directionInfo.direction_end_stop_name[0] : ''}}</ion-label>
+                {{order ? (order.dispatcher.direction_end_stop_name ? order.dispatcher.direction_end_stop_name[0] : '') : ''}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>
@@ -60,7 +60,7 @@
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Хөдлөх огноо</ion-label><br>
-          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{leaveDate ? leaveDate : ''}}</ion-label>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{order ? order.leaveDateText : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -69,47 +69,52 @@
           <ion-row>
             <ion-col style="padding: 0px; width: 50%;">
               <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
-                  Том хүн: {{peopleNum.people ? peopleNum.people : '0'}}</ion-label>
+                  Том хүн: {{order ? order.bigCount : '0'}}</ion-label>
             </ion-col>
             <ion-col style="padding: 0px; width: 50%;">
               <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
-                  Хүүхэд: {{peopleNum.child ? peopleNum.child : '0'}}</ion-label>
+                  Хүүхэд: {{order ? order.childCount : '0'}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>
 
       </ion-row>
-      <ion-item-divider class="custom-divider">
-        <ion-label>Төлбөрийн мэдээлэл</ion-label>
-      </ion-item-divider>
-      <ion-row>
-        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-          <ion-label style="width: 100%; text-align: left;">Банкны нэр</ion-label><br>
-          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">Хаан банк</ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-          <ion-label style="width: 100%; text-align: left;">Дансны дугаар</ion-label><br>
-          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">5057397049</ion-label>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
-          <ion-label style="width: 100%; text-align: left;">Данс эзэмшигчийн нэр</ion-label><br>
-          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АВТО ТЭЭВРИЙН ҮНДЭСНИЙ ТӨВ</ion-label>
-        </ion-col>
-      </ion-row>
-      <div style="height: 150px; margin: 10px; width: 100%; text-align: center" *ngIf="qrCode">
-        <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);"
-          [src]="qrCode">
-      </div>
-      <div class="padding-wrap-tb">
-        <button class="custom-button" type="button" size="full" (click)="finish($event)">
-          <div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
-          </div>
-          болсон
-        </button>
+      <div *ngIf="order ? (order.status == 'N' || order.status == 'W') : false">
+        <ion-item-divider class="custom-divider">
+          <ion-label>Төлбөрийн мэдээлэл</ion-label>
+        </ion-item-divider>
+        <ion-row>
+          <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+            <ion-label style="width: 100%; text-align: left;">Банкны нэр</ion-label><br>
+            <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">Хаан банк</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+            <ion-label style="width: 100%; text-align: left;">Дансны дугаар</ion-label><br>
+            <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">5057397049</ion-label>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
+            <ion-label style="width: 100%; text-align: left;">Данс эзэмшигчийн нэр</ion-label><br>
+            <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">АВТО ТЭЭВРИЙН ҮНДЭСНИЙ ТӨВ</ion-label>
+          </ion-col>
+        </ion-row>
+        <div style="height: 150px; margin: 10px; width: 100%; text-align: center" *ngIf="order">
+          <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);"
+            [src]="order.qrCode">
+        </div>
+        <div class="padding-wrap-tb">
+          <button class="custom-button" type="button" size="full" (click)="finish($event)">
+            <div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
+            </div>
+            болсон
+          </button>
+        </div>
+        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px;">
+          <ion-label style="font-size: 24px; font-weight: bold;">{{(time.min < 10) ? ('0' + time.min) : time.min + ":" + (time.sec < 10) ? ('0' + time.sec) : time.sec}}</ion-label>
+        </div>
       </div>
     </ion-list>
   </div>

@@ -254,29 +254,36 @@ export class ApiService {
     });
   }
 
-  setOrderSeat(order: Order) {
-    var body = {
-      "dispatcher_id": order.dispatcherId, 
-      "seat_no": order.passengers[0].seat_no, 
-      "zahialagch_id": order.subscriberId, 
-      "expired": order.expired
-    };
-    const apiUrl = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/set_Order_Seat?"+'dispatcher_id='+ body.dispatcher_id + '&seat_no=' + body.seat_no + '&zahialagch_id=' + body.zahialagch_id + '&expired=' + body.expired;
+  async setOrderSeat(order: Order) {
+    var array = [];
+    var response;
+    for(let item of order.passengers) {
+      var body = {
+        "dispatcher_id": order.dispatcher.id[0], 
+        "seat_no": item.seat_no, 
+        "zahialagch_id": order.subscriberId, 
+        "expired": order.expired
+      };
+      const apiUrl = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/set_Order_Seat?"+'dispatcher_id='+ body.dispatcher_id + '&seat_no=' + body.seat_no + '&zahialagch_id=' + body.zahialagch_id + '&expired=' + body.expired;
 
-    console.log("POST mae", body);
-    this.http.get(apiUrl, {}, {}).then(data => {
-      let arrData: any[];
-      xml2js.parseString(data.data, function (err, res) {
-        if(res.DataTable["diffgr:diffgram"][0]) {
-          if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
-            if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]){
-              arrData = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["set_Order_Seat"];
+      console.log("POST mae", body);
+      response = await this.http.get(apiUrl, {}, {}).then(data => {
+        let arrData: any[];
+        xml2js.parseString(data.data, function (err, res) {
+          if(res.DataTable["diffgr:diffgram"][0]) {
+            if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"]){
+              if(res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]){
+                arrData = res.DataTable["diffgr:diffgram"][0]["DocumentElement"][0]["set_Order_Seat"];
+                array.push(arrData[0]);
+              }
             }
           }
-        }
+        });
+        return new Promise((resolve, reject) => {
+          resolve(array);
+        });
       });
-      this.orderHistoryService.orderSeat = arrData[0];
-    });
-
+    }
+    return response;
   }
 }
