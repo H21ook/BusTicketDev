@@ -52,17 +52,17 @@ export class ValidatorService {
       for(let j = 0; j < name.length; j++) {
         let step1 = false, step2 = false, step3 = false;
         for(let i = 0; i < this.latinLetters.length; i++) {
-          if(name[j] != this.latinLetters[i]) {
+          if(name[j] == this.latinLetters[i]) {
             step1 = true;
           } else {
             step1 = false;
             break;
           }
         }
-        if(step1 == false) {
-          errMsg = "Зөвхөн крилл үсэг хэрэглэнэ үү!";
-          break;
-        }
+        // if(step1 == false) {
+        //   errMsg = "Зөвхөн крилл үсэг хэрэглэнэ үү!";
+        //   break;
+        // }
         for(let i = 0; i < this.mnLetters.length; i++) {
           if(name[j] == this.mnLetters[i]) {
             step2 = true;

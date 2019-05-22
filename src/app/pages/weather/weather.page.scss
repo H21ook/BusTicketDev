@@ -29,7 +29,7 @@ input[type=range]::-webkit-slider-runnable-track {
 }
 
 .wrap-slide {
-    height: 70%;
+    height: 410px;
     min-height: 350px; 
 }
 
@@ -64,7 +64,7 @@ input[type=range]::-webkit-slider-runnable-track {
 .con-info-text {
     font-size: 20px;
     width: 80px;
-    margin: 0 10px;
+    margin: 0 auto;
 }
 
 .temp-info {
@@ -76,20 +76,24 @@ input[type=range]::-webkit-slider-runnable-track {
     font-size: 500%;
     width:100%;
     font-weight: bold;
-    margin: -10px 0 -40px 0;
+    margin: 20px 0px 0px 0px;
 }
 
 .icon-sup{
     height: 30px;
 }
 
+.sup-info {
+    margin: -40px 0px 0px 0px;
+}
 .sup-info-text {
     font-size: 18px;
     margin: 0 5px;
 }
 
 .limit-info {
-    height: 70px;
+    height: 100px;
+    margin: -20px 0px -5px 0px;
 }
 
 .limit-layer {

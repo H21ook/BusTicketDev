@@ -29,7 +29,9 @@ export class DistinationStopListPage implements OnInit {
   ngOnInit() {
     this.distSourceStops = this.dataService.distSourceStops;
     this.result = this.distSourceStops;
+    console.log("SS", this.result);
     this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
+    console.log("DispL", this.displayList);
     if(this.readTarif) {
       this.loadingList();
     } else {
@@ -38,7 +40,6 @@ export class DistinationStopListPage implements OnInit {
     
     this.apiService.readTarif.subscribe(data => {
         this.readTarif = data;
-        console.log(this.readTarif);
     });
   }
 

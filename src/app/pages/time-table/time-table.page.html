@@ -43,7 +43,7 @@
       <ion-label>Хаашаа</ion-label>
     </ion-item-divider>
     <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
-      <ion-label>{{ toStop ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
+      <ion-label>{{ toStop ? toStop.end_stop_name : 'Буудал сонгох' }}</ion-label>
       <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
     </ion-item>
 
@@ -59,13 +59,13 @@
           <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
         </div>
         <div class="body-side">
-          <ion-label>{{item.direction_name ? item.direction_name[0] : ''}}</ion-label>
-          <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name[0] : ''}}</ion-label>
+          <ion-label>{{item.direction_name ? item.direction_name : ''}}</ion-label>
+          <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name : ''}}</ion-label>
         </div>
         <div slot="end" class="end-side">
           <ion-label class="start-date">Суудал</ion-label>
           <ion-label class="start-time">
-            {{item.sitcount ? (item.sitcount[0] - (item.empty_seat_count ? item.empty_seat_count[0] : 0)) + ' / ' + item.sitcount[0] : 'NaN'}}
+            {{item.sitcount ? (item.sitcount - (item.empty_seat_count ? item.empty_seat_count : 0)) + ' / ' + item.sitcount : 'NaN'}}
           </ion-label>
         </div>
       </ion-item>
@@ -73,17 +73,5 @@
     <div class="no-item" *ngIf="timeTableData == null">
       Хуваарь байхгүй байна
     </div>
-    <div style="padding: 10px;">
-      {{test}}
-    </div>
   </ion-list>
-  <p>{{dat}}</p>
 </ion-content>
-<!-- <ion-footer>
-  <ion-toolbar>
-    <ion-button slot="end" fill="clear" [routerDirection]="'forward'" [routerLink]="'/seats-select'">
-      <ion-icon name="arrow-forward" slot="end"></ion-icon>
-      <ion-label>Үргэлжлүүлэх</ion-label>
-    </ion-button>
-  </ion-toolbar>
-</ion-footer> -->

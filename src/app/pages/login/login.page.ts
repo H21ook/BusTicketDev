@@ -8,6 +8,9 @@ import { ValidatorService } from 'src/app/services/validator/validator.service';
 import { trigger, animate, keyframes, transition, style } from '@angular/animations';
 import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { Network } from '@ionic-native/network/ngx';
+import { ApiService } from 'src/app/services/api.service';
+import { FunctionsService } from 'src/app/services/functions.service';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
   selector: 'app-login',
@@ -59,7 +62,9 @@ export class LoginPage implements OnInit {
     private loadingController: LoadingController,
     private platform: Platform,
     private localNotify: LocalNotifications,
-    private network: Network
+    private apiService: ApiService,
+    private functionsService: FunctionsService,
+    private splashScreen: SplashScreen
   ) { 
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
@@ -71,12 +76,11 @@ export class LoginPage implements OnInit {
   }
 
   ngOnInit() {
-    this.network.onConnect().subscribe(() => {
-      this.onNetwork = true;
-    });
-    this.network.onDisconnect().subscribe(() => {
-      this.onNetwork = false;
-    });
+    // this.functionsService.newtork.subscribe(data => {
+    //   this.onNetwork = data;
+    // });
+    
+    this.splashScreen.hide();
   }
 
   goToSignUp() {
@@ -209,15 +213,6 @@ export class LoginPage implements OnInit {
         page: "/order-history", 
         id: 1
       }
-    });
-  }
-
-  connect() {
-    this.network.onConnect().subscribe(() => {
-      this.onNetwork = true;
-    });
-    this.network.onDisconnect().subscribe(() => {
-      this.onNetwork = false;
     });
   }
 }

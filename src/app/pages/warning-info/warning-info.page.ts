@@ -74,10 +74,11 @@ export class WarningInfoPage implements OnInit {
   goToPayment() {
     this.passData.setIsAgree(true); 
     let date = new Date();
-    this.dataPass.orderData.orderNumber = date.getFullYear() + "" + (date.getMonth() < 10 ? "0" : "") + date.getMonth() + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
+    let ordernumber = date.getFullYear() + "" + (date.getMonth() < 10 ? "0" : "") + date.getMonth() + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
+    this.dataPass.orderData.orderNumber = ordernumber;
     this.orderHistoryService.createOrder(this.dataPass.orderData)
-    // .then(() => {
-    //   this.nav.navigateForward("/payment/"+ this.dataPass.orderData.orderNumber);
-    // });
+    .then(() => {
+      this.nav.navigateForward("/payment/"+ ordernumber);
+    });
   }
 }

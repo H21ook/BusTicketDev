@@ -72,7 +72,7 @@ export class ApiService {
         });
 
         return new Promise((resolve, reject) => {
-          resolve(array);
+          resolve(this.functionsService.convertDateByDispatcher(array));
         });
       });
     }
@@ -98,7 +98,7 @@ export class ApiService {
           }
         });
         return new Promise((resolve, reject) => {
-          resolve(array);
+          resolve(this.functionsService.convertDateByDispatcher(array));
         });
       });
     }
@@ -107,11 +107,11 @@ export class ApiService {
   
   async getDateDispatcherToday(directions, end_id) {
     return this.getTodayTimeTable(directions).then(data => {
-
+      console.log("ttt", data);
       let result = []; 
       for(let j = 0; j < directions.length; j++) {
         for(let i = 0; i < data.length; i++) {
-          if(directions[j] == data[i].direction_id[0] && end_id == data[i].direction_end_stop_id[0]) {
+          if(directions[j] == data[i].direction_id && end_id == data[i].direction_end_stop_id) {
             result.push(data[i]);
           }
         }
@@ -125,7 +125,7 @@ export class ApiService {
       let result = []; 
       for(let j = 0; j < directions.length; j++) {
         for(let i = 0; i < data.length; i++) {
-          if(directions[j] == data[i].direction_id[0] && end_id == data[i].direction_end_stop_id[0]) {
+          if(directions[j] == data[i].direction_id && end_id == data[i].direction_end_stop_id) {
             result.push(data[i]);
           }
         }
@@ -140,31 +140,25 @@ export class ApiService {
     
     if(dists && dists.length >= 1) {
       for(let i = 0; i < dists.length; i++) {
-        let tempData = {
-          aimag_id: dists[i].end_stop_aimag_id[0], 
-          stop_id: dists[i].end_stop_id[0],
-          stop_name: dists[i].end_stop_name[0],
-          stop_data: dists[i],
-          dispatcher: null
-        }
+        let tempData = dists[i];
         if(i == 0){
           distSourceStop.push(tempData);
-          directions.push(dists[i].direction_id[0]);
+          directions.push(dists[i].direction_id);
         } else {
           let check = false;
           for(let j = 0; j < distSourceStop.length; j++) {
-            if(distSourceStop[j].stop_id == dists[i].end_stop_id[0] ) {
+            if(distSourceStop[j].end_stop_id == dists[i].end_stop_id ) {
               check = false;
 
               let checkDir = false;
               for(let k = 0; k < directions.length; k++) {
-                if(directions[k] == dists[i].direction_id[0]) {
+                if(directions[k] == dists[i].direction_id) {
                   checkDir = true;
                   break;
                 }
               }
               if(!checkDir) {
-                directions.push(dists[i].direction_id[0]);
+                directions.push(dists[i].direction_id);
               }
               
               break;
@@ -178,7 +172,6 @@ export class ApiService {
         
       }
     }
-
     this.dataService.distSourceStops = distSourceStop;
     
     return directions;
@@ -196,7 +189,7 @@ export class ApiService {
         }
       });
 
-      this.dataService.emptySeats = result;
+      this.dataService.emptySeats = this.functionsService.convertSeat(result);
     });
   }
 
@@ -233,7 +226,7 @@ export class ApiService {
           }
         }
       });
-      this.dataService.sourceStops =  this.functionsService.uniqueAllStops(arrData);
+      this.dataService.sourceStops =  this.functionsService.uniqueAllStops(this.functionsService.convertAllStop(arrData));
       // console.log(this.functionsService.uniqueAllStops1(arrData));
     });
   }
@@ -250,7 +243,8 @@ export class ApiService {
           }
         }
       });
-      this.dataService.getTarif = arrData;
+      this.dataService.getTarif = this.functionsService.convertTarif(arrData);
+      console.log("tarif", this.dataService.getTarif);
     });
   }
 
@@ -259,13 +253,12 @@ export class ApiService {
     var response;
     for(let item of order.passengers) {
       var body = {
-        "dispatcher_id": order.dispatcher.id[0], 
+        "dispatcher_id": order.dispatcher.id, 
         "seat_no": item.seat_no, 
         "zahialagch_id": order.subscriberId, 
         "expired": order.expired
       };
       const apiUrl = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/set_Order_Seat?"+'dispatcher_id='+ body.dispatcher_id + '&seat_no=' + body.seat_no + '&zahialagch_id=' + body.zahialagch_id + '&expired=' + body.expired;
-
       console.log("POST mae", body);
       response = await this.http.get(apiUrl, {}, {}).then(data => {
         let arrData: any[];

@@ -10,8 +10,6 @@ import { Order } from '../models/order.model';
 export class OrderHistoryService {
 
   private orderCollection: AngularFirestoreCollection<Order>;
-  orders = new BehaviorSubject([]);
-
 
   constructor(
     private afs: AngularFirestore,
@@ -20,7 +18,7 @@ export class OrderHistoryService {
   }
 
   getOrders() {
-    return this.orderCollection.valueChanges();
+    return this.orderCollection.snapshotChanges();
   }
 
   getOrder(orderNumber: string): Observable<Order> {
@@ -34,24 +32,11 @@ export class OrderHistoryService {
   }
 
   createOrder(order: Order) {
-    var torder;
-    // torder.passengers = order.passengers.map((obj)=> {return Object.assign({}, obj)});
-    // torder.subsriber = Object.assign({}, order.subscriber);
-    // torder.orderNumber = order.orderNumber;
-    // torder.dispatcher  = Object.assign({}, order.dispatcher);
-    // torder.totalAmount  = order.totalAmount
-    // torder.subscriberId  = order.subscriberId
-    // torder.isAgree = order.isAgree
-    // torder.expired  = order.expired
-    // torder.bigCount  = order.bigCount
-    // torder.childCount = order.childCount
-    // torder.qrCode = order.qrCode
-    // torder.createdTime = order.createdTime
-    // torder.status = order.status
-    // torder.leaveDateText = order.leaveDateText
-    // torder.seatRequest = order.seatRequest.map((obj)=> {return Object.assign({}, obj)});
+    var tempOrder = order;
+    tempOrder.subscriber = Object.assign({}, tempOrder.subscriber);
+    console.log("coo", tempOrder);
     console.log("cool", order);
-    // return this.orderCollection.add(torder);
+    return this.orderCollection.doc(tempOrder.orderNumber).set(tempOrder);
   }
 
   updateOrder(order: Order) {

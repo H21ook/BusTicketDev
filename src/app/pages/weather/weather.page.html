@@ -33,7 +33,7 @@
                 </ion-select>
               </div>
             </ion-list>
-            <ion-slides *ngIf="weather && forecastPreData" #mySlider>
+            <ion-slides *ngIf="weather && forecastPreData" #mySlider [options]="slidesOpts">
               <ion-slide *ngFor="let forecastday of forecastPreData;">
                 <ion-grid style="width:100%; height: 100%; background: var(--ion-color-secondary-contrast);">
 
@@ -44,9 +44,11 @@
                   <ion-row class="condition-info">
                     <ion-grid class="height-100 margin-center">
                       <ion-row align-items-center class="height-100 mp-0">
-                        <img src="{{'http://openweathermap.org/img/w/'+ forecastday.weather[0].icon +'.png'}}"
-                          class="icon-con">
-                        <p class="con-info-text">{{forecastday.weather[0].main}}</p>
+                        <div style="width: 100%;">
+                          <img src="{{'http://openweathermap.org/img/w/'+ forecastday.weather[0].icon +'.png'}}"
+                            class="icon-con">
+                          <p class="con-info-text">{{forecastday.weather[0].main}}</p>
+                        </div>
                       </ion-row>
                     </ion-grid>
                   </ion-row>
@@ -58,14 +60,18 @@
                   <ion-row class="sup-info">
                     <ion-grid class="height-100 margin-center">
                       <ion-row align-items-center class="height-100 mp-0">
-                        <img src="../../../assets/other/wind1.svg" class="icon-sup">
-                        <p class="sup-info-text">{{forecastday.windSpeed}} m/s</p>
+                        <div style="width: 100%;">
+                          <img src="../../../assets/other/wind1.svg" class="icon-sup">
+                          <p class="sup-info-text">{{forecastday.windSpeed}} m/s</p>
+                        </div>
                       </ion-row>
                     </ion-grid>
                     <ion-grid class="height-100 margin-center">
                       <ion-row align-items-center class="height-100 mp-0">
-                        <img src="../../../assets/other/drops.svg" class="icon-sup">
-                        <p class="sup-info-text">{{forecastday.humidity}} %</p>
+                        <div style="width: 100%;">
+                          <img src="../../../assets/other/drops.svg" class="icon-sup">
+                          <p class="sup-info-text">{{forecastday.humidity}} %</p>
+                          </div>
                       </ion-row>
                     </ion-grid>
                   </ion-row>
@@ -97,7 +103,7 @@
       </ion-grid>
     </div>
 
-    <div style="height: 28%;">
+    <div style="height: 160px;">
 
       <ion-grid *ngIf="weather && forecastPreData" class="full-100" style="margin: 5px; width:auto;">
         <ion-row align-items-center class="full-100" style="width:auto;">

@@ -20,7 +20,7 @@ export class OrderHistoryPage implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    this.loadingData();
   }
 
   async loadingData() {
@@ -32,14 +32,19 @@ export class OrderHistoryPage implements OnInit {
     await loading.present();
 
     this.orderHistoryService.getOrders().subscribe(data => {
-      this.orders = data;
       console.log("LISt", data);
+      this.orders = data.map(e => {
+          return e.payload.doc.data();
+      });
       loading.dismiss();
     }, err => {
       loading.dismiss();
     })
   }
 
+  goToUser() {
+    this.nav.navigateForward('/profile/old');
+  }
 
   selectItem(item) {
     console.log("itme", item);

@@ -16,11 +16,23 @@
                 Нүүр
               </ion-label>
             </ion-item>
-            <ion-item [routerDirection]="'forward'" [routerLink]="['/time-table']">
+            <!-- <ion-item [routerDirection]="'forward'" [routerLink]="['/time-table']"> -->
               <!-- <ion-icon slot="start" [name]="p.icon"></ion-icon> -->
-              <fa-icon slot="start" icon="list-alt" color="dark"></fa-icon>
+              <!-- <fa-icon slot="start" icon="list-alt" color="dark"></fa-icon>
               <ion-label>
                 Тээврийн хуваарийн жагсаалт
+              </ion-label>
+            </ion-item> -->
+            <ion-item [routerDirection]="'forward'" [routerLink]="['/order-history']">
+              <fa-icon slot="start" icon="list" color="dark"></fa-icon>
+              <ion-label>
+                Захиалгын түүх
+              </ion-label>
+            </ion-item>
+            <ion-item (click)="logOut()">
+              <fa-icon slot="start" icon="sign-out-alt" color="dark"></fa-icon>
+              <ion-label>
+                Гарах
               </ion-label>
             </ion-item>
           </ion-menu-toggle>

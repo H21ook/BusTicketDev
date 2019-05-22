@@ -6,7 +6,7 @@
     <ion-title>
       Төлбөр
     </ion-title>
-    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+    <ion-buttons class="user-btn" slot="end" (click)="goToUser()">
       <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
       <img class="user-icon" *ngIf="(avatarImage == null)" color="light"
         src="../../../assets/other/user-circle-solid.svg">
@@ -24,21 +24,21 @@
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Захиалгын код</ion-label><br>
           <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{order ? order.orderNumber : ''}}</ion-label>
+            {{order.orderNumber ? order.orderNumber : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Захиалгын нийт мөнгөн дүн</ion-label><br>
           <ion-label style="color: var(--ion-color-danger); width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{order ? (order.totalAmount ? order.totalAmount : '0') : '0'}}₮</ion-label>
+            {{order.totalAmount ? (order.totalAmount ? order.totalAmount : '0') : '0'}}₮</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Маршрут</ion-label><br>
           <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">
-            {{order ? (order.dispatcher.direction_name ? order.dispatcher.direction_name[0] : '') : ''}}</ion-label>
+            {{order.dispatcher ? (order.dispatcher.direction_name ? order.dispatcher.direction_name : '') : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -47,12 +47,12 @@
             <ion-col style="width: 50%; padding:0;">
               <ion-label style="width: 100%; text-align: left;">Суух</ion-label><br>
               <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
-                {{order ? (order.dispatcher.direction_start_stop_name ? order.dispatcher.direction_start_stop_name[0] : '') : ''}}</ion-label>
+                {{order.dispatcher ? (order.dispatcher.direction_start_stop_name ? order.dispatcher.direction_start_stop_name : '') : ''}}</ion-label>
             </ion-col>
             <ion-col style="width: 50%; padding:0;">
               <ion-label style="width: 100%; text-align: left;">Буух</ion-label><br>
               <ion-label style="width: 98%; text-align: left; font-size: 14px; font-weight: bold;">
-                {{order ? (order.dispatcher.direction_end_stop_name ? order.dispatcher.direction_end_stop_name[0] : '') : ''}}</ion-label>
+                {{order.dispatcher ? (order.dispatcher.direction_end_stop_name ? order.dispatcher.direction_end_stop_name : '') : ''}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>
@@ -60,7 +60,7 @@
       <ion-row>
         <ion-col style="margin: 0px 15px; width: 100%; border-bottom:1px solid var(--ion-color-medium);">
           <ion-label style="width: 100%; text-align: left;">Хөдлөх огноо</ion-label><br>
-          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{order ? order.leaveDateText : ''}}</ion-label>
+          <ion-label style="width: 100%; text-align: left; font-size: 16px; font-weight: bold;">{{order.leaveDateText ? order.leaveDateText : ''}}</ion-label>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -69,11 +69,11 @@
           <ion-row>
             <ion-col style="padding: 0px; width: 50%;">
               <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
-                  Том хүн: {{order ? order.bigCount : '0'}}</ion-label>
+                  Том хүн: {{order.bigCount ? order.bigCount : '0'}}</ion-label>
             </ion-col>
             <ion-col style="padding: 0px; width: 50%;">
               <ion-label style="width: 98%; text-align: left; font-size: 16px; font-weight: bold;">
-                  Хүүхэд: {{order ? order.childCount : '0'}}</ion-label>
+                  Хүүхэд: {{order.childCount ? order.childCount : '0'}}</ion-label>
             </ion-col>
           </ion-row>
         </ion-col>
@@ -112,8 +112,8 @@
             болсон
           </button>
         </div>
-        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px;">
-          <ion-label style="font-size: 24px; font-weight: bold;">{{(time.min < 10) ? ('0' + time.min) : time.min + ":" + (time.sec < 10) ? ('0' + time.sec) : time.sec}}</ion-label>
+        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px; text-align: center; margin: 0 auto;">
+          <ion-label style="font-size: 32px !important; font-weight: bold; margin: 0 auto;">{{((time.min < 10) ? ('0' + time.min) : time.min) + ':' + ((time.sec < 10) ? ('0' + time.sec) : time.sec)}}</ion-label>
         </div>
       </div>
     </ion-list>

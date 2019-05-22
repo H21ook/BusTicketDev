@@ -12,16 +12,15 @@
           <ion-label class="btn-header">Гарах</ion-label>
         </ion-button>
       </ion-buttons>
-      <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)" *ngIf="!isNew">
-          <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
-          <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
+      <ion-buttons class="user-btn" slot="end" (click)="gotoHome()" *ngIf="!isNew">
+          <fa-icon class="icon-normal" icon="home" color="light"></fa-icon>
       </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
 <ion-content fullscreen>
-  <ion-grid class="height-100 mp-0">
-    <ion-row class="height-100 bg-img">
+  <ion-grid class="height-100 mp-0" style ="padding: 0; background: var(--ion-color-primary);">
+    <ion-row class="height-100">
       <ion-col>
         <div class="login-wrap login-wrap-limiter">
           <div class="login-form">

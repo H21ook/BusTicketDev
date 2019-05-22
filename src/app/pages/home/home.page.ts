@@ -31,6 +31,8 @@ export class HomePage implements OnInit {
   timeTableData: any = null;
   fromStop: any;
   toStop: any;
+  startDate: string;
+  endDate: string;
 
   avatarImage: any;
   selectedCity: any = {
@@ -64,11 +66,7 @@ export class HomePage implements OnInit {
     if(!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
       navCtrl.navigateRoot('/login');
-    }
-  }
-  
-  ngOnInit() {
-    if(this.afAuth.auth.currentUser) {
+    } else {
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
         this.profile = profile;
         if (this.profile.image != null)
@@ -76,6 +74,9 @@ export class HomePage implements OnInit {
       });
       this.loadingData();
     }
+  }
+  
+  ngOnInit() {
     this.apiService.readAllStop.subscribe(data => {
       this.readAllStop = data;
       if(this.readAllStop && this.readTarif)
@@ -108,17 +109,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  async openPopover(ev: Event) {
-    const popover = await this.popover.create({
-      component: UserMethodsPage,
-      componentProps: {
-        ev: ev
-      },
-      event: ev,
-      mode: 'ios',
-      cssClass: 'pop-over-style'
-    });
-    await popover.present();
+  goToUser() {
+    this.navCtrl.navigateForward('/profile/old');
   }
 
   openWeather(event) {
@@ -128,11 +120,15 @@ export class HomePage implements OnInit {
   async loadingData() {
     const loading = await this.loadingController.create({
       spinner: 'bubbles',
-      translucent: false,
+      translucent: true,
       message: '',
     });
     await loading.present();
-  };
+  
+    this.getDefaultValue();
+    this.show = true;
+	  loading.dismiss();
+  }
 
   async changeFromStop() {
     const listModal = await this.modalCtrl.create({
@@ -150,7 +146,6 @@ export class HomePage implements OnInit {
         this.distData = [];
         this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
         this.directions = this.apiService.getDistData(this.dists);
-
         this.passData.fromStop = this.fromStop;
       }
     });
@@ -167,21 +162,23 @@ export class HomePage implements OnInit {
     listModal.onDidDismiss().then(data => {
       if(data.data){
         this.toStop = data.data;
-
-        this.apiService.getDateDispatcherToday(this.directions, this.toStop.stop_id).then(() => {
+        var date = new Date(this.startDate);
+        var date2 = new Date(this.endDate);
+        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.end_stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
           for(let i = 0; i < tempData.length; i++) {
-            let leaveDate = new Date(tempData[i].leave_date[0]);
-            if(dataNow.getTime() < leaveDate.getTime()) {
-              tempData[i].leave_date_time = new Date(tempData[i].leave_date[0]).toTimeString().substring(0, 5);
-              tempData[i].leave_date_text = new Date(tempData[i].leave_date[0]).toISOString().substring(0, 10);
+            // orig heregleen deer ashiglana
+            // let leaveDate = new Date(tempData[i].leave_date[0]);
+            // if(dataNow.getTime() < leaveDate.getTime()) {
+              tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
+              tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
               resultArray.push(tempData[i]);
-            }
+            // }
           }
           if(resultArray.length > 0) {
-            this.timeTableData = resultArray;
+            this.timeTableData = this.functionsService.sortByArray(resultArray, "leave_date_text");
           }
         });
 
@@ -190,13 +187,19 @@ export class HomePage implements OnInit {
     });
   }
 
+  getDefaultValue() {
+    let now = new Date();
+    this.startDate = now.toISOString();
+    this.endDate = now.toISOString();
+  }
+
   clickItem(item) {
     this.passData.dispatcher = item;
     this.navCtrl.navigateForward('/seats-select');
   }
 
-  fromStopChange(e) {
-    console.log(e);
+  changeEndDate() {
+    
   }
 
 }

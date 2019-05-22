@@ -4,8 +4,6 @@ import { FunctionsService } from '../../services/functions.service';
 import { ApiService } from '../../services/api.service';
 import { PopoverController, NavController, ModalController, LoadingController, MenuController } from '@ionic/angular';
 import { UserMethodsPage } from '../user-methods/user-methods.page';
-import { AngularFireObject } from 'angularfire2/database';
-import { Observable } from 'rxjs';
 import { Profile } from 'src/app/models/profile.model';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { ProfileService } from 'src/app/services/profile.service';
@@ -37,7 +35,6 @@ export class TimeTablePage implements OnInit {
   
   id: string;
   show: boolean = false;
-  test: any;
 
   constructor(
     private popover: PopoverController,
@@ -83,7 +80,6 @@ export class TimeTablePage implements OnInit {
     });
     await loading.present();
     
-    this.sourceStops = this.dataService.sourceStops;
     this.getDefaultValue();
     this.show = true;
 	  loading.dismiss();
@@ -105,7 +101,6 @@ export class TimeTablePage implements OnInit {
         this.distData = [];
         this.dists = this.functionsService.searchDistinations(this.fromStop.stop_id);
         this.directions = this.apiService.getDistData(this.dists);
-
         this.passData.fromStop = this.fromStop;
       }
     });
@@ -124,7 +119,7 @@ export class TimeTablePage implements OnInit {
         this.toStop = data.data;
         var date = new Date(this.startDate);
         var date2 = new Date(this.endDate);
-        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
+        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.end_stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
@@ -132,8 +127,8 @@ export class TimeTablePage implements OnInit {
             // orig heregleen deer ashiglana
             // let leaveDate = new Date(tempData[i].leave_date[0]);
             // if(dataNow.getTime() < leaveDate.getTime()) {
-              tempData[i].leave_date_time = new Date(tempData[i].leave_date[0]).toTimeString().substring(0, 5);
-              tempData[i].leave_date_text = new Date(tempData[i].leave_date[0]).toISOString().substring(0, 10);
+              tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
+              tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
               resultArray.push(tempData[i]);
             // }
           }

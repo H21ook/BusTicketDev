@@ -188,17 +188,8 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  async openPopover(ev: Event) {
-    const popover = await this.popover.create({
-      component: UserMethodsPage,
-      componentProps: {
-        ev: ev
-      },
-      event: ev,
-      mode: 'ios'
-    });
-
-    await popover.present();
+  gotoHome() {
+    this.navCtrl.navigateRoot('/home');
   }
 
   logout() {

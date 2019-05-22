@@ -9,7 +9,8 @@ import { LocalNotifications } from '@ionic-native/local-notifications/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { OrderHistoryService } from 'src/app/services/order-history.service';
 import { ActivatedRoute } from '@angular/router';
-import { timer } from 'rxjs';
+import { timer, BehaviorSubject } from 'rxjs';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-payment',
@@ -38,15 +39,11 @@ export class PaymentPage implements OnInit {
   private rippleData: any = {}
   ripple: boolean = true;
 
-
-  order: Order;
+  sTimer = new BehaviorSubject({});
+  order: Order = {};
   timeLimit = 1200*1000;
-  time: {
-    zoruu: number,
-    min: number,
-    sec: number,
-    isEnd: boolean
-  }
+  time: any = {};
+  showTime: boolean = false;
 
   constructor(
     private nav: NavController,
@@ -60,7 +57,7 @@ export class PaymentPage implements OnInit {
     private apiService: ApiService
     
   ) { 
-    this.order.orderNumber = this.route.snapshot.queryParamMap.get('id');
+    
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
         if(notif.data) {
@@ -72,25 +69,35 @@ export class PaymentPage implements OnInit {
     
   
   ngOnInit() {
-    if(this.time) {
-      if(this.time.min > 0) {
-        var mytimer = timer(3000, 1000);
-        var tsub = mytimer.subscribe(x => {
-          if(this.time.min >= 0) {
-            if(this.time.sec == 0 && this.time.min == 0) {
-              tsub.unsubscribe();
-            } else {
-              if(this.time.sec == 0) {
-                this.time.min--;
-                this.time.sec = 60;
-              } 
-              this.time.sec--;
-            }
-          }
-        });
-      }
-    }
+    this.order.orderNumber = this.route.snapshot.paramMap.get('id');
+    console.log(this.order.orderNumber);
     
+    this.sTimer.subscribe(data => {
+      this.time = data;
+      console.log("time", this.time);
+      if(this.time) {
+          var mytimer = timer(3000, 1000);
+          var tsub = mytimer.subscribe(x => {
+            if(this.time.min >= 0) {
+              this.showTime = true;
+              if(this.time.sec == 0 && this.time.min == 0) {
+                tsub.unsubscribe();
+                this.showTime = false;
+              } else {
+                if(this.time.sec == 0) {
+                  this.time.min--;
+                  this.time.sec = 60;
+                } 
+                this.time.sec--;
+              }
+            } else{
+              tsub.unsubscribe();
+              this.showTime = false;
+            }
+          });
+      }
+    }) 
+    this.loadingData();
   }
 
   async loadingData() {
@@ -103,14 +110,14 @@ export class PaymentPage implements OnInit {
 
     this.orderHistoryService.getOrder(this.order.orderNumber).subscribe(data => {
       this.order = data;
+      console.log("aaa", this.order);
       switch(this.order.status) {
         case 'N':
           this.order.status = 'W';
-          this.order.expired = new Date(Date.now() + 60*20*1000).toISOString();
+          this.order.expired = new Date(Date.now() + this.timeLimit).toISOString();
           this.order.createdTime = new Date().toISOString();
-          this.time.min = (this.timeLimit/1000)/60;
-          this.time.sec = (this.timeLimit/1000)%60;
-          this.apiService.setOrderSeat(this.dataPass.orderData).then(data => {
+          this.sTimer.next({ min: (this.timeLimit/1000)/60, sec: (this.timeLimit/1000)%60, zoruu: 0, isEnd: false});
+          this.apiService.setOrderSeat(this.order).then(data => {
             this.order.seatRequest = data;
             console.log("req", data);
             this.orderHistoryService.updateOrder(this.order).then(() => {
@@ -119,17 +126,15 @@ export class PaymentPage implements OnInit {
           });
           break;
         case 'W':
-          this.time.zoruu = Date.now() - new Date(this.order.createdTime).getTime();
+          var zoruu = Date.now() - new Date(this.order.createdTime).getTime();
 
-          if(this.time.zoruu > this.timeLimit) {
-            this.time.isEnd = true;
+          if(zoruu > this.timeLimit) {
+            this.sTimer.next({ min: 0, sec: 0, zoruu: 0, isEnd: true});
           }
-          else if(this.time.zoruu < 0) {
-            this.time.min = (this.timeLimit/1000)/60;
-            this.time.sec = (this.timeLimit/1000)%60;
+          else if(zoruu < 0) {
+            this.sTimer.next({ min: (this.timeLimit/1000)/60, sec: (this.timeLimit/1000)%60, zoruu: 0, isEnd: false});
           } else {
-            this.time.min = ((this.timeLimit - this.time.zoruu)/1000)/60;
-            this.time.sec = ((this.timeLimit - this.time.zoruu)/1000)%60;
+            this.sTimer.next({ min: ((this.timeLimit - zoruu)/1000)/60, sec: ((this.timeLimit - zoruu)/1000)%60, zoruu: 0, isEnd: true});
           }
           break;
         case 'C':
@@ -162,17 +167,8 @@ export class PaymentPage implements OnInit {
     });
   }
   
-  async openPopover(ev: Event) {
-    const popover = await this.popover.create({
-      component: UserMethodsPage,
-      componentProps: {
-        ev: ev
-      },
-      event: ev,
-      mode: 'ios'
-    });
-
-    await popover.present();
+  goToUser() {
+    this.nav.navigateForward('/profile/old');
   }
 
   rippleEffect(e) {

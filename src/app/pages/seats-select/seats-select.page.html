@@ -18,16 +18,16 @@
     </ion-item-divider>
     <div>
       <ion-row>
-        <ion-label class="text-info">Чиглэл:<b>{{' ' + passData.toStop.stop_data.direction_name ? passData.toStop.stop_data.direction_name[0] : ''}}</b></ion-label>
+        <ion-label class="text-info">Чиглэл:<b>{{' ' + passData.toStop.direction_name ? passData.toStop.direction_name : ''}}</b></ion-label>
       </ion-row>
       <ion-row>
-        <ion-label class="text-info">ААН нэр:<b>{{' ' + passData.dispatcher.company_name ? passData.dispatcher.company_name[0] : ''}}</b></ion-label>
+        <ion-label class="text-info">ААН нэр:<b>{{' ' + passData.dispatcher.company_name ? passData.dispatcher.company_name : ''}}</b></ion-label>
       </ion-row>
       <ion-row>
-        <ion-label class="text-info">Марк загвар:<b>{{' ' + passData.dispatcher.model_name ? passData.dispatcher.model_name[0] : ''}}</b></ion-label>
+        <ion-label class="text-info">Марк загвар:<b>{{' ' + passData.dispatcher.model_name ? passData.dispatcher.model_name : ''}}</b></ion-label>
       </ion-row>
       <ion-row>
-        <ion-label class="text-info">Улсын дугаар:<b>{{' ' + passData.dispatcher.car_number ? passData.dispatcher.car_number[0] : ''}}</b></ion-label>
+        <ion-label class="text-info">Улсын дугаар:<b>{{' ' + passData.dispatcher.car_number ? passData.dispatcher.car_number : ''}}</b></ion-label>
       </ion-row>
     </div>
     <ion-item-divider class="custom-divider">
@@ -35,17 +35,17 @@
     </ion-item-divider>
     <div>
       <ion-row>
-        <ion-label class="text-info">Том хүн:<b>{{' ' + passData.toStop.stop_data.big_price ? passData.toStop.stop_data.big_price[0] + '₮ /Амь даатгал: ' + (passData.toStop.stop_data.big_insurance ? passData.toStop.stop_data.big_insurance[0] : '0') + '₮/' : '0₮'}}</b></ion-label>
+        <ion-label class="text-info">Том хүн:<b>{{' ' + passData.toStop.big_price ? passData.toStop.big_price + '₮ /Амь даатгал: ' + (passData.toStop.big_insurance ? passData.toStop.big_insurance : '0') + '₮/' : '0₮'}}</b></ion-label>
       </ion-row>
       <ion-row>
-        <ion-label class="text-info">Хүүхэд /7-12нас/:<b>{{' ' + passData.toStop.stop_data.big_childprice ? passData.toStop.stop_data.big_childprice[0]  + '₮ /Амь даатгал: ' + (passData.toStop.stop_data.big_childinsurance ? passData.toStop.stop_data.big_childinsurance[0] : '0') + '₮/' : '0₮'}}</b></ion-label>
+        <ion-label class="text-info">Хүүхэд /7-12нас/:<b>{{' ' + passData.toStop.big_childprice ? passData.toStop.big_childprice  + '₮ /Амь даатгал: ' + (passData.toStop.big_childinsurance ? passData.toStop.big_childinsurance : '0') + '₮/' : '0₮'}}</b></ion-label>
       </ion-row>
     </div>
     <ion-item-divider class="custom-divider">
       <ion-label>Суудал сонгох</ion-label>
     </ion-item-divider>
   </ion-list>
-  <bus [seats]="emptySeats" (valueChange)='changeBusSeat($event)' busType="{{passData.dispatcher.car_type_id ? passData.dispatcher.car_type_id[0] : 1}}"></bus>
+  <bus [seats]="emptySeats" (valueChange)='changeBusSeat($event)' busType="{{passData.dispatcher.car_type_id ? passData.dispatcher.car_type_id : 1}}" seatCount="{{passData.dispatcher.sitcount ? passData.dispatcher.sitcount : ((passData.dispatcher.car_type_id == '1') ? 45 : 25)}}"></bus>
 </ion-content>
 <ion-footer>
   <ion-toolbar>

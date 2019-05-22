@@ -3,7 +3,6 @@ import { AngularFirestoreCollection, AngularFirestore, DocumentReference } from 
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { Profile } from '../models/profile.model';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({

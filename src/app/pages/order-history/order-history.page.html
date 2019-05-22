@@ -1,6 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
     <ion-title>Захиалгын түүх</ion-title>
+    <ion-buttons class="user-btn" slot="end" (click)="goToUser()">
+      <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
+      <img class="user-icon" *ngIf="(avatarImage == null)" color="light"
+        src="../../../assets/other/user-circle-solid.svg">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 

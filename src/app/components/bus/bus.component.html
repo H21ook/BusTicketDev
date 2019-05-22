@@ -1,8 +1,23 @@
-<div class="bus" *ngIf="busType == 1">
+<div class="bus" [ngStyle]="{'height': height + 'px'}">
   <div class="seat-row driver">
     <bus-seat-checkbox [text]="'Ж'" status="normal" readonly="true"></bus-seat-checkbox>
   </div>
-  <div class="seat-row  start-row">
+  <div *ngFor="let rowSeat of displaySeats; let i = index;">
+    <div class="{{(i == 0) ? 'seat-row  start-row' : 'seat-row'}}" >
+      <div class="seat-left">
+        <bus-seat-checkbox [text]="rowSeat[0].seat_no" [checked]="rowSeat[0].checked" [disabled]="rowSeat[0].disabled" (toggle)="toggleChanged($event)" status="{{(i == 0) ? 'special' : 'normal'}}"></bus-seat-checkbox>
+        <bus-seat-checkbox [text]="rowSeat[1].seat_no" [checked]="rowSeat[1].checked" [disabled]="rowSeat[1].disabled" (toggle)="toggleChanged($event)" status="{{(i == 0) ? 'special' : 'normal'}}"></bus-seat-checkbox>
+      </div>
+      <div class="seat-right">
+        <bus-seat-checkbox [text]="rowSeat[2].seat_no" [checked]="rowSeat[2].checked" [disabled]="rowSeat[2].disabled" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+        <bus-seat-checkbox [text]="rowSeat[3].seat_no" [checked]="rowSeat[3].checked" [disabled]="rowSeat[3].disabled" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
+      </div>
+    </div>
+  </div>
+  <div class="seat-row end-row">
+    <bus-seat-checkbox [text]="oneSeat.seat_no" [checked]="oneSeat.checked" [disabled]="oneSeat.disabled" status="normal" (toggle)="toggleChanged($event)" *ngFor="let oneSeat of endRow"></bus-seat-checkbox>
+  </div>
+  <!-- <div class="seat-row  start-row">
     <div class="seat-left">
       <bus-seat-checkbox [text]="seatData[1].seat_no" [checked]="seatData[1].checked" [disabled]="seatData[1].disabled" (toggle)="toggleChanged($event)" status="special"></bus-seat-checkbox>
       <bus-seat-checkbox [text]="seatData[2].seat_no" [checked]="seatData[2].checked" [disabled]="seatData[2].disabled" (toggle)="toggleChanged($event)" status="special"></bus-seat-checkbox>
@@ -171,5 +186,5 @@
     <bus-seat-checkbox [text]="seatData[23].seat_no" [checked]="seatData[23].checked" [disabled]="seatData[23].disabled" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     <bus-seat-checkbox [text]="seatData[24].seat_no" [checked]="seatData[24].checked" [disabled]="seatData[24].disabled" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
     <bus-seat-checkbox [text]="seatData[25].seat_no" [checked]="seatData[25].checked" [disabled]="seatData[25].disabled" status="normal" (toggle)="toggleChanged($event)"></bus-seat-checkbox>
-  </div>
+  </div> -->
 </div>

@@ -6,7 +6,7 @@
     <ion-title>
       Нүүр
     </ion-title>
-    <ion-buttons class="user-btn" slot="end" (click)="openPopover($event)">
+    <ion-buttons class="user-btn" slot="end" (click)="goToUser()">
         <img class="user-icon" *ngIf="avatarImage != null" [src]="avatarImage">
         <img class="user-icon" *ngIf="(avatarImage == null)" color="light" src="../../../assets/other/user-circle-solid.svg">
     </ion-buttons>
@@ -32,48 +32,61 @@
     </ion-item>
     <!-- <ion-list-header>Чиглэлийн жагсаалт</ion-list-header> -->
     <ion-item-divider class="custom-divider">
-      <ion-label>Хаанаас</ion-label>
-    </ion-item-divider>
-    <ion-item (click)="changeFromStop()" lines="none">
+        <ion-label>Хугацаа</ion-label>
+      </ion-item-divider>
+      <ion-item>
+        <ion-label>Эхлэх</ion-label>
+        <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
+          [(ngModel)]="startDate"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label>Дуусах</ion-label>
+        <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
+          [(ngModel)]="endDate" (ionChange)="changeEndDate()" [disabled]="!startDate"></ion-datetime>
+      </ion-item>
+  
+      <ion-item-divider class="custom-divider">
+        <ion-label>Хаанаас</ion-label>
+      </ion-item-divider>
+      <ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate">
         <ion-label>{{ fromStop ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
         <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
-    </ion-item>
-
-    <ion-item-divider class="custom-divider">
-      <ion-label>Хаашаа</ion-label>
-    </ion-item-divider>
-    <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
-      <ion-label>{{ toStop ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
-      <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
-    </ion-item>
-
-    <ion-item-divider class="custom-divider">
-      <ion-label>Цагийн хуваарь</ion-label>
-    </ion-item-divider>
-    <div *ngIf="timeTableData != null">
-      <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
-        <div slot="start" class="start-side">
-          <!-- <ion-label class="start-date">2019.01.10</ion-label> -->
-          <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
-          <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
-        </div>
-        <div class="body-side">
-          <ion-label>{{item.direction_name ? item.direction_name[0] : ''}}</ion-label>
-          <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name[0] : ''}}</ion-label>
-        </div>
-        <div slot="end" class="end-side">
-            <ion-label class="start-date">Суудал</ion-label>
-            <ion-label class="start-time">{{item.sitcount ? (item.sitcount[0] - (item.empty_seat_count ? item.empty_seat_count[0] : 0)) + ' / ' + item.sitcount[0] : 'NaN'}}</ion-label>
-            
-        </div>
-        <!-- <div slot="end" class="end-side">
-          End
-        </div> -->
       </ion-item>
-    </div>
-    <div class="no-item" *ngIf="timeTableData == null">
-      Хуваарь байхгүй байна
-    </div>
+  
+      <ion-item-divider class="custom-divider">
+        <ion-label>Хаашаа</ion-label>
+      </ion-item-divider>
+      <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
+        <ion-label>{{ toStop ? toStop.end_stop_name : 'Буудал сонгох' }}</ion-label>
+        <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
+      </ion-item>
+  
+      <ion-item-divider class="custom-divider">
+        <ion-label>Цагийн хуваарь</ion-label>
+      </ion-item-divider>
+  
+  
+      <div *ngIf="timeTableData != null">
+        <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
+          <div slot="start" class="start-side">
+            <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
+            <ion-label class="start-time">{{item.leave_date_time}}</ion-label>
+          </div>
+          <div class="body-side">
+            <ion-label>{{item.direction_name ? item.direction_name : ''}}</ion-label>
+            <ion-label class="sub-body">{{item.car_type_name ? item.car_type_name : ''}}</ion-label>
+          </div>
+          <div slot="end" class="end-side">
+            <ion-label class="start-date">Суудал</ion-label>
+            <ion-label class="start-time">
+              {{item.sitcount ? (item.sitcount - (item.empty_seat_count ? item.empty_seat_count : 0)) + ' / ' + item.sitcount : 'NaN'}}
+            </ion-label>
+          </div>
+        </ion-item>
+      </div>
+      <div class="no-item" *ngIf="timeTableData == null">
+        Хуваарь байхгүй байна
+      </div>
   </ion-list>
 
 </ion-content>

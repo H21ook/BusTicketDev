@@ -60,8 +60,8 @@ export class PassengerInfoPage implements OnInit {
     let selectedSeats: any = this.passData.getSelectedSeats();
     if (selectedSeats) {
       for (let i = 0; i < selectedSeats.length; i++) {
-        this.required.push([]);
         this.passengersData.push({ seat_no: selectedSeats[i].seat_no, age: '1', name: '', register: '', incur: true });
+        this.required.push([false, false]);
         this.calcAmountAge(i);
       }
     } else {
@@ -73,12 +73,12 @@ export class PassengerInfoPage implements OnInit {
     this.passengersData[i].totalAmount = 0;
     if (this.passengersData[i].age == "0") {
       //huuhed 0
-      this.passengersData[i].amount = Number(this.passData.toStop.stop_data.big_childprice[0]);
-      this.passengersData[i].incurAmount = Number(this.passData.toStop.stop_data.big_childinsurance[0]);
+      this.passengersData[i].amount = Number(this.passData.toStop.big_childprice);
+      this.passengersData[i].incurAmount = Number(this.passData.toStop.big_childinsurance);
     } else {
       //tom hun 1
-      this.passengersData[i].amount = Number(this.passData.toStop.stop_data.big_price[0]);
-      this.passengersData[i].incurAmount = Number(this.passData.toStop.stop_data.big_insurance[0]);
+      this.passengersData[i].amount = Number(this.passData.toStop.big_price);
+      this.passengersData[i].incurAmount = Number(this.passData.toStop.big_insurance);
     }
     this.passengersData[i].totalAmount += this.passengersData[i].amount;
     this.passengersData[i].totalAmount += this.passengersData[i].incur ? this.passengersData[i].incurAmount : 0;

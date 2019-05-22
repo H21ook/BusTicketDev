@@ -52,7 +52,7 @@ export class SeatsSelectPage implements OnInit {
     await loading.present();
     // this.aimagData = this.functionsService.groupBy(this.sourceStops, "ss_A_id");
     if(this.passData.dispatcher) {
-      this.apiService.getEmptySeats(this.passData.dispatcher.id[0]).then(() => {
+      this.apiService.getEmptySeats(this.passData.dispatcher.id).then(() => {
         this.emptySeats = this.dataService.emptySeats;
         loading.dismiss();
         this.show = true;
