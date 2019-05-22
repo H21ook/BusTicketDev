@@ -44,7 +44,9 @@ export class PaymentPage implements OnInit {
   timeLimit = 1200*1000;
   time: any = {};
   showTime: boolean = false;
-
+  styleMessage: any = {};
+  styleCircle: any = {};
+  showAlert: boolean = false;
   constructor(
     private nav: NavController,
     private popover: PopoverController,
@@ -70,19 +72,22 @@ export class PaymentPage implements OnInit {
   
   ngOnInit() {
     this.order.orderNumber = this.route.snapshot.paramMap.get('id');
-    console.log(this.order.orderNumber);
     
     this.sTimer.subscribe(data => {
       this.time = data;
       console.log("time", this.time);
       if(this.time) {
-          var mytimer = timer(3000, 1000);
+          var mytimer = timer(0, 1000);
           var tsub = mytimer.subscribe(x => {
             if(this.time.min >= 0) {
               this.showTime = true;
               if(this.time.sec == 0 && this.time.min == 0) {
                 tsub.unsubscribe();
                 this.showTime = false;
+                this.order.status = "C";
+                this.showAlert = true;
+                this.orderHistoryService.updateOrder(this.order).then(() => {
+                });
               } else {
                 if(this.time.sec == 0) {
                   this.time.min--;
@@ -92,6 +97,7 @@ export class PaymentPage implements OnInit {
               }
             } else{
               tsub.unsubscribe();
+              this.showAlert = true;
               this.showTime = false;
             }
           });
@@ -117,11 +123,10 @@ export class PaymentPage implements OnInit {
           this.order.expired = new Date(Date.now() + this.timeLimit).toISOString();
           this.order.createdTime = new Date().toISOString();
           this.sTimer.next({ min: (this.timeLimit/1000)/60, sec: (this.timeLimit/1000)%60, zoruu: 0, isEnd: false});
+          this.sTimer.complete();
           this.apiService.setOrderSeat(this.order).then(data => {
             this.order.seatRequest = data;
-            console.log("req", data);
             this.orderHistoryService.updateOrder(this.order).then(() => {
-              console.log('OK');
             });
           });
           break;
@@ -129,19 +134,49 @@ export class PaymentPage implements OnInit {
           var zoruu = Date.now() - new Date(this.order.createdTime).getTime();
 
           if(zoruu > this.timeLimit) {
-            this.sTimer.next({ min: 0, sec: 0, zoruu: 0, isEnd: true});
+            this.order.status = "C";
+            this.showAlert = true;
+            this.orderHistoryService.updateOrder(this.order).then(() => {
+            });
           }
           else if(zoruu < 0) {
             this.sTimer.next({ min: (this.timeLimit/1000)/60, sec: (this.timeLimit/1000)%60, zoruu: 0, isEnd: false});
           } else {
-            this.sTimer.next({ min: ((this.timeLimit - zoruu)/1000)/60, sec: ((this.timeLimit - zoruu)/1000)%60, zoruu: 0, isEnd: true});
+            this.sTimer.next({ min: Math.floor(((this.timeLimit - zoruu)/1000)/60), sec: Math.floor(((this.timeLimit - zoruu)/1000)%60), zoruu: 0, isEnd: true});
           }
           break;
         case 'C':
-
+          this.showAlert = true;
+          // this.styleCircle = {
+          //   'border-radius': '50px',
+          //   'height': '60px', 
+          //   'width': '100%',
+          //   'background-color': '#f04141',
+          //   'text-align': 'center',
+          //   'margin': '0 auto',
+          //   'padding-top': '15px'
+          // };
+          // this.styleMessage = {
+          //   'font-size': '32px !important',
+          //   'font-weight': 'bold',
+          //   'margin': '0 auto'
+          // };
           break;
         case 'S':
-
+          this.showAlert = true;
+          // this.styleCircle = {
+          //   'border-radius': '50px',
+          //   'background-color': '#10dc60', 
+          //   'height': '60px', 
+          //   'width': '100%',
+          //   'text-align': 'center',
+          //   'margin': '0 auto'
+          // };
+          // this.styleMessage = {
+          //   'font-size': '32px !important',
+          //   'font-weight': 'bold',
+          //   'margin': '0 auto'
+          // };
           break;
         default: 
           break;
@@ -151,6 +186,7 @@ export class PaymentPage implements OnInit {
       loading.dismiss();
     });
   }
+
   finish(e) {
     // this.nav.navigateRoot('/home');
     this.rippleData = this.rippleEffect(e);

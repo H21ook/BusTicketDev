@@ -12,6 +12,7 @@ import { Order } from 'src/app/models/order.model';
 export class OrderHistoryPage implements OnInit {
   
   orders: Order[];
+  private statusColor: any = [];
 
   constructor(
     private orderHistoryService: OrderHistoryService,
@@ -32,10 +33,7 @@ export class OrderHistoryPage implements OnInit {
     await loading.present();
 
     this.orderHistoryService.getOrders().subscribe(data => {
-      console.log("LISt", data);
-      this.orders = data.map(e => {
-          return e.payload.doc.data();
-      });
+      this.orders = data;
       loading.dismiss();
     }, err => {
       loading.dismiss();
@@ -49,5 +47,9 @@ export class OrderHistoryPage implements OnInit {
   selectItem(item) {
     console.log("itme", item);
     this.nav.navigateForward('/payment/'+ item.orderNumber);
+  }
+
+  getCreatedTime(i) {
+    return this.orders[i].createdTime.substring(0, 10);
   }
 }

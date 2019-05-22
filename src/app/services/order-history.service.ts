@@ -18,7 +18,7 @@ export class OrderHistoryService {
   }
 
   getOrders() {
-    return this.orderCollection.snapshotChanges();
+    return this.orderCollection.valueChanges();
   }
 
   getOrder(orderNumber: string): Observable<Order> {

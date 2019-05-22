@@ -126,8 +126,6 @@ export class HomePage implements OnInit {
     await loading.present();
   
     this.getDefaultValue();
-    this.show = true;
-	  loading.dismiss();
   }
 
   async changeFromStop() {

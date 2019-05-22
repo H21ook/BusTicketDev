@@ -105,17 +105,13 @@
           <img style="height: 150px; width:150px; margin:0 auto; box-shadow: 0 5px 5px var(--ion-color-medium);"
             [src]="order.qrCode">
         </div>
-        <div class="padding-wrap-tb">
-          <button class="custom-button" type="button" size="full" (click)="finish($event)">
-            <div class="ripple" [@btn]="{ 'value': ripple ? true : false, 'params': rippleData}">
-            </div>
-            болсон
-          </button>
-        </div>
-        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px; text-align: center; margin: 0 auto;">
-          <ion-label style="font-size: 32px !important; font-weight: bold; margin: 0 auto;">{{((time.min < 10) ? ('0' + time.min) : time.min) + ':' + ((time.sec < 10) ? ('0' + time.sec) : time.sec)}}</ion-label>
-        </div>
       </div>
+      <div [ngStyle]="styleCircle" *ngIf="showAlert">
+          <ion-label [ngStyle]="styleMessage">{{(order.status == 'S') ? 'Амжилттай' : 'Цуцлагдсан'}}</ion-label>
+        </div>
+        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px; text-align: center; margin: 0 auto;" *ngIf="showTime">
+          <ion-label style="font-size: 32px !important; font-weight: bold; margin: 0 auto; padding-top:3px;">{{((time.min < 10) ? ('0' + time.min) : time.min) + ':' + ((time.sec < 10) ? ('0' + time.sec) : time.sec)}}</ion-label>
+        </div>
     </ion-list>
   </div>
 

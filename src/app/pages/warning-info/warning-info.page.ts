@@ -36,7 +36,7 @@ export class WarningInfoPage implements OnInit {
 
   ngOnInit() {
     if(this.dataPass.dispatcher.leave_date) {
-      let tempDate = new Date(this.dataPass.dispatcher.leave_date[0]);
+      let tempDate = new Date(this.dataPass.dispatcher.leave_date);
       this.leaveDate = tempDate.getFullYear() + "-" + (tempDate.getMonth() < 10 ? "0" : "") + tempDate.getMonth() + "-" + (tempDate.getDate() < 10 ? "0" : "") + tempDate.getDate() + " " + (tempDate.getHours() < 10 ? "0" : "") + tempDate.getHours() + ":" + (tempDate.getMinutes() < 10 ? "0" : "") + tempDate.getMinutes();
       
       
@@ -74,7 +74,7 @@ export class WarningInfoPage implements OnInit {
   goToPayment() {
     this.passData.setIsAgree(true); 
     let date = new Date();
-    let ordernumber = date.getFullYear() + "" + (date.getMonth() < 10 ? "0" : "") + date.getMonth() + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
+    let ordernumber = date.getFullYear() + "" + ((date.getMonth()+1) < 10 ? "0" : "") + (date.getMonth()+1) + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     this.dataPass.orderData.orderNumber = ordernumber;
     this.orderHistoryService.createOrder(this.dataPass.orderData)
     .then(() => {

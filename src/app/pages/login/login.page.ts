@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { LoadingController, NavController, AlertController, MenuController, Platform } from '@ionic/angular';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -35,7 +35,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
     ])
   ]
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, AfterViewInit {
 
   user: User = {
     email: "",
@@ -62,8 +62,6 @@ export class LoginPage implements OnInit {
     private loadingController: LoadingController,
     private platform: Platform,
     private localNotify: LocalNotifications,
-    private apiService: ApiService,
-    private functionsService: FunctionsService,
     private splashScreen: SplashScreen
   ) { 
     this.platform.ready().then(() => {
@@ -79,7 +77,9 @@ export class LoginPage implements OnInit {
     // this.functionsService.newtork.subscribe(data => {
     //   this.onNetwork = data;
     // });
-    
+  }
+
+  ngAfterViewInit() {
     this.splashScreen.hide();
   }
 
