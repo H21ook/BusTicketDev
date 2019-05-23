@@ -12,6 +12,7 @@ export class DataService {
   distSourceStops: any;
   dateByDispatcherData: any = [];
   emptySeats: any = [];
+  dispatchers: any [];
 
   constructor() {
     
@@ -35,6 +36,7 @@ export class DataService {
       mn_name: "Хатгал"
     },
   ];
+
 
   // sourceStops: any = [
   //   {

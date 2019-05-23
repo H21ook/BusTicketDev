@@ -172,7 +172,16 @@ export class ApiService {
         
       }
     }
-    this.dataService.distSourceStops = distSourceStop;
+    var tempStops: any = [];
+    this.dataService.dispatchers = distSourceStop;
+    for(var i = 0; i < this.dataService.sourceStops.length; i++){
+      for(var j = 0; j < distSourceStop.length; j++){
+        if(distSourceStop[j].end_stop_id == this.dataService.sourceStops[i].stop_id) {
+          tempStops.push(this.dataService.sourceStops[i]);
+        }
+      }
+    }
+    this.dataService.distSourceStops = tempStops;
     
     return directions;
   }
@@ -188,8 +197,9 @@ export class ApiService {
           }
         }
       });
-
+      
       this.dataService.emptySeats = this.functionsService.convertSeat(result);
+      console.log("ee", this.dataService.emptySeats);
     });
   }
 

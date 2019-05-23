@@ -107,11 +107,11 @@
         </div>
       </div>
       <div [ngStyle]="styleCircle" *ngIf="showAlert">
-          <ion-label [ngStyle]="styleMessage">{{(order.status == 'S') ? 'Амжилттай' : 'Цуцлагдсан'}}</ion-label>
-        </div>
-        <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px; text-align: center; margin: 0 auto;" *ngIf="showTime">
-          <ion-label style="font-size: 32px !important; font-weight: bold; margin: 0 auto; padding-top:3px;">{{((time.min < 10) ? ('0' + time.min) : time.min) + ':' + ((time.sec < 10) ? ('0' + time.sec) : time.sec)}}</ion-label>
-        </div>
+        <ion-label style="font-size: 20px !important;" [ngStyle]="styleMessage">{{(order.status == 'S') ? 'Амжилттай' : ((order.status == 'W') ? '' : 'Цуцлагдсан')}}</ion-label>
+      </div>
+      <div style="border-radius: 50px; border: 2px solid green; height: 50px; width: 200px; text-align: center; margin: 0 auto;" *ngIf="showTime">
+        <ion-label style="font-size: 32px !important; font-weight: bold; margin: 0 auto; padding-top:3px;">{{((time.min < 10) ? ('0' + time.min) : time.min) + ':' + ((time.sec < 10) ? ('0' + time.sec) : time.sec)}}</ion-label>
+      </div>
     </ion-list>
   </div>
 

@@ -147,36 +147,30 @@ export class PaymentPage implements OnInit {
           break;
         case 'C':
           this.showAlert = true;
-          // this.styleCircle = {
-          //   'border-radius': '50px',
-          //   'height': '60px', 
-          //   'width': '100%',
-          //   'background-color': '#f04141',
-          //   'text-align': 'center',
-          //   'margin': '0 auto',
-          //   'padding-top': '15px'
-          // };
-          // this.styleMessage = {
-          //   'font-size': '32px !important',
-          //   'font-weight': 'bold',
-          //   'margin': '0 auto'
-          // };
+          this.styleCircle = {
+            'height': '55px', 
+            'margin': '10px',
+            'background-color': '#f04141',
+            'text-align': 'center',
+            'padding-top': '15px'
+          };
+          this.styleMessage = {
+            'font-weight': 'bold',
+            'margin': '0 auto'
+          };
           break;
         case 'S':
           this.showAlert = true;
-          // this.styleCircle = {
-          //   'border-radius': '50px',
-          //   'background-color': '#10dc60', 
-          //   'height': '60px', 
-          //   'width': '100%',
-          //   'text-align': 'center',
-          //   'margin': '0 auto'
-          // };
-          // this.styleMessage = {
-          //   'font-size': '32px !important',
-          //   'font-weight': 'bold',
-          //   'margin': '0 auto'
-          // };
+          this.styleCircle = {
+            'background-color': '#10dc60', 
+            'height': '55px', 
+            'text-align': 'center',
+            'margin': '10px',
+          };
+          this.styleMessage = {
+            'font-weight': 'bold',
+            'margin': '0 auto'
+          };
           break;
         default: 
           break;

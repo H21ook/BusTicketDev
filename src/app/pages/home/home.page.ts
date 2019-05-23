@@ -162,7 +162,7 @@ export class HomePage implements OnInit {
         this.toStop = data.data;
         var date = new Date(this.startDate);
         var date2 = new Date(this.endDate);
-        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.end_stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
+        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
           let resultArray = [];
           let tempData: any = this.dataService.dateByDispatcherData;
           let dataNow = new Date();
@@ -192,7 +192,14 @@ export class HomePage implements OnInit {
   }
 
   clickItem(item) {
-    this.passData.dispatcher = item;
+    console.log("SELECTED item", item);
+    for(var i = 0; i < this.dataService.dispatchers.length; i++){
+      if(item.stop_id == this.dataService.dispatchers[i].end_stop_id) {
+        this.passData.dispatcher = this.dataService.dispatchers[i];
+        console.log("DD", this.passData.dispatcher);
+      }
+    }
+    
     this.navCtrl.navigateForward('/seats-select');
   }
 
