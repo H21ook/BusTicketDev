@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -11,15 +12,16 @@ export class WeatherService {
   private url: string;
   headers: any;
 
-  constructor(public http: Http) {
-    this.url = 'http://api.openweathermap.org/data/2.5/'; // openweather
+  constructor(public http: Http,
+    private http1:HTTP,) {
+    this.url = 'http://samples.openweathermap.org/data/2.5/'; // openweather
     // this.url = 'https://api.apixu.com/v1/forecast.json?key='+ this.apiKey +'&q='; //apixu
   }
 
   getWeater(city) {
     // return this.http.get(this.url+city+'&days=5').map(res => res); //apixu
-    try {
-      const response = this.http.get(this.url + 'weather?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+    try {             
+      const response = this.http1.get(this.url + 'weather?q=' + city + ',mn&appid=' + this.apiKey, {}, {}); // openweather
       // const response = this.http.get(this.url + city + '&days=5');
       const params = {};
       const headers = {};
@@ -33,11 +35,11 @@ export class WeatherService {
   }
 
   getForecastWeater(city) {
-    return this.http.get(this.url + 'forecast?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+    return this.http1.get(this.url + 'forecast?q=' + city + ',mn&appid=' + this.apiKey, {}, {}); // openweather
   }
 
   getForecastHourly(city) {
-    return this.http.get(this.url + 'forecast/hourly?q=' + city + ',mn&units=metric&appid=' + this.apiKey); // openweather
+    return this.http1.get(this.url + 'forecast/hourly?q=' + city + ',mn&appid=' + this.apiKey, {}, {}); // openweather
   }
 }
 // https://api.apixu.com/v1/forecast.json?key=a38fec97bda64fb6af1120457182110&q=mecherfeh-hims-syria-2338880 //apixu

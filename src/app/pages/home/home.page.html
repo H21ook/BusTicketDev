@@ -14,12 +14,11 @@
 </ion-header>
 
 <ion-content *ngIf="show">
-
   <ion-list>
-    <ion-item-divider class="custom-divider">
+    <!-- <ion-item-divider class="custom-divider">
       <ion-label>Өнөөдөр</ion-label>
     </ion-item-divider>
-    <ion-item class="text-center" (click)="openWeather($event)" lines="none" *ngIf="weatherData">
+    <ion-item class="text-center click-col" (click)="openWeather($event)" lines="none" *ngIf="weatherData">
       <ion-thumbnail slot="start">
         <img src="{{'http://openweathermap.org/img/w/' + weatherData.weather[0].icon +'.png'}}">
       </ion-thumbnail>
@@ -29,17 +28,17 @@
           <b class="celsius">{{weatherData.main.temp}}°C</b>
         </ion-label>
       </div>
-    </ion-item>
+    </ion-item> -->
     <!-- <ion-list-header>Чиглэлийн жагсаалт</ion-list-header> -->
     <ion-item-divider class="custom-divider">
         <ion-label>Хугацаа</ion-label>
       </ion-item-divider>
-      <ion-item>
+      <ion-item class="click-col">
         <ion-label>Эхлэх</ion-label>
         <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
           [(ngModel)]="startDate"></ion-datetime>
       </ion-item>
-      <ion-item>
+      <ion-item class="click-col">
         <ion-label>Дуусах</ion-label>
         <ion-datetime class="custom-datetime" display-format="YYYY-MM-DD" picker-format="YYYY MMMM DD"
           [(ngModel)]="endDate" (ionChange)="changeEndDate()" [disabled]="!startDate"></ion-datetime>
@@ -48,7 +47,7 @@
       <ion-item-divider class="custom-divider">
         <ion-label>Хаанаас</ion-label>
       </ion-item-divider>
-      <ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate">
+      <ion-item (click)="changeFromStop()" lines="none" [disabled]="!endDate" class="click-col">
         <ion-label>{{ fromStop ? fromStop.stop_name : 'Буудал сонгох' }}</ion-label>
         <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
       </ion-item>
@@ -56,7 +55,7 @@
       <ion-item-divider class="custom-divider">
         <ion-label>Хаашаа</ion-label>
       </ion-item-divider>
-      <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop">
+      <ion-item (click)="changeToStop()" lines="none" [disabled]="!fromStop" class="click-col">
         <ion-label>{{ toStop ? toStop.stop_name : 'Буудал сонгох' }}</ion-label>
         <ion-icon name="arrow-dropdown" slot="end"></ion-icon>
       </ion-item>
@@ -67,7 +66,7 @@
   
   
       <div *ngIf="timeTableData != null">
-        <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)">
+        <ion-item lines="full" *ngFor="let item of timeTableData; let i=index;" (click)="clickItem(item)" class="click-col">
           <div slot="start" class="start-side">
             <ion-label class="start-date">{{item.leave_date_text}}</ion-label>
             <ion-label class="start-time">{{item.leave_date_time}}</ion-label>

@@ -47,6 +47,7 @@ export class PaymentPage implements OnInit {
   styleMessage: any = {};
   styleCircle: any = {};
   showAlert: boolean = false;
+  showD: boolean = false;
   constructor(
     private nav: NavController,
     private popover: PopoverController,
@@ -175,6 +176,7 @@ export class PaymentPage implements OnInit {
         default: 
           break;
       }
+      this.showD = true;
       loading.dismiss();
     }, err => {
       loading.dismiss();

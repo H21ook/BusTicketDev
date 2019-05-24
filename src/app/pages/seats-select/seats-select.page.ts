@@ -54,6 +54,7 @@ export class SeatsSelectPage implements OnInit {
     if(this.passData.dispatcher) {
       this.apiService.getEmptySeats(this.passData.dispatcher.id).then(() => {
         this.emptySeats = this.dataService.emptySeats;
+        console.log("Eseat", this.dataService.emptySeats);
         loading.dismiss();
         this.show = true;
       });

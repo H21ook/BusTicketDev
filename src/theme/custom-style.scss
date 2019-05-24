@@ -362,7 +362,9 @@ textarea:-ms-input-placeholder { color: var(--ion-color-medium);}
 .bg2 {background-color: #1da1f2}
 .bg3 {background-color: #ea4335}
 
-
+.click-col:hover {
+  background: #eeeeee;
+}
 
 /*--[ login ]--*/
 .login-wrap-limiter {

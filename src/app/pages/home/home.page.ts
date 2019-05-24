@@ -89,15 +89,15 @@ export class HomePage implements OnInit {
     });
     this.readData.subscribe(data => {
       if(data) {
-        this.weatherService.getWeater(this.selectedCity.name).subscribe(data => {
-          this.weatherData = data.json();
+        // this.weatherService.getWeater(this.selectedCity.name).then(data => {
+        //   this.weatherData = data.data;
           this.menuCtrl.enable(true);
         
           // this.apiService.getAllStopsData().then(() => {
           this.show = true; 
           this.loadingController.dismiss();
           // });
-        }, err => this.loadingController.dismiss());
+      //   }, err => this.loadingController.dismiss());
       }
     });
   }
@@ -179,8 +179,12 @@ export class HomePage implements OnInit {
             this.timeTableData = this.functionsService.sortByArray(resultArray, "leave_date_text");
           }
         });
-
-        this.passData.toStop = this.toStop;
+        for(var i = 0; i < this.dataService.dispatchers.length; i++){
+      
+          if(this.toStop.stop_id == this.dataService.dispatchers[i].end_stop_id) {
+            this.passData.toStop = this.dataService.dispatchers[i];
+          }
+        }
       }  
     });
   }
@@ -193,12 +197,14 @@ export class HomePage implements OnInit {
 
   clickItem(item) {
     console.log("SELECTED item", item);
-    for(var i = 0; i < this.dataService.dispatchers.length; i++){
-      if(item.stop_id == this.dataService.dispatchers[i].end_stop_id) {
-        this.passData.dispatcher = this.dataService.dispatchers[i];
-        console.log("DD", this.passData.dispatcher);
-      }
-    }
+    console.log("DD", this.dataService.dispatchers);
+    this.passData.dispatcher = item;
+    // for(var i = 0; i < this.dataService.dispatchers.length; i++){
+      
+    //   if(item.direction_end_stop_id == this.dataService.dispatchers[i].end_stop_id) {
+    //     this.passData.dispatcher = this.dataService.dispatchers[i];
+    //   }
+    // }
     
     this.navCtrl.navigateForward('/seats-select');
   }
