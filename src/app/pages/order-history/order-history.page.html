@@ -17,7 +17,7 @@
     <ion-item *ngFor="let item of orders; let i = index;" (click)="selectItem(item)">
       <div slot="start">
         <div class="statusCircle" [ngStyle]="{'background-color': (item.status == 'W') ? '#ff9c23' : ((item.status == 'S') ? '#10dc60' : '#f04141')  }">
-          <p class="statusText">{{item.status}}</p>
+          <ion-icon [name]="(item.status == 'W') ? 'alarm' : ((item.status == 'S') ? 'checkmark' : 'close')" class="statusIcon"></ion-icon>
         </div>
       </div>
       <ion-label text-wrap>

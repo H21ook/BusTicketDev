@@ -66,7 +66,6 @@ export class OrderDetailPage implements OnInit {
 
   changeSliderMain() {
     this.sliderMain.getActiveIndex().then(index => {
-      console.log(index);
     });
   }
 }

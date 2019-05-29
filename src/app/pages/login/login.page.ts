@@ -11,6 +11,8 @@ import { Network } from '@ionic-native/network/ngx';
 import { ApiService } from 'src/app/services/api.service';
 import { FunctionsService } from 'src/app/services/functions.service';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -49,6 +51,7 @@ export class LoginPage implements OnInit, AfterViewInit {
   private rippleData: any = {}
   ripple: boolean = true;
   onNetwork: boolean = true; 
+  backButtonSubscription;
 
   @ViewChild('errMsg', {read: ElementRef}) private errMsg: ElementRef;
 
@@ -62,7 +65,9 @@ export class LoginPage implements OnInit, AfterViewInit {
     private loadingController: LoadingController,
     private platform: Platform,
     private localNotify: LocalNotifications,
-    private splashScreen: SplashScreen
+    private splashScreen: SplashScreen,
+    private router: Router,
+    private appMinimize: AppMinimize
   ) { 
     this.platform.ready().then(() => {
       this.localNotify.on('click').subscribe(notif => {
@@ -74,13 +79,20 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    this.splashScreen.hide();
     // this.functionsService.newtork.subscribe(data => {
     //   this.onNetwork = data;
     // });
   }
 
   ngAfterViewInit() {
-    this.splashScreen.hide();
+    this.backButtonSubscription = this.platform.backButton.subscribe(() => {
+      if(this.router.url.substring(this.router.url.length - 5, this.router.url.length) == 'login') {
+        this.appMinimize.minimize();
+      }
+      // navigator['app'].exitApp();
+    });
+    
   }
 
   goToSignUp() {
@@ -92,7 +104,6 @@ export class LoginPage implements OnInit, AfterViewInit {
   }
 
   changeEmail() {
-    console.log(this.user);
     var res = this.validator.validateEmail(this.user.email);
     if (res == true) {
       this.required[0] = true;
@@ -135,8 +146,10 @@ export class LoginPage implements OnInit, AfterViewInit {
 
         if(this.afAuth.auth.currentUser.emailVerified) {
           this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
-            if (profile.state == "new")
+            if (profile.state == "new") {
               this.navController.navigateRoot('/profile/new');
+              loading.dismiss();
+            }
             else {
               this.navController.navigateRoot('/home');
               loading.dismiss();
@@ -174,7 +187,6 @@ export class LoginPage implements OnInit, AfterViewInit {
 		  this.authService.resetPassword(this.user.email)
 		  .then((data) => {
 			  this.presentAlert("Таны " +this.user.email+  " хаягруу нууц үг сэргээх холбоосыг илгээсэн!","Нууц үг сэргээх");
-			  console.log(data);
 		  }, err => {
 			  this.loginError = err;
 		  });
@@ -204,15 +216,7 @@ export class LoginPage implements OnInit, AfterViewInit {
     return param;
   }
 
-  testF() {
-    this.localNotify.schedule({
-      title: 'Bus Ticket',
-      text: 'Таны захиалга амжилттай боллоо',
-      foreground: true,
-      data: {
-        page: "/order-history", 
-        id: 1
-      }
-    });
+  ngOnDestroy(): void {
+    this.backButtonSubscription.unsubscribe();
   }
 }

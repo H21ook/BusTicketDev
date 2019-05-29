@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController, LoadingController, ModalController, NavController, MenuController, Platform } from '@ionic/angular';
-import { UserMethodsPage } from '../user-methods/user-methods.page';
 import { DataService } from '../../services/data.service';
 import { FunctionsService } from '../../services/functions.service';
 import { WeatherService } from 'src/app/services/weather/weather.service';
@@ -10,11 +9,11 @@ import { ProfileService } from 'src/app/services/profile.service';
 import * as firebase from 'firebase';
 import { ApiService } from 'src/app/services/api.service';
 import { PassingDataService } from 'src/app/services/passing-data/passing-data.service';
-
-import * as xml2js  from 'xml2js'
 import { StopListPage } from '../stop-list/stop-list.page';
 import { DistinationStopListPage } from '../distination-stop-list/distination-stop-list.page';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
+import { AppMinimize } from '@ionic-native/app-minimize/ngx';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +22,7 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class HomePage implements OnInit {
 
-  private profile : Profile;
+  private profile: Profile;
 
   sourceStops: any = [];
   aimagData: any = [];
@@ -47,7 +46,8 @@ export class HomePage implements OnInit {
   readAllStop: boolean;
   readTarif: boolean;
   readData: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  
+  backButtonSubscription;
+
   constructor(
     private platform: Platform,
     private popover: PopoverController,
@@ -61,12 +61,15 @@ export class HomePage implements OnInit {
     private menuCtrl: MenuController,
     private apiService: ApiService,
     private passData: PassingDataService,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private router: Router,
+    private appMinimize: AppMinimize
   ) {
-    if(!this.afAuth.auth.currentUser) {
+    if (!this.afAuth.auth.currentUser) {
       this.menuCtrl.enable(false);
       navCtrl.navigateRoot('/login');
     } else {
+      this.menuCtrl.enable(true);
       this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
         this.profile = profile;
         if (this.profile.image != null)
@@ -75,33 +78,43 @@ export class HomePage implements OnInit {
       this.loadingData();
     }
   }
-  
+
   ngOnInit() {
     this.apiService.readAllStop.subscribe(data => {
       this.readAllStop = data;
-      if(this.readAllStop && this.readTarif)
+      if (this.readAllStop && this.readTarif)
         this.readData.next(true);
     });
     this.apiService.readTarif.subscribe(data => {
       this.readTarif = data;
-      if(this.readAllStop && this.readTarif)
+      if (this.readAllStop && this.readTarif)
         this.readData.next(true);
     });
     this.readData.subscribe(data => {
-      if(data) {
+      if (data) {
         // this.weatherService.getWeater(this.selectedCity.name).then(data => {
         //   this.weatherData = data.data;
-          this.menuCtrl.enable(true);
-        
-          // this.apiService.getAllStopsData().then(() => {
-          this.show = true; 
-          this.loadingController.dismiss();
-          // });
-      //   }, err => this.loadingController.dismiss());
+
+
+        // this.apiService.getAllStopsData().then(() => {
+        this.show = true;
+        this.loadingController.dismiss();
+        // });
+        //   }, err => this.loadingController.dismiss());
+      }
+    });
+
+    this.passData.refresh_home.subscribe(data => {
+      if (data == true) {
+        this.toStop = null;
+        this.fromStop = null;
+        this.timeTableData = null;
+        this.getDefaultValue();
+        this.passData.emptyData();
       }
     });
   }
-  
+
   loadImage(imageName) {
     var storageRef = firebase.storage().ref(imageName);
     storageRef.getDownloadURL().then((url) => {
@@ -122,22 +135,24 @@ export class HomePage implements OnInit {
       spinner: 'bubbles',
       translucent: true,
       message: '',
+      duration: 5000
     });
     await loading.present();
-  
+
     this.getDefaultValue();
   }
 
   async changeFromStop() {
+    this.loadingStop();
     const listModal = await this.modalCtrl.create({
       component: StopListPage,
       componentProps: {
       }
     });
-    listModal.present(); 
+    listModal.present();
 
     listModal.onDidDismiss().then(data => {
-      if(data.data){
+      if (data.data) {
         this.fromStop = data.data;
         this.toStop = null;
         this.timeTableData = null;
@@ -150,43 +165,30 @@ export class HomePage implements OnInit {
   }
 
   async changeToStop() {
+    this.loadingStop();
     const listModal = await this.modalCtrl.create({
       component: DistinationStopListPage,
       componentProps: {
       }
     });
-    listModal.present(); 
+    listModal.present();
 
     listModal.onDidDismiss().then(data => {
-      if(data.data){
+      if (data.data) {
         this.toStop = data.data;
-        var date = new Date(this.startDate);
-        var date2 = new Date(this.endDate);
-        this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0,10), date2.toISOString().toString().substring(0,10)).then(() => {
-          let resultArray = [];
-          let tempData: any = this.dataService.dateByDispatcherData;
-          let dataNow = new Date();
-          for(let i = 0; i < tempData.length; i++) {
-            // orig heregleen deer ashiglana
-            // let leaveDate = new Date(tempData[i].leave_date[0]);
-            // if(dataNow.getTime() < leaveDate.getTime()) {
-              tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
-              tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
-              resultArray.push(tempData[i]);
-            // }
-          }
-          if(resultArray.length > 0) {
-            this.timeTableData = this.functionsService.sortByArray(resultArray, "leave_date_text");
-          }
-        });
-        for(var i = 0; i < this.dataService.dispatchers.length; i++){
-      
-          if(this.toStop.stop_id == this.dataService.dispatchers[i].end_stop_id) {
-            this.passData.toStop = this.dataService.dispatchers[i];
-          }
-        }
-      }  
+        this.getDispatcherData();
+      }
     });
+  }
+
+  async loadingStop() {
+    const loading = await this.loadingController.create({
+      spinner: 'bubbles',
+      translucent: true,
+      message: '',
+      duration: 2000
+    });
+    await loading.present();
   }
 
   getDefaultValue() {
@@ -196,21 +198,62 @@ export class HomePage implements OnInit {
   }
 
   clickItem(item) {
-    console.log("SELECTED item", item);
-    console.log("DD", this.dataService.dispatchers);
     this.passData.dispatcher = item;
     // for(var i = 0; i < this.dataService.dispatchers.length; i++){
-      
+
     //   if(item.direction_end_stop_id == this.dataService.dispatchers[i].end_stop_id) {
     //     this.passData.dispatcher = this.dataService.dispatchers[i];
     //   }
     // }
-    
+
     this.navCtrl.navigateForward('/seats-select');
   }
 
-  changeEndDate() {
-    
+  getDispatcherData() {
+    this.timeTableData = [];
+    var date = new Date(this.startDate);
+    var date2 = new Date(this.endDate);
+    this.apiService.getDateDispatcherWeek(this.directions, this.toStop.stop_id, date.toISOString().toString().substring(0, 10), date2.toISOString().toString().substring(0, 10)).then(() => {
+      let resultArray = [];
+      let tempData: any = this.dataService.dateByDispatcherData;
+      let dataNow = new Date();
+      for (let i = 0; i < tempData.length; i++) {
+        // orig heregleen deer ashiglana
+        // let leaveDate = new Date(tempData[i].leave_date[0]);
+        // if(dataNow.getTime() < leaveDate.getTime()) {
+        tempData[i].leave_date_time = new Date(tempData[i].leave_date).toTimeString().substring(0, 5);
+        tempData[i].leave_date_text = new Date(tempData[i].leave_date).toISOString().substring(0, 10);
+        resultArray.push(tempData[i]);
+        // }
+      }
+      if (resultArray.length > 0) {
+        this.timeTableData = this.functionsService.sortByArray(resultArray, "leave_date_text");
+      }
+    });
+    for (var i = 0; i < this.dataService.dispatchers.length; i++) {
+
+      if (this.toStop.stop_id == this.dataService.dispatchers[i].end_stop_id) {
+        this.passData.toStop = this.dataService.dispatchers[i];
+      }
+    }
   }
 
+  changeDate() {
+    if (this.fromStop && this.toStop && this.startDate && this.endDate) {
+      this.getDispatcherData();
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.backButtonSubscription = this.platform.backButton.subscribe(() => {
+      if (this.router.url.substring(this.router.url.length - 4, this.router.url.length) == 'home') {
+        this.appMinimize.minimize();
+      }
+      // navigator['app'].exitApp();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.backButtonSubscription.unsubscribe();
+  }
 }

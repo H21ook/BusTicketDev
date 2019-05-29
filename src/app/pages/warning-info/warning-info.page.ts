@@ -76,9 +76,9 @@ export class WarningInfoPage implements OnInit {
     let date = new Date();
     let ordernumber = date.getFullYear() + "" + ((date.getMonth()+1) < 10 ? "0" : "") + (date.getMonth()+1) + "" + (date.getDate() < 10 ? "0" : "") + date.getDate() + "" + (date.getHours() < 10 ? "0" : "") + date.getHours() + "" + (date.getMinutes() < 10 ? "0" : "") + date.getMinutes() + "" + (date.getSeconds() < 10 ? "0" : "") + date.getSeconds();
     this.dataPass.orderData.orderNumber = ordernumber;
-    this.orderHistoryService.createOrder(this.dataPass.orderData)
+    this.orderHistoryService.createOrder(this.dataPass.orderData, this.afAuth.auth.currentUser.uid)
     .then(() => {
-      this.nav.navigateForward("/payment/"+ ordernumber);
+      this.nav.navigateRoot("/payment/"+ ordernumber);
     });
   }
 }

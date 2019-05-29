@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ProfileService } from 'src/app/services/profile.service';
 import { OrderHistoryService } from 'src/app/services/order-history.service';
-import { LoadingController, NavController } from '@ionic/angular';
+import { LoadingController, NavController, MenuController } from '@ionic/angular';
 import { Order } from 'src/app/models/order.model';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Profile } from 'src/app/models/profile.model';
+import * as firebase from 'firebase';
 
 @Component({
   selector: 'app-order-history',
@@ -10,16 +13,38 @@ import { Order } from 'src/app/models/order.model';
   styleUrls: ['./order-history.page.scss'],
 })
 export class OrderHistoryPage implements OnInit {
-  
+
   orders: Order[];
   private statusColor: any = [];
+  private profile: Profile;
+  avatarImage: any;
 
   constructor(
     private orderHistoryService: OrderHistoryService,
     private loadingController: LoadingController,
+    private afAuth: AngularFireAuth,
+    private menuCtrl: MenuController,
+    private profileService: ProfileService,
     private nav: NavController
-  ) { }
+  ) {
+    if (!this.afAuth.auth.currentUser) {
+      this.menuCtrl.enable(false);
+      nav.navigateRoot('/login');
+    } else {
+      this.profileService.getProfile(this.afAuth.auth.currentUser.uid).subscribe(profile => {
+        this.profile = profile;
+        if (this.profile.image != null)
+          this.loadImage(this.profile.image)
+      });
+    }
+  }
 
+  loadImage(imageName) {
+    var storageRef = firebase.storage().ref(imageName);
+    storageRef.getDownloadURL().then((url) => {
+      this.avatarImage = url;
+    });
+  }
   ngOnInit() {
     this.loadingData();
   }
@@ -32,8 +57,9 @@ export class OrderHistoryPage implements OnInit {
     });
     await loading.present();
 
-    this.orderHistoryService.getOrders().subscribe(data => {
+    this.orderHistoryService.getOrders(this.afAuth.auth.currentUser.uid).subscribe(data => {
       this.orders = data;
+      console.log("O", this.orders);
       loading.dismiss();
     }, err => {
       loading.dismiss();
@@ -45,8 +71,7 @@ export class OrderHistoryPage implements OnInit {
   }
 
   selectItem(item) {
-    console.log("itme", item);
-    this.nav.navigateForward('/payment/'+ item.orderNumber);
+    this.nav.navigateForward('/payment/' + item.orderNumber);
   }
 
   getCreatedTime(i) {

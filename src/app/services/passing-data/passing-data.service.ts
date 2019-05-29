@@ -3,6 +3,7 @@ import { Seat } from 'src/app/models/seat.model';
 import { Passenger } from 'src/app/models/passenger.model';
 import { Subscriber } from 'src/app/models/subscriber.model';
 import { Order } from 'src/app/models/order.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,7 @@ export class PassingDataService {
   fromStop: any = {}; //sourceStop data
   toStop: any = {}; //tarif data
 
+  refresh_home: BehaviorSubject<boolean> = new BehaviorSubject(false);
   constructor() { }
 
   setSelectedSeats(data: Seat[]) {
@@ -42,5 +44,14 @@ export class PassingDataService {
   
   getOrderData() {
     return this.orderData;
+  }
+
+  emptyData() {
+    this.dispatcher = {};
+    this.toStop ={};
+    this.fromStop = {};
+    this.orderData = {};
+    this.selectedSeats = [];
+    this.refresh_home.next(false);
   }
 }

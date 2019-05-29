@@ -86,6 +86,8 @@ export class ProfilePage implements OnInit {
   
       loading.dismiss();
       this.show = true;
+    }, err => {
+      loading.dismiss();
     });
   }
 
@@ -159,11 +161,9 @@ export class ProfilePage implements OnInit {
     if(this.editable) {
       if (this.validator.checkRequired(this.required)) {
         if (this.checkPhoto) {
-          console.log("PHOTO CHEKC:", this.avatarImage);
           const picture = firebase.storage().ref('avatar/image' + this.afAuth.auth.currentUser.uid);
           picture.putString(this.avatarImage, 'data_url');
           this.profile.image = 'avatar/image' + this.afAuth.auth.currentUser.uid;
-          console.log("PHOTO LINK:", this.profile.image);
         }
         if(this.isNew) {
           try {

@@ -88,7 +88,6 @@ export class SignUpPage implements OnInit {
       this.required[2] = false;
       this.error = res;
     }
-    console.log("password match", res);
   }
 
   closeErrorMsg() {

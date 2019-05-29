@@ -13,16 +13,26 @@ export class OrderHistoryService {
 
   constructor(
     private afs: AngularFirestore,
-  ) { 
+  ) {
     this.orderCollection = this.afs.collection<Order>('order');
   }
 
-  getOrders() {
-    return this.orderCollection.valueChanges();
+  getOrders(userID) {
+    return this.orderCollection.snapshotChanges().pipe(
+      map(orders => {
+        let result: Order[] = [];
+        orders.map(order => {
+          if (order.payload.doc.id.substring(0, order.payload.doc.id.length - 14) == userID) {
+            result.push(order.payload.doc.data());
+          }
+        });
+        return result;
+      })
+    );
   }
 
-  getOrder(orderNumber: string): Observable<Order> {
-    return this.orderCollection.doc<Order>(orderNumber).valueChanges().pipe(
+  getOrder(orderNumber: string, userID: string): Observable<Order> {
+    return this.orderCollection.doc<Order>(userID + "" + orderNumber).valueChanges().pipe(
       take(1),
       map(order => {
         order.orderNumber = orderNumber;
@@ -31,20 +41,18 @@ export class OrderHistoryService {
     );
   }
 
-  createOrder(order: Order) {
+  createOrder(order: Order, userID: string) {
     var tempOrder = order;
     tempOrder.subscriber = Object.assign({}, tempOrder.subscriber);
-    console.log("coo", tempOrder);
-    console.log("cool", order);
-    return this.orderCollection.doc(tempOrder.orderNumber).set(tempOrder);
+    return this.orderCollection.doc(userID + "" + tempOrder.orderNumber).set(tempOrder);
   }
 
-  updateOrder(order: Order) {
-    return this.orderCollection.doc(order.orderNumber).update(order);
+  updateOrder(order: Order, userID: string) {
+    return this.orderCollection.doc(userID + "" + order.orderNumber).update(order);
   }
 
-  deleteOrder(orderNumber) {
-    return this.orderCollection.doc(orderNumber).delete();
+  deleteOrder(orderNumber, userID: string) {
+    return this.orderCollection.doc(userID + "" + orderNumber).delete();
   }
 
 }

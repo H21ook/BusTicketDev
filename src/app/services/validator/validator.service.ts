@@ -53,11 +53,12 @@ export class ValidatorService {
         let step1 = false, step2 = false, step3 = false;
         for(let i = 0; i < this.latinLetters.length; i++) {
           if(name[j] == this.latinLetters[i]) {
-            step1 = true;
-          } else {
-            step1 = false;
+            step2 = true;
             break;
           }
+        }
+        if(step2 == true) {
+          continue;
         }
         // if(step1 == false) {
         //   errMsg = "Зөвхөн крилл үсэг хэрэглэнэ үү!";

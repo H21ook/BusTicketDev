@@ -107,7 +107,6 @@ export class ApiService {
   
   async getDateDispatcherToday(directions, end_id) {
     return this.getTodayTimeTable(directions).then(data => {
-      console.log("ttt", data);
       let result = []; 
       for(let j = 0; j < directions.length; j++) {
         for(let i = 0; i < data.length; i++) {
@@ -199,7 +198,6 @@ export class ApiService {
       });
       
       this.dataService.emptySeats = this.functionsService.convertSeat(result);
-      console.log("ee", this.dataService.emptySeats);
     });
   }
 
@@ -237,7 +235,6 @@ export class ApiService {
         }
       });
       this.dataService.sourceStops =  this.functionsService.uniqueAllStops(this.functionsService.convertAllStop(arrData));
-      // console.log(this.functionsService.uniqueAllStops1(arrData));
     });
   }
 
@@ -254,7 +251,6 @@ export class ApiService {
         }
       });
       this.dataService.getTarif = this.functionsService.convertTarif(arrData);
-      console.log("tarif", this.dataService.getTarif);
     });
   }
 
@@ -269,7 +265,6 @@ export class ApiService {
         "expired": order.expired
       };
       const apiUrl = "http://rest.transdep.mn:7879/GeregeTest/Web_service.asmx/set_Order_Seat?"+'dispatcher_id='+ body.dispatcher_id + '&seat_no=' + body.seat_no + '&zahialagch_id=' + body.zahialagch_id + '&expired=' + body.expired;
-      console.log("POST mae", body);
       response = await this.http.get(apiUrl, {}, {}).then(data => {
         let arrData: any[];
         xml2js.parseString(data.data, function (err, res) {

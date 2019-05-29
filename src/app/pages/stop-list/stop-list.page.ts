@@ -34,14 +34,12 @@ export class StopListPage implements OnInit {
     this.result = this.sourceStops;
     this.displayList = Object.values(this.functionsService.groupByArray(this.result, "aimag_id"));
     if(this.readTarif) {
-      this.loadingList();
     } else {
       this.modal.dismiss();
     }
     
     this.apiService.readTarif.subscribe(data => {
         this.readTarif = data;
-        console.log(this.readTarif);
     });
   }
 
@@ -63,7 +61,6 @@ export class StopListPage implements OnInit {
   } 
   
   onClose (e) {
-    console.log("CLOSE", e);
   } 
 
   selectItem(item) {
@@ -75,13 +72,13 @@ export class StopListPage implements OnInit {
   }
 
   
-  async loadingList() {
-    const loading = await this.loadingController.create({
-      spinner: 'bubbles',
-      translucent: true,
-      message: '',
-      duration: 1000
-    });
-    await loading.present();
-  }
+  // async loadingList() {
+  //   const loading = await this.loadingController.create({
+  //     spinner: 'bubbles',
+  //     translucent: true,
+  //     message: '',
+  //     duration: 1000
+  //   });
+  //   await loading.present();
+  // }
 }
