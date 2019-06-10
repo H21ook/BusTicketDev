@@ -139,9 +139,8 @@ export class LoginPage implements OnInit, AfterViewInit {
     });
     await loading.present();
     
-    // if (this.validator.checkRequired(this.required)) {
+    if (this.validator.checkRequired(this.required)) {
       this.loginError = '';
-      this.user = { email: "tbeta40@gmail.com", password: "H21ook97" };
       this.authService.login(this.user).then(() => {
 
         if(this.afAuth.auth.currentUser.emailVerified) {
@@ -156,7 +155,7 @@ export class LoginPage implements OnInit, AfterViewInit {
             }
           },err => {
             loading.dismiss();
-            this.loginError = err;
+            this.loginError = "Холболт үүсгэхэд алдаа гарлаа. Дахиан оролдоно уу!";
           });
         } else {
           loading.dismiss();
@@ -177,7 +176,7 @@ export class LoginPage implements OnInit, AfterViewInit {
         else
           this.loginError = error;
       });
-    // }
+    }
   }
   
   resetPassword() {
